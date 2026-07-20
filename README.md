@@ -41,7 +41,7 @@ node scripts/gen-images.mjs campaigns/<你的>.json output/发布台-<你的>.ht
 
 - **默认一张「通配主图」**（`campaign.masterImage`，1:1 方图）配所有平台 —— 不给每个平台单独作图。
 - 只有当某平台**确需展示不同内容**时，才在该平台卡加 `imagePrompt`，`gen-images` 会额外生成一张。
-- 生图走**你自己的** `uking-aigc` 接口（虾盘云 gpt-image-2，key 读 `~/.uking/device.json`），不经第三方。
+- 生图走**可配置的文生图 CLI**：默认走本机 `uking-aigc`，用环境变量 `MP_GEN_IMAGE` 可指向你自己的任意 text-to-image CLI（约定 `--prompt/--out/--size/--json`）。密钥由该 CLI 自行解析，**本项目不接触任何 key/端点**。
 
 ## 由来
 

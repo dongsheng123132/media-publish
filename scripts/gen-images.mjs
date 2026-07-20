@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // gen-images.mjs — 给 campaign 里带 imagePrompt 的平台卡自动生成配图。
-// 调用**用户自己的**生图接口（uking-aigc/gen-image.mjs → 虾盘云 gpt-image-2，key 读 ~/.uking/device.json），
-// 生成后把图片路径回填进 campaign JSON 的 platform.image，并重新编译发布台 HTML。
+// 调用可配置的文生图 CLI（默认 uking-aigc/gen-image.mjs，可用 MP_GEN_IMAGE 覆盖成你自己的），
+// 密钥由该 CLI 自行解析，本脚本不接触任何 key/端点；生成后回填 campaign.masterImage.image 并重编发布台。
 // 用法: node gen-images.mjs <campaign.json> <发布台.html 输出路径> [--only id1,id2]
 // 图片存到 <html同目录>/<slug>-images/<平台id>.png，HTML 用相对路径引用。
 import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync } from 'node:fs';
@@ -16,8 +16,11 @@ if (!cfgPath || !htmlOut) { console.error('usage: node gen-images.mjs <campaign.
 const onlyIx = process.argv.indexOf('--only');
 const only = onlyIx > -1 ? new Set((process.argv[onlyIx + 1] || '').split(',').map(s => s.trim())) : null;
 
-const GEN = join(homedir(), '.claude', 'skills', 'uking-aigc', 'scripts', 'gen-image.mjs');
-if (!existsSync(GEN)) { console.error('找不到生图脚本:', GEN); process.exit(1); }
+// 生图 CLI（可配置）：默认用 uking-aigc；用 MP_GEN_IMAGE 指向你自己的任意「文生图」CLI。
+// 约定：接受 --prompt <文本> --out <png路径> --size <WxH> --json，成功时 stdout 输出 {"ok":true,"file":"..."}。
+// 密钥由那个 CLI 自己解析（本脚本不接触任何 key/端点）。
+const GEN = process.env.MP_GEN_IMAGE || join(homedir(), '.claude', 'skills', 'uking-aigc', 'scripts', 'gen-image.mjs');
+if (!existsSync(GEN)) { console.error('找不到生图 CLI:', GEN, '\n可设 MP_GEN_IMAGE 指向你自己的文生图脚本'); process.exit(1); }
 
 const cfg = JSON.parse(readFileSync(cfgPath, 'utf8'));
 const htmlDir = dirname(resolve(htmlOut));
