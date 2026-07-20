@@ -1,0 +1,27 @@
+{
+  "_note": "平台目录：id → 提交页 submitUrl（含 {url}/{title}/{text} 占位）+ 元信息。合并自 social-copy-generator 全集。写 campaign 时按 id 取 submitUrl，文案按 references/platform-copy-guidelines.md。charLimit=0 表示无硬限；manual=true 表示无网页提交页（多为移动端/creator 后台），发布台只提供[复制文案]。",
+  "platforms": {
+    "hn":            { "name": "Hacker News",        "region": "intl", "submitUrl": "https://news.ycombinator.com/submitlink?u={url}&t={title}", "charLimit": 80 },
+    "reddit":        { "name": "Reddit",             "region": "intl", "submitUrl": "https://www.reddit.com/r/{sub}/submit?title={title}", "charLimit": 0 },
+    "producthunt":   { "name": "Product Hunt",       "region": "intl", "submitUrl": "https://www.producthunt.com/posts/new", "charLimit": 0 },
+    "x":             { "name": "X / Twitter",        "region": "intl", "submitUrl": "https://twitter.com/intent/tweet?text={text}", "charLimit": 280 },
+    "linkedin":      { "name": "LinkedIn",           "region": "intl", "submitUrl": "https://www.linkedin.com/feed/?shareActive=true", "charLimit": 0 },
+    "lobsters":      { "name": "Lobsters",           "region": "intl", "submitUrl": "https://lobste.rs/stories/new", "charLimit": 0 },
+    "devto":         { "name": "Dev.to",             "region": "intl", "submitUrl": "https://dev.to/new", "charLimit": 0 },
+    "telegram":      { "name": "Telegram",           "region": "intl", "submitUrl": "https://t.me/share/url?url={url}&text={text}", "charLimit": 0 },
+    "awesome":       { "name": "awesome list (PR)",  "region": "intl", "submitUrl": "https://github.com/hesreallyhim/awesome-claude-code", "charLimit": 0 },
+
+    "v2ex":          { "name": "V2EX · 分享创造",     "region": "cn", "submitUrl": "https://www.v2ex.com/new", "charLimit": 0 },
+    "juejin":        { "name": "掘金",               "region": "cn", "submitUrl": "https://juejin.cn/editor/drafts/new", "charLimit": 0 },
+    "zhihu":         { "name": "知乎专栏",           "region": "cn", "submitUrl": "https://zhuanlan.zhihu.com/write", "charLimit": 0 },
+    "sspai":         { "name": "少数派",             "region": "cn", "submitUrl": "https://sspai.com/write", "charLimit": 0 },
+    "jike":          { "name": "即刻",               "region": "cn", "submitUrl": "https://web.okjike.com/", "charLimit": 0 },
+    "weibo":         { "name": "微博",               "region": "cn", "submitUrl": "https://service.weibo.com/share/share.php?title={text}&url={rawurl}", "charLimit": 0 },
+    "xiaohongshu":   { "name": "小红书",             "region": "cn", "submitUrl": "https://creator.xiaohongshu.com/publish/publish", "charLimit": 0, "manual": true },
+    "moments":       { "name": "微信朋友圈",         "region": "cn", "submitUrl": "weixin://", "charLimit": 0, "manual": true },
+    "mp":            { "name": "微信公众号",         "region": "cn", "submitUrl": "https://mp.weixin.qq.com/", "charLimit": 0 },
+    "shipinhao":     { "name": "视频号",             "region": "cn", "submitUrl": "https://channels.weixin.qq.com/platform/post/create", "charLimit": 30 },
+    "douyin":        { "name": "抖音",               "region": "cn", "submitUrl": "https://creator.douyin.com/", "charLimit": 0, "manual": true },
+    "bilibili":      { "name": "Bilibili 专栏",       "region": "cn", "submitUrl": "https://member.bilibili.com/platform/upload/text/edit", "charLimit": 0 }
+  }
+}
