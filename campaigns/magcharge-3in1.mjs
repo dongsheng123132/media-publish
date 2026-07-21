@@ -1,0 +1,280 @@
+// 构造「产品 / 工厂类」宣发 campaign —— MagCharge 三合一磁吸无线充电站（示范模板）。
+// 与软件类 opencodex-redline 不同：走电商 + 消费社交平台（Amazon/Alibaba/TikTok/小红书…），
+// 文案说卖点/参数/信任背书/下单，且每个字段挂多语言 {en,zh,ja,es}，发布台顶部可切换语言。
+// 复制本文件改成你自己的产品即可：改 PRODUCT / URL 常量与各平台文案。
+// 生成: node campaigns/magcharge-3in1.mjs  ->  campaigns/magcharge-3in1.json
+import { writeFileSync } from 'node:fs';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const here = dirname(fileURLToPath(import.meta.url));
+
+// ── 产品事实（换成你自己的）──────────────────────────────
+const STORE = 'https://magcharge.example.com';           // TODO: 换成你的产品页/独立站
+const ALI   = 'https://www.alibaba.com/';                // TODO: 换成你的 Alibaba 商品链接
+// 硬指标：15W · Qi2/MagSafe 兼容 · 一座充手机+手表+耳机 · 可折叠便携
+// 工厂端：OEM/ODM · 起订 500 · CE/FCC/RoHS/Qi 认证 · 定制 logo/包装 · 12-15 天交期 · 10 年工厂
+
+// ── 主图提示词（产品 hero 图，语言中立英文，喂给自己的生图 CLI）──
+const masterPrompt = 'Professional product hero photo of a white foldable 3-in-1 magnetic wireless charging station on a warm wooden desk, charging a smartphone (magnetically attached upright), a smartwatch and a pair of wireless earbuds all at once, soft studio lighting, shallow depth of field, minimalist Scandinavian desk setup, clean e-commerce white-ish background with subtle shadow, ultra sharp, 1:1 square';
+
+const campaign = {
+  slug: 'magcharge-3in1',
+  langs: ['en', 'zh', 'ja', 'es'],   // 语言下拉顺序，第一个是默认
+  defaultLang: 'en',
+  title: {
+    en: 'MagCharge 3-in-1 Wireless Charger — Factory Launch',
+    zh: 'MagCharge 三合一磁吸无线充电站 · 工厂新品发布',
+    ja: 'MagCharge 3-in-1 ワイヤレス充電器 — 工場新製品',
+    es: 'MagCharge Cargador Inalámbrico 3 en 1 — Lanzamiento de fábrica',
+  },
+  subtitle: {
+    en: '15W Qi2 · charges phone + watch + earbuds at once · foldable · OEM/ODM, MOQ 500',
+    zh: '15W Qi2 磁吸 · 手机+手表+耳机一次充满 · 可折叠 · 支持 OEM/ODM，起订 500',
+    ja: '15W Qi2 · スマホ+ウォッチ+イヤホンを同時充電 · 折りたたみ式 · OEM/ODM対応 MOQ 500',
+    es: '15W Qi2 · carga móvil + reloj + auriculares a la vez · plegable · OEM/ODM, MOQ 500',
+  },
+  primaryUrl: STORE,
+  masterImage: { prompt: masterPrompt, size: '1024x1024' },
+  repos: [
+    { label: { en: 'Product page', zh: '产品页', ja: '製品ページ', es: 'Página del producto' }, url: STORE },
+    { label: 'Alibaba', url: ALI },
+  ],
+  platforms: [
+    // ── 海外 · B2B（找分销/批发）───────────────────────────
+    {
+      id: 'amazon', name: 'Amazon Seller', region: 'intl', priority: 3, needsImage: true,
+      how: { en: 'Add product in Seller Central, paste title + 5 bullets + description', zh: '在 Seller Central 建品，粘贴标题+五点描述+描述', ja: 'Seller Central で商品登録、タイトル＋5行＋説明を貼付', es: 'Crea el producto en Seller Central y pega título + 5 viñetas + descripción' },
+      submitUrl: 'https://sellercentral.amazon.com/',
+      fields: [
+        { label: { en: 'Title (≤200)', zh: '标题（≤200）', ja: 'タイトル（≤200）', es: 'Título (≤200)' }, limit: 200, rows: 3,
+          value: {
+            en: 'MagCharge 3-in-1 Magnetic Wireless Charging Station, 15W Fast Qi2 Charger for iPhone 16/15/14, Apple Watch & AirPods, Foldable Travel Charging Dock (White)',
+            ja: 'MagCharge 3in1 マグネット ワイヤレス充電器, 15W 急速 Qi2 iPhone 16/15/14・Apple Watch・AirPods 対応, 折りたたみ 充電スタンド（ホワイト）',
+            es: 'MagCharge Cargador Inalámbrico Magnético 3 en 1, 15W Qi2 Rápido para iPhone 16/15/14, Apple Watch y AirPods, Base de Carga Plegable de Viaje (Blanco)',
+          } },
+        { label: { en: '5 bullet points', zh: '五点描述', ja: '5つの箇条書き', es: '5 viñetas' }, rows: 8,
+          value: {
+            en: '• 3-IN-1 CHARGING: Power your iPhone, Apple Watch and AirPods at the same time from one compact stand — no more cable clutter.\n• 15W FAST & Qi2 SAFE: Qi2 magnetic alignment locks your phone in place for full-speed 15W charging; over-charge, over-heat and foreign-object protection built in.\n• FOLDABLE FOR TRAVEL: Folds flat to pocket size — the perfect nightstand + carry-on charger.\n• MAGSAFE COMPATIBLE: Strong magnets fit iPhone 12–16 (and MagSafe cases); watch charger works with all Apple Watch series.\n• WHAT YOU GET: MagCharge station, USB-C cable, 20W adapter, 18-month warranty & friendly support.',
+            ja: '• 3in1 同時充電：iPhone・Apple Watch・AirPods を1台でまとめて充電、ケーブルの煩わしさを解消。\n• 15W 急速・Qi2 安全設計：Qi2 マグネットで位置ズレなく最大15W。過充電・過熱・異物検知保護を内蔵。\n• 折りたたみで携帯：フラットに畳めてポケットサイズ。枕元にも出張にも。\n• MagSafe 対応：iPhone 12〜16（MagSafeケース対応）、Apple Watch 全シリーズ対応。\n• セット内容：本体・USB-Cケーブル・20Wアダプター・18ヶ月保証・安心サポート。',
+            es: '• CARGA 3 EN 1: Carga tu iPhone, Apple Watch y AirPods a la vez desde una base compacta — adiós al lío de cables.\n• 15W RÁPIDO Y SEGURO Qi2: El imán Qi2 alinea el móvil para cargar a 15W; protección contra sobrecarga, sobrecalentamiento y objetos extraños.\n• PLEGABLE PARA VIAJAR: Se pliega al tamaño de bolsillo — ideal mesita de noche y equipaje de mano.\n• COMPATIBLE MAGSAFE: Imanes potentes para iPhone 12–16 (y fundas MagSafe); el cargador de reloj sirve para todas las series de Apple Watch.\n• INCLUYE: Base MagCharge, cable USB-C, adaptador 20W, 18 meses de garantía y soporte cercano.',
+          } },
+        { label: { en: 'Search terms', zh: '后台关键词', ja: '検索キーワード', es: 'Términos de búsqueda' }, rows: 3,
+          value: {
+            en: 'wireless charging station, 3 in 1 charger, magsafe charger stand, apple watch airpods charger, foldable travel charger, qi2 15w fast charger',
+            ja: 'ワイヤレス充電器 3in1, magsafe 充電スタンド, apple watch 充電器, airpods 充電, 折りたたみ 充電器, qi2 15w 急速',
+            es: 'cargador inalambrico 3 en 1, base magsafe, cargador apple watch airpods, cargador plegable viaje, qi2 15w rapido',
+          } },
+      ],
+      tips: { en: 'Different site = different language: use EN on .com, switch to 日本語 for .co.jp, Español for .es.', zh: '换站点换语言：.com 用 EN，.co.jp 切日语，.es 切西语。', ja: 'サイトごとに言語を切替：.com は EN、.co.jp は日本語、.es はスペイン語。', es: 'Cada sitio, un idioma: EN en .com, 日本語 en .co.jp, Español en .es.' },
+    },
+    {
+      id: 'alibaba', name: 'Alibaba.com (B2B)', region: 'intl', priority: 3, needsImage: true,
+      how: { en: 'Post product in supplier dashboard; keep an inquiry-reply ready', zh: '供应商后台发布产品；备好询盘回复模板', ja: 'サプライヤー管理画面で出品、問い合わせ返信テンプレを用意', es: 'Publica en el panel de proveedor; ten lista una respuesta a consultas' },
+      submitUrl: 'https://www.alibaba.com/',
+      fields: [
+        { label: { en: 'Product title', zh: '产品标题', ja: '製品タイトル', es: 'Título del producto' }, rows: 3,
+          value: {
+            en: 'OEM/ODM 3-in-1 Magnetic Wireless Charger 15W Qi2 Foldable Charging Station for Phone Watch Earbuds — Custom Logo, MOQ 500',
+            zh: '工厂 OEM/ODM 三合一磁吸无线充电器 15W Qi2 可折叠充电底座 手机手表耳机 支持定制 logo 起订 500',
+          } },
+        { label: { en: 'Key attributes', zh: '核心属性', ja: '主要属性', es: 'Atributos clave' }, rows: 6,
+          value: {
+            en: 'MOQ: 500 pcs · Lead time: 12–15 days (sample 3–5 days) · Certifications: CE / FCC / RoHS / Qi2 · Customization: logo, color, retail packaging, private label · Payment: T/T, L/C, Trade Assurance · Monthly capacity: 100,000 pcs · 10-year factory, own SMT line.',
+            zh: '起订量：500 件 · 交期：12-15 天（打样 3-5 天）· 认证：CE / FCC / RoHS / Qi2 · 可定制：logo、颜色、彩盒、贴牌 · 付款：T/T、L/C、Trade Assurance · 月产能：10 万件 · 10 年工厂，自有 SMT 产线。',
+          } },
+        { label: { en: 'Inquiry reply (paste in chat)', zh: '询盘回复模板', ja: '問い合わせ返信', es: 'Respuesta a consultas' }, rows: 6,
+          value: {
+            en: 'Hi, thanks for your interest in the MagCharge 3-in-1! Ladder price: 500pcs $X.X / 1000pcs $X.X / 5000pcs $X.X (FOB). Sample $X + shipping, refundable on bulk order. OEM logo & custom packaging welcome, lead time 12–15 days. CE/FCC/RoHS/Qi2 reports attached. May I know your target market and quantity?',
+            zh: '您好，感谢关注 MagCharge 三合一！阶梯价：500件 $X.X / 1000件 $X.X / 5000件 $X.X（FOB）。样品 $X + 运费，大货可退。支持 OEM logo 与定制包装，交期 12-15 天。CE/FCC/RoHS/Qi2 报告可提供。请问您的目标市场和数量？',
+          } },
+      ],
+      tips: { en: 'B2B buyers search by keyword — front-load OEM/ODM + specs. Attach cert PDFs.', zh: 'B2B 靠关键词搜——OEM/ODM+参数前置，附认证 PDF。' },
+    },
+    {
+      id: 'madeinchina', name: 'Made-in-China (B2B)', region: 'intl', priority: 1, needsImage: true,
+      how: { en: 'Same B2B listing as Alibaba, second channel for distributors', zh: '与 Alibaba 同款 B2B 刊登，第二分销渠道' },
+      submitUrl: 'https://www.made-in-china.com/',
+      title: { en: '3-in-1 Magnetic Wireless Charger 15W Qi2 Foldable — Factory OEM/ODM, MOQ 500', zh: '三合一磁吸无线充电器 15W Qi2 可折叠 源头工厂 OEM/ODM 起订 500' },
+      text: {
+        en: 'Direct from a 10-year factory with its own SMT line. 15W Qi2, charges phone + watch + earbuds. Full custom: logo, color, retail box, private label. CE/FCC/RoHS/Qi2. MOQ 500, 12–15 day lead time, 100k/month capacity. T/T, L/C, Trade Assurance.',
+        zh: '10 年源头工厂、自有 SMT 产线。15W Qi2，一座充手机+手表+耳机。全定制：logo、颜色、彩盒、贴牌。CE/FCC/RoHS/Qi2 齐全。起订 500，交期 12-15 天，月产能 10 万。支持 T/T、L/C、Trade Assurance。',
+      },
+      tips: { en: 'Distributors here compare specs + certs — keep both explicit.', zh: '这里分销商比参数比认证——两样都写清。' },
+    },
+    {
+      id: 'aliexpress', name: 'AliExpress', region: 'intl', priority: 2, needsImage: true,
+      how: { en: 'List in seller center; set color/plug variants', zh: '卖家后台上架；设颜色/插头变体', ja: '出品ページで色/プラグのバリエーション設定', es: 'Publica en el centro de vendedor; añade variantes de color/enchufe' },
+      submitUrl: 'https://www.aliexpress.com/',
+      title: {
+        en: 'MagCharge 3 in 1 Wireless Charger 15W Qi2 Magnetic Foldable Charging Station for iPhone Apple Watch AirPods Travel Dock',
+        zh: 'MagCharge 三合一无线充电器 15W Qi2 磁吸可折叠充电站 适用 iPhone Apple Watch AirPods 便携底座',
+        ja: 'MagCharge 3in1 ワイヤレス充電器 15W Qi2 マグネット 折りたたみ iPhone Apple Watch AirPods 対応',
+        es: 'MagCharge Cargador Inalámbrico 3 en 1 15W Qi2 Magnético Plegable para iPhone Apple Watch AirPods',
+      },
+      text: {
+        en: 'Free shipping · 15W fast Qi2 · one stand charges phone + watch + earbuds · folds to pocket size · MagSafe compatible (iPhone 12–16). 18-month warranty. Ships in 48h.',
+        zh: '包邮 · 15W 快充 Qi2 · 一座充手机+手表+耳机 · 折叠便携 · MagSafe 兼容（iPhone 12-16）。18 个月质保，48 小时发货。',
+        ja: '送料無料 · 15W Qi2 急速 · 1台でスマホ+ウォッチ+イヤホン · ポケットサイズに折りたたみ · MagSafe対応（iPhone 12-16）。18ヶ月保証、48時間以内発送。',
+        es: 'Envío gratis · Qi2 rápido 15W · una base carga móvil + reloj + auriculares · se pliega al bolsillo · compatible MagSafe (iPhone 12–16). 18 meses de garantía. Envío en 48h.',
+      },
+      tips: { en: 'Keyword title + compatible models drives search. Price-competitive + rating matters.', zh: '关键词标题+兼容机型带搜索，拼价格拼评分。' },
+    },
+    {
+      id: 'temu', name: 'Temu Seller', region: 'intl', priority: 1, needsImage: true,
+      how: { en: 'List via Temu seller center; clean main image + low price win', zh: 'Temu 卖家后台上架；干净主图+低价取胜' },
+      title: { en: '3 in 1 Magnetic Wireless Charger 15W Foldable Charging Station for Phone Watch Earbuds', zh: '三合一磁吸无线充电器 15W 折叠充电站 手机手表耳机' },
+      text: { en: 'Charge 3 devices at once · 15W fast · foldable travel design · MagSafe compatible · free shipping.', zh: '一次充 3 设备 · 15W 快充 · 折叠便携 · MagSafe 兼容 · 包邮。' },
+      tips: { en: 'Temu rewards low price + a crisp first main image. Keep copy short.', zh: 'Temu 吃低价+清爽主图，文案短。' },
+    },
+
+    // ── 海外 · 消费社交（种草/引流）───────────────────────
+    {
+      id: 'x', name: 'X / Twitter', region: 'intl', priority: 2, needsImage: true,
+      how: { en: 'Click Open → tweet pre-filled; attach the product photo/GIF', zh: '点「一键打开」预填推文，配产品图/GIF', ja: '「開く」でツイート自動入力、製品画像を添付', es: 'Haz clic en «Abrir» → tuit precargado; añade la foto del producto' },
+      submitUrl: 'https://twitter.com/intent/tweet?text={text}',
+      text: {
+        en: 'One stand. Three devices. Zero cable mess. MagCharge 3-in-1 charges your iPhone, Apple Watch & AirPods at 15W — then folds to pocket size for travel. 👇',
+        zh: '一个底座，三台设备，零线缆。MagCharge 三合一 15W 同时充手机+手表+耳机，还能折叠塞进口袋。👇',
+        ja: '1台で3デバイス、ケーブルの山とサヨナラ。MagCharge 3in1 は iPhone・Apple Watch・AirPods を15Wで同時充電、折りたたんでポケットへ。👇',
+        es: 'Una base. Tres dispositivos. Cero cables. MagCharge 3 en 1 carga tu iPhone, Apple Watch y AirPods a 15W — y se pliega para viajar. 👇',
+      },
+      tips: { en: 'A photo or a 5s fold/charge clip doubles engagement.', zh: '配产品图或 5 秒折叠/充电小视频，互动翻倍。' },
+    },
+    {
+      id: 'tiktok', name: 'TikTok', region: 'intl', priority: 3, needsImage: true,
+      how: { en: 'Upload a 15–30s demo; caption is the hook', zh: '传 15-30s 演示视频，标题即钩子', ja: '15〜30秒のデモ動画、キャプションがフック', es: 'Sube una demo de 15–30s; el pie es el gancho' },
+      submitUrl: 'https://www.tiktok.com/upload', needsImage: true, limit: 150,
+      text: {
+        en: 'POV: your nightstand finally has ONE charger for everything 🤯 phone + watch + earbuds, 15W, folds flat #techtok #gadgets #wirelesscharger #desksetup',
+        zh: 'POV：床头终于只剩一个充电器 🤯 手机+手表+耳机一起充，15W，还能折叠 #好物分享 #数码好物 #无线充电器 #桌面好物',
+        ja: 'POV：枕元の充電器がついに1台に🤯 スマホ+ウォッチ+イヤホン、15W、折りたたみOK #ガジェット #便利グッズ #ワイヤレス充電',
+        es: 'POV: tu mesita por fin tiene UN solo cargador para todo 🤯 móvil + reloj + auriculares, 15W, se pliega #techtok #gadgets #cargadorinalambrico',
+      },
+      tips: { en: 'First 3 seconds = the hook (before/after clutter). Link in bio / TikTok Shop.', zh: '前 3 秒定生死（凌乱→清爽对比）。挂小黄车/主页链接。' },
+    },
+    {
+      id: 'instagram', name: 'Instagram', region: 'intl', priority: 2, needsImage: true,
+      how: { en: 'Reels or carousel; lifestyle desk shot first', zh: 'Reels 或图集，首图放桌面氛围图', ja: 'Reels かカルーセル、1枚目はデスクの雰囲気写真', es: 'Reels o carrusel; primera foto lifestyle del escritorio' },
+      submitUrl: 'https://www.instagram.com/', needsImage: true, limit: 2200,
+      text: {
+        en: 'Declutter your desk in one move ✨ MagCharge 3-in-1 powers your phone, watch & earbuds together at 15W — and folds flat for travel.\n\nWhich setup are you? Minimal or maximal? 👇\n.\n.\n#wirelesscharger #desksetup #techgadgets #magsafe #appleaccessories #travelgear',
+        zh: '一步搞定桌面收纳 ✨ MagCharge 三合一 15W 同时充手机+手表+耳机，出门还能折叠带走。\n\n你是极简党还是堆料党？👇\n.\n.\n#无线充电器 #桌面好物 #数码好物 #MagSafe #苹果配件',
+        ja: 'デスクを一気にスッキリ ✨ MagCharge 3in1 はスマホ・ウォッチ・イヤホンを15Wで同時に。旅行には折りたたんで。\n\nあなたはミニマル派？🤍\n.\n.\n#ワイヤレス充電 #デスク環境 #ガジェット #MagSafe #Apple好き',
+        es: 'Ordena tu escritorio de un golpe ✨ MagCharge 3 en 1 carga móvil, reloj y auriculares a 15W — y se pliega para viajar.\n\n¿Minimalista o maximalista? 👇\n.\n.\n#cargadorinalambrico #setupescritorio #gadgets #magsafe #accesoriosapple',
+      },
+      tips: { en: 'Put the long hashtag block in the first comment. Aesthetic first frame wins.', zh: '长标签串放首条评论。首帧越好看越好。' },
+    },
+    {
+      id: 'youtube', name: 'YouTube Shorts', region: 'intl', priority: 1, needsImage: true,
+      how: { en: 'Vertical 15–30s demo, number in the title', zh: '竖版 15-30s 演示，标题带数字' },
+      submitUrl: 'https://studio.youtube.com/', needsImage: true, limit: 100,
+      title: { en: 'This 3-in-1 charger cleared my whole desk (15W, foldable)', zh: '这个三合一充电器清空了我整张桌子（15W 可折叠）' },
+      text: { en: 'One foldable stand charges phone + watch + earbuds at 15W. #shorts #tech #gadgets', zh: '一个可折叠底座 15W 同时充手机+手表+耳机。#shorts #数码 #好物' },
+      tips: { en: 'Hook in the first second; pin a comment with the store link.', zh: '第一秒出钩子；置顶评论放购买链接。' },
+    },
+    {
+      id: 'pinterest', name: 'Pinterest', region: 'intl', priority: 2, needsImage: true,
+      how: { en: 'Click Open → pin pre-filled with url + description; use a 2:3 vertical image', zh: '点「一键打开」预填 url+描述；用 2:3 竖图', es: 'Haz clic en «Abrir» → pin precargado con url + descripción; usa imagen vertical 2:3' },
+      submitUrl: 'https://www.pinterest.com/pin/create/button/?url={url}&description={text}', needsImage: true, limit: 500,
+      text: {
+        en: 'MagCharge 3-in-1 wireless charging station — one minimalist stand for iPhone, Apple Watch & AirPods, 15W Qi2, foldable for travel. Perfect for a clean desk setup or nightstand. #desksetup #wirelesscharger #minimalistdesk #techgadgets #travelessentials',
+        zh: 'MagCharge 三合一无线充电站——一个极简底座同时充 iPhone、Apple Watch、AirPods，15W Qi2，可折叠便携。适合极简桌面/床头。#桌面搭配 #无线充电器 #极简桌面 #数码好物',
+        es: 'Estación de carga inalámbrica MagCharge 3 en 1 — una base minimalista para iPhone, Apple Watch y AirPods, 15W Qi2, plegable para viajar. Ideal para un escritorio ordenado. #setupescritorio #cargadorinalambrico #escritoriominimalista',
+      },
+      tips: { en: 'Pinterest is a search engine — pack the description with keywords + use-cases.', zh: 'Pinterest 是搜索引擎——描述塞关键词+使用场景。' },
+    },
+    {
+      id: 'facebook', name: 'Facebook', region: 'intl', priority: 1, needsImage: true,
+      how: { en: 'Click Open → sharer pre-fills the link; paste the copy manually', zh: '点「一键打开」预填链接，文案手动粘', es: 'Haz clic en «Abrir» → precarga el enlace; pega el texto a mano' },
+      submitUrl: 'https://www.facebook.com/sharer/sharer.php?u={url}', needsImage: true,
+      text: {
+        en: 'Tired of three chargers on your nightstand? MagCharge 3-in-1 powers your phone, watch and earbuds from one foldable 15W stand. Free shipping, 18-month warranty. 👉',
+        zh: '床头三个充电器烦不烦？MagCharge 三合一用一个可折叠 15W 底座搞定手机+手表+耳机。包邮，18 个月质保。👉',
+        es: '¿Cansado de tres cargadores en la mesita? MagCharge 3 en 1 carga móvil, reloj y auriculares desde una base plegable de 15W. Envío gratis, 18 meses de garantía. 👉',
+      },
+      tips: { en: 'sharer only pre-fills the URL; also post to relevant groups / Marketplace.', zh: 'sharer 只预填链接；也可发相关群组/Marketplace。' },
+    },
+    {
+      id: 'whatsapp', name: 'WhatsApp', region: 'intl', priority: 1,
+      how: { en: 'Click Open → pre-filled message; pick a contact / broadcast list', zh: '点「一键打开」预填消息，选联系人/群发', es: 'Haz clic en «Abrir» → mensaje precargado; elige contacto / lista' },
+      submitUrl: 'https://wa.me/?text={text}',
+      text: {
+        en: 'New drop: MagCharge 3-in-1 — one 15W stand for phone + watch + earbuds, foldable. Wholesale from MOQ 500, OEM/ODM welcome. Details: ' + STORE,
+        zh: '新品：MagCharge 三合一——一个 15W 底座充手机+手表+耳机，可折叠。起订 500 批发，支持 OEM/ODM。详情：' + STORE,
+        es: 'Novedad: MagCharge 3 en 1 — una base 15W para móvil + reloj + auriculares, plegable. Mayoreo desde MOQ 500, OEM/ODM. Detalles: ' + STORE,
+      },
+      tips: { en: 'Great for pushing new SKUs to existing clients / reseller groups.', zh: '适合把新品直推老客户/分销群。' },
+    },
+    {
+      id: 'linkedin', name: 'LinkedIn', region: 'intl', priority: 1, needsImage: true,
+      how: { en: 'Post from company page; first 2 lines carry the trust points', zh: '公司主页发帖，前 2 行放信任点' },
+      submitUrl: 'https://www.linkedin.com/feed/?shareActive=true',
+      text: {
+        en: 'We just launched the MagCharge 3-in-1 wireless charger for wholesale & private label. 10-year factory, own SMT line, CE/FCC/RoHS/Qi2 certified, 100k/month capacity, MOQ 500, 12–15 day lead time. Looking for distributors in EU / US / JP. DM for catalog & FOB pricing. ' + ALI,
+        zh: '我们刚发布 MagCharge 三合一无线充电器，面向批发与贴牌。10 年工厂、自有 SMT 产线，CE/FCC/RoHS/Qi2 认证，月产能 10 万，起订 500，交期 12-15 天。寻 EU/US/JP 分销商。私信要目录与 FOB 报价。' + ALI,
+      },
+      tips: { en: 'B2B audience: lead with capacity + certs + MOQ, not lifestyle.', zh: 'B2B 受众：先甩产能+认证+MOQ，不谈生活方式。' },
+    },
+
+    // ── 国内 · 电商 + 消费社交 ─────────────────────────────
+    {
+      id: '1688', name: '1688 · 批发', region: 'cn', priority: 3, needsImage: true,
+      how: { en: 'Supplier backend; emphasize factory-direct + dropship', zh: '供货后台发布，主打厂家直销+一件代发' },
+      submitUrl: 'https://www.1688.com/',
+      title: { zh: '源头工厂 三合一磁吸无线充电器 15W Qi2 可折叠 手机手表耳机 支持一件代发定制', en: 'Factory 3-in-1 Magnetic Wireless Charger 15W Qi2 Foldable — Dropship & Custom' },
+      text: { zh: '10 年源头工厂现货，自有 SMT 产线。15W Qi2，一座充手机+手表+耳机，可折叠。支持一件代发、定制 logo/彩盒/贴牌。阶梯价，起订 500，48 小时发货，CE/FCC/RoHS/Qi2 齐全。', en: '10-year factory, in stock, own SMT line. 15W Qi2, 3-in-1, foldable. Dropship + custom logo/box/label. Ladder price, MOQ 500, ships in 48h, fully certified.' },
+      tips: { zh: '标题塞「源头厂家/一件代发/支持定制」，详情写清起订与时效。', en: 'Front-load factory-direct + dropship + custom in the title.' },
+    },
+    {
+      id: 'taobao', name: '淘宝/天猫', region: 'cn', priority: 2, needsImage: true,
+      how: { zh: '卖家中心发布，标题塞高频搜索词', en: 'Seller center; pack the title with high-search keywords' },
+      submitUrl: 'https://myseller.taobao.com/', needsImage: true, limit: 30,
+      title: { zh: '三合一磁吸无线充电器15W快充手机手表耳机可折叠MagSafe桌面床头', en: '3-in-1 magnetic wireless charger 15W foldable' },
+      text: { zh: '一座充手机+手表+耳机，15W Qi2 磁吸，MagSafe 兼容 iPhone12-16，可折叠便携。18 个月质保，赠 20W 头。详情页讲清参数/兼容/质检/售后。', en: 'One stand for phone + watch + earbuds, 15W Qi2 magnetic, MagSafe compatible, foldable. 18-month warranty.' },
+      tips: { zh: '标题 ≤30 字塞搜索词；详情页图文讲场景+参数+质检。', en: 'Title ≤30 CJK chars, keyword-stacked; rich detail page.' },
+    },
+    {
+      id: 'pinduoduo', name: '拼多多', region: 'cn', priority: 1, needsImage: true,
+      how: { zh: '商家后台上架，突出价格力', en: 'Merchant backend; emphasize price' },
+      submitUrl: 'https://mms.pinduoduo.com/', needsImage: true,
+      title: { zh: '三合一磁吸无线充电器15W折叠手机手表耳机快充', en: '3-in-1 magnetic wireless charger 15W foldable' },
+      text: { zh: '手机+手表+耳机一次充满，15W 快充，折叠便携，MagSafe 兼容。主图第一屏说清卖点，短平快。', en: 'Charge 3 at once, 15W, foldable, MagSafe compatible.' },
+      tips: { zh: '拼多多吃低价+清晰主图；可上百亿补贴/拼团。', en: 'Low price + crisp main image win here.' },
+    },
+    {
+      id: 'xiaohongshu', name: '小红书', region: 'cn', priority: 3, needsImage: true,
+      how: { zh: 'creator 后台发（网页登录），必须配图/短视频', en: 'Creator backend (web login); image/video required' },
+      submitUrl: 'https://creator.xiaohongshu.com/publish/publish', needsImage: true,
+      text: {
+        zh: '桌面一堆充电线是真的会逼疯人😩\n\n直到我换了这个三合一磁吸底座 MagCharge：\n📱 手机磁吸一贴就充，15W 满速\n⌚️ Apple Watch 单独一个位\n🎧 耳机往上一放也在充\n🧳 还能折叠，出差塞进化妆包\n\n✅ 一根线搞定三设备\n✅ MagSafe 兼容 iPhone12-16\n✅ 18 个月质保\n\n桌面/床头颜值直接拉满，谁用谁清爽~\n\n#桌面好物 #无线充电器 #数码好物分享 #苹果配件 #出差神器',
+        en: 'A pile of charging cables on the desk drives me crazy😩\n\nThen I switched to the MagCharge 3-in-1 magnetic stand:\n📱 snap the phone on, 15W full speed\n⌚️ a spot for Apple Watch\n🎧 drop earbuds on top — also charging\n🧳 folds flat, fits in a travel pouch\n\n✅ one cable, three devices\n✅ MagSafe compatible iPhone12-16\n✅ 18-month warranty\n\n#desksetup #wirelesscharger #techgadgets',
+      },
+      tips: { zh: 'emoji 小标题 + ✅清单 + 单独一行 tags；配主图或桌面实拍。', en: 'emoji sub-heads + ✅ list + tags on their own line.' },
+    },
+    {
+      id: 'douyin', name: '抖音', region: 'cn', priority: 2, needsImage: true,
+      how: { zh: 'creator 后台传短视频，标题当封面文案', en: 'Upload short video; title doubles as cover copy' },
+      submitUrl: 'https://creator.douyin.com/', needsImage: true,
+      text: { zh: '床头三个充电器该退休了🔋 MagCharge 三合一，一个底座同时充手机+手表+耳机，15W 快充还能折叠。评论区扣「1」看链接。#好物分享 #数码好物 #无线充电器 #桌面好物 #办公神器', en: 'Retire your 3 chargers🔋 MagCharge 3-in-1 charges phone+watch+earbuds from one 15W foldable stand.' },
+      tips: { zh: '配「一座充满三设备+折叠收纳」演示；挂小黄车。', en: 'Demo one-stand-three-devices + folding; attach product link.' },
+    },
+    {
+      id: 'kuaishou', name: '快手', region: 'cn', priority: 1, needsImage: true,
+      how: { zh: 'creator 后台传短视频，老铁向、实在讲', en: 'Upload short video; down-to-earth tone' },
+      submitUrl: 'https://cp.kuaishou.com/', needsImage: true,
+      text: { zh: '实测：一个底座同时充手机、手表、耳机,15W 快充,还能折叠揣兜里。源头工厂发货,包邮 18 个月保。小黄车自取~ #无线充电器 #数码好物 #工厂直销', en: 'One stand charges phone, watch and earbuds at 15W, foldable. Factory-direct, free shipping.' },
+      tips: { zh: '快手重实在与性价比,讲清厂家直销+质保。', en: 'Emphasize factory-direct + value.' },
+    },
+    {
+      id: 'weibo', name: '微博', region: 'cn', priority: 1, needsImage: true,
+      how: { zh: '一键预填分享，配图', en: 'One-click pre-fill share, add image' },
+      submitUrl: 'https://service.weibo.com/share/share.php?title={text}&url={rawurl}', url: STORE, needsImage: true,
+      text: { zh: '桌面减负神器🔋 MagCharge 三合一磁吸充电站,一座同时充手机+手表+耳机,15W 快充还能折叠带走。#数码好物##无线充电器#', en: 'Desk declutter🔋 MagCharge 3-in-1 charges phone+watch+earbuds at 15W, foldable.' },
+      tips: { zh: '一句话 + #话题#,配顶部主图。', en: 'One line + #topic#, use the master image.' },
+    },
+  ],
+};
+
+const out = resolve(here, 'magcharge-3in1.json');
+writeFileSync(out, JSON.stringify(campaign, null, 2), 'utf8');
+console.log('wrote', out, '·', campaign.platforms.length, 'platforms ·', campaign.langs.join('/'));

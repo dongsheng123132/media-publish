@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>宣发发布台 · 张明律师 · 劳动争议 · 合同纠纷 · 上线宣发</title>
+<style>
+  :root{--bg:#0f1115;--card:#1a1d24;--line:#2a2f3a;--fg:#e6e9ef;--mut:#9aa4b2;--acc:#5b8cff;--ok:#3fb98a;--cn:#ff7a59;--intl:#5b8cff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+  header{padding:22px 24px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(15,17,21,.94);backdrop-filter:blur(6px);z-index:5}
+  h1{margin:0 0 6px;font-size:20px}
+  .sub{color:var(--mut);font-size:13px}
+  .repos{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+  .repos a{color:var(--acc);text-decoration:none;border:1px solid var(--line);padding:4px 10px;border-radius:8px;font-size:13px}
+  .repos a:hover{border-color:var(--acc)}
+  .bar{margin-top:12px;font-size:13px;color:var(--mut)}
+  .bar b{color:var(--ok)}
+  main{padding:20px 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px;align-items:start}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+  .card.done{opacity:.5}
+  .top{display:flex;align-items:center;gap:8px}
+  .name{font-weight:600;font-size:16px}
+  .tag{font-size:11px;padding:2px 7px;border-radius:99px;border:1px solid var(--line);color:var(--mut)}
+  .tag.cn{color:var(--cn);border-color:var(--cn)}
+  .tag.intl{color:var(--intl);border-color:var(--intl)}
+  .star{color:#ffd24a;font-size:12px}
+  .how{color:var(--mut);font-size:13px}
+  .row{display:flex;gap:8px;flex-wrap:wrap}
+  button{cursor:pointer;border:1px solid var(--line);background:#222634;color:var(--fg);padding:7px 12px;border-radius:9px;font-size:13px}
+  button:hover{border-color:var(--acc)}
+  button.open{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+  button.copy{background:#20303a}
+  .field label{display:block;font-size:12px;color:var(--mut);margin:6px 0 3px}
+  textarea{width:100%;background:#0e1116;color:var(--fg);border:1px solid var(--line);border-radius:9px;padding:9px;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;resize:vertical}
+  .tips{font-size:12px;color:var(--mut);border-left:2px solid var(--line);padding-left:9px;margin-top:2px}
+  .cnt{font-weight:600}
+  button.imgbtn{background:#2a2140;border-color:#4a3a6b}
+  button.openimg{background:#20303a}
+  .imgwrap{margin-top:4px}
+  .imgwrap img{max-width:100%;border-radius:9px;border:1px solid var(--line);display:block}
+  .imgwrap .ph{color:var(--mut);font-size:12px;border:1px dashed var(--line);border-radius:9px;padding:14px;text-align:center}
+  #master{padding:2px 24px 0}
+  #master .mwrap{display:flex;gap:16px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+  #master img{width:170px;border-radius:10px;border:1px solid var(--line);display:block}
+  #master .mph{width:170px;height:170px;border:1px dashed var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:12px;text-align:center;padding:10px}
+  #master .mbody{flex:1;min-width:0}
+  #master h3{margin:0 0 6px;font-size:14px}
+  .imgchip{font-size:11px;padding:2px 7px;border-radius:99px;border:1px solid #4a3a6b;color:#b79bff}
+  button.pvbtn{background:#241f2e;border-color:#4a3a6b}
+  .pvbox{margin-top:4px}
+  .pv{border-radius:12px;overflow:hidden;font-size:13px;line-height:1.5;box-shadow:0 1px 6px rgba(0,0,0,.35)}
+  .pv .pvhd{display:flex;gap:8px;align-items:center;padding:10px 12px}
+  .pv .av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#5b8cff,#3fb98a);flex:none;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+  .pv .nm{font-weight:700}.pv .hnd{color:#8a94a6;font-size:12px}
+  .pv .pvbody{padding:2px 12px 12px;white-space:pre-wrap;word-break:break-word}
+  .pv .pvtitle{font-weight:700;padding:8px 12px 2px}
+  .pv img.pvimg{width:100%;display:block}
+  .pv .pvlink{margin:0 12px 12px;border:1px solid rgba(128,128,128,.3);border-radius:10px;padding:8px 10px;color:#3a6df0;font-size:12px;background:#f7f9fc}
+  .pv.x,.pv.linkedin,.pv.generic,.pv.cn,.pv.xhs{background:#fff;color:#0f1419}
+  .pv.reddit{background:#fff;color:#1a1a1b}
+  .pv.reddit .pvsub{color:#878a8c;font-size:12px;padding:9px 12px 0}
+  .pv.reddit .pvtitle{font-size:15px}
+  .pv.hn{background:#f6f6ef;color:#000;padding:10px 12px}
+  .pv.hn .hnmeta{color:#828282;font-size:11px}
+  .pv.linkedin .hnd{font-size:11px}
+  .pvcnt{font-size:11px;color:#8a94a6;padding:0 12px 8px}
+  .chk{margin-left:auto;font-size:12px;color:var(--mut);display:flex;align-items:center;gap:5px;cursor:pointer;user-select:none}
+  #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--ok);color:#04120c;padding:9px 16px;border-radius:10px;font-size:14px;font-weight:600;opacity:0;transition:opacity .2s;pointer-events:none}
+  #toast.show{opacity:1}
+  footer{padding:16px 24px;color:var(--mut);font-size:12px;border-top:1px solid var(--line)}
+  #lang{position:absolute;top:20px;right:24px;background:#20303a;color:var(--fg);border:1px solid var(--line);border-radius:9px;padding:7px 10px;font-weight:600;font-size:13px;cursor:pointer}
+  #lang:hover{border-color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <select id="lang" title="language"></select>
+  <h1>🦞 <span id="brand"></span> · <span id="t"></span></h1>
+  <div class="sub" id="sub"></div>
+  <div class="repos" id="repos"></div>
+  <div class="bar" id="bar"></div>
+</header>
+<section id="master"></section>
+<main id="grid"></main>
+<footer id="foot"></footer>
+<div id="toast"></div>
+<script>
+const C = {"slug":"lawyer-services","langs":["zh","en"],"defaultLang":"zh","title":{"zh":"张明律师 · 劳动争议 · 合同纠纷 · 上线宣发","en":"Lawyer 张明 · Employment & Contract Disputes · Launch"},"subtitle":{"zh":"北京 · 某某律师事务所 · 专注劳动争议 · 合同纠纷，先答疑再委托，按阶段收费","en":"北京-based employment & contract dispute lawyer · free first consult · staged fees"},"primaryUrl":"https://law.example.com","masterImage":{"prompt":"Professional, trustworthy poster for a Chinese employment lawyer, clean corporate style, deep blue and warm gold accents, a tidy law office bookshelf and a balance-scale icon, elegant serif Chinese wordmark placeholder for the lawyer name, calm confident mood, plenty of negative space for text, no real faces, no photorealistic person, flat modern editorial illustration, 1:1 square","size":"1024x1024"},"repos":[{"label":{"zh":"预约咨询","en":"Book a consult"},"url":"https://law.example.com"}],"platforms":[{"id":"zhihu","name":"知乎 · 专业回答","region":"cn","priority":3,"how":{"zh":"答同领域高热问题 + 发专栏，签名带执业信息","en":"Answer hot questions in your field + column"},"submitUrl":"https://zhuanlan.zhihu.com/write","title":{"zh":"被公司「协商解除」还能拿到 N+1 吗？一文讲清劳动者能主张什么"},"text":{"zh":"我是张明，北京执业律师，专注劳动争议 · 合同纠纷。\n\n很多人被 HR 一句「协商解除」就慌了，其实你能主张的远不止一句\"同意\"。这篇按真实办案经验讲清楚：\n\n1）协商解除 vs 单方解除：赔偿基数、N / N+1 / 2N 分别什么情形；\n2）哪些证据要在离职前就固定（考勤、工资流水、工作沟通记录）；\n3）常见的三个坑：签了《离职证明》就不能仲裁了吗？竞业限制补偿怎么算？年终奖能不能要回？\n\n先厘清事实再决定要不要维权，别急着签字。评论区可以描述你的情况，我看到会挑典型的答。需要一对一可看主页预约。"},"tips":{"zh":"知乎吃「专业+真实案例+不推销」；先给干货，签名放执业信息即可。"}},{"id":"mp","name":"微信公众号","region":"cn","priority":3,"how":{"zh":"发深度普法长文，结尾放预约方式","en":"Long-form legal explainer, CTA at the end"},"submitUrl":"https://mp.weixin.qq.com/","title":{"zh":"劳动仲裁前，这 5 份证据你固定了吗？（附时间线自查清单）"},"text":{"zh":"劳动争议 · 合同纠纷案件，八成胜负在「证据」而不在「道理」。\n\n作为北京专注劳动争议的律师，我把最常用的自查清单整理出来：\n① 劳动关系证明（合同/工牌/社保）\n② 工资构成与实发流水（区分基本工资与绩效）\n③ 加班与考勤证据（打卡、审批、聊天记录）\n④ 解除/调岗的书面通知与沟通记录\n⑤ 关键对话的合法录音\n\n每一项怎么固定、什么时候固定，文里都写了。收藏起来，真用得上再找专业律师，也能省不少沟通成本。\n\n有具体问题，公众号后台留言或看菜单栏预约咨询。"},"tips":{"zh":"公众号适合系统长文 + 清单；结尾放二维码/预约，别通篇广告。"}},{"id":"xiaohongshu","name":"小红书","region":"cn","priority":3,"needsImage":true,"how":{"zh":"creator 后台发，普法避坑清单体，必须配图","en":"Creator backend; myth-busting list, image required"},"submitUrl":"https://creator.xiaohongshu.com/publish/publish","text":{"zh":"被裁员先别慌😮‍💨 这 4 件事做完再签字\n\n我是张明，北京劳动法律师，最近太多人踩坑：\n\n✅ 先问清是「协商解除」还是「无过失辞退」——赔偿差一倍\n✅ 别当场签《离职证明》和《结算确认》，先拍照留证\n✅ 工资流水/考勤/沟通记录，离职前统统导出备份\n✅ 竞业限制有没有补偿？没补偿的可能不用遵守\n\n⚠️ 不是所有情况都要打官司，先厘清事实、算清账，再决定。\n\n评论区说你的情况，我挑典型的回~\n\n#劳动法 #被裁员 #职场维权 #劳动仲裁 #法律科普"},"tips":{"zh":"emoji 小标题 + ✅清单 + ⚠️提醒；单独一行 tags；配主图。不承诺结果。"}},{"id":"douyin","name":"抖音 · 普法","region":"cn","priority":3,"needsImage":true,"how":{"zh":"creator 后台传竖版普法短视频，标题当钩子","en":"Upload vertical legal-tip short; title is the hook"},"submitUrl":"https://creator.douyin.com/","text":{"zh":"公司让你「主动离职」千万别答应❗劳动争议 · 合同纠纷律师提醒：主动辞职拿不到经济补偿，等来的可能不是 N+1 而是 0。3 步教你怎么回应 HR。有类似情况评论区扣个「1」。#劳动法 #法律科普 #职场维权 #被裁员"},"tips":{"zh":"前 3 秒抛冲突钩子；口播干货为主；挂主页预约。规避「一定/包赢」。"}},{"id":"shipinhao","name":"视频号","region":"cn","priority":2,"needsImage":true,"how":{"zh":"同款普法短视频，导流私域/预约","en":"Same short video, funnel to private domain"},"submitUrl":"https://channels.weixin.qq.com/platform/post/create","limit":30,"title":{"zh":"被辞退别急着签字，先做这 3 件事"},"text":{"zh":"北京劳动法律师张明｜被辞退先固定证据、算清赔偿、再谈解除。需要一对一看主页预约。#劳动法 #法律科普"},"tips":{"zh":"视频号连微信生态，适合导流公众号/加微信预约。标题 ≤30 字。"}},{"id":"dianping","name":"大众点评","region":"cn","priority":2,"needsImage":true,"how":{"zh":"完善律所主页信息 + 服务项目 + 案例（脱敏）","en":"Complete firm profile + services + anonymized cases"},"submitUrl":"https://www.dianping.com/","title":{"zh":"某某律师事务所（北京）· 张明律师 · 劳动争议/合同纠纷咨询"},"text":{"zh":"专注劳动争议 · 合同纠纷，提供劳动仲裁、经济补偿协商、合同审查与纠纷代理。首次咨询先厘清事实与方案，按阶段收费、明码标价。到店/线上均可预约。地址与营业时间见主页。"},"tips":{"zh":"本地获客靠点评主页完整度 + 真实评价；服务项目、收费方式写清楚。"}},{"id":"baidu","name":"百度百家号","region":"cn","priority":2,"how":{"zh":"发 SEO 友好的问答式普法文，覆盖搜索长尾","en":"SEO Q&A legal article for long-tail search"},"submitUrl":"https://baijiahao.baidu.com/","title":{"zh":"2024 劳动仲裁流程怎么走？需要哪些材料？多久出结果？（律师详解）"},"text":{"zh":"很多人搜「劳动仲裁怎么申请」，本文按流程讲清：一、去哪申请（用人单位所在地或劳动合同履行地仲裁委）；二、要交哪些材料（申请书、身份证明、劳动关系与主张的证据）；三、时限（一般 45 天内审结，复杂可延）；四、对裁决不服怎么办。作者：北京张明律师，专注劳动争议 · 合同纠纷。具体个案建议咨询专业律师。"},"tips":{"zh":"百度吃搜索——标题用用户会搜的疑问句，正文结构化答清。"}},{"id":"weibo","name":"微博","region":"cn","priority":1,"needsImage":true,"how":{"zh":"蹭劳动维权热点，一句话科普 + 话题","en":"Ride trending topics; one-line tip + hashtag"},"submitUrl":"https://service.weibo.com/share/share.php?title={text}&url={rawurl}","url":"https://law.example.com","text":{"zh":"【提醒】被公司「协商解除」，先别急着签字：搞清是协商还是辞退、固定好工资考勤证据、算清 N 还是 N+1，再谈。北京劳动法律师张明 #劳动法# #职场维权#"},"tips":{"zh":"一句话 + #话题#，蹭热点普法引流，配主图。"}},{"id":"bilibili","name":"Bilibili","region":"cn","priority":1,"needsImage":true,"how":{"zh":"录 3-5 分钟普法讲解，专栏/视频均可","en":"3–5 min legal explainer video/column"},"submitUrl":"https://member.bilibili.com/platform/upload/text/edit","title":{"zh":"劳动仲裁全流程实操：从申请到拿钱，律师一次讲透"},"text":{"zh":"北京张明律师，专注劳动争议 · 合同纠纷。这期把劳动仲裁从「决定要不要打」到「材料怎么准备」「开庭说什么」「拿到裁决怎么执行」讲一遍。适合正被裁员/欠薪困扰的朋友。个案不同，评论区可留言。"},"tips":{"zh":"B站适合系统长讲解，转粉率高；封面用主图。"}},{"id":"maimai","name":"脉脉","region":"cn","priority":1,"how":{"zh":"职场社区发普法/答疑，触达在职人群与 HR","en":"Workplace community; reach employees & HR"},"submitUrl":"https://maimai.cn/","text":{"zh":"在职场，最容易被忽略的是「离职那一下」的法律动作。作为北京专注劳动争议 · 合同纠纷的律师，常见三类问题：协商解除的赔偿、竞业限制的效力、年终奖与提成的归属。有相关困惑可在评论描述，我尽量给方向。"},"tips":{"zh":"脉脉是职场人群，讲实务、给方向，不硬广。"}},{"id":"linkedin","name":"LinkedIn","region":"intl","priority":1,"how":{"zh":"涉外/外企劳动法业务，英文职业化表达","en":"Cross-border / foreign-company employment law"},"submitUrl":"https://www.linkedin.com/feed/?shareActive=true","text":{"en":"I'm 张明, an employment & contract disputes lawyer based in 北京, China. I help employees and foreign companies navigate terminations, severance, non-compete clauses and labor arbitration under PRC law. First consultation focuses on clarifying the facts and options before any engagement; fees are staged and transparent. Happy to connect with HR leaders and expats who need a clear read on Chinese employment law. https://law.example.com","zh":"我是张明，北京执业律师，专注劳动争议 · 合同纠纷，服务劳动者与外企，处理解除、经济补偿、竞业限制与劳动仲裁。首次咨询先厘清事实与方案，按阶段收费、透明。https://law.example.com"},"tips":{"zh":"面向外企 HR / 在华外籍人士，英文表达，突出「PRC labor law」。"}},{"id":"googlebiz","name":"Google Business","region":"intl","priority":1,"needsImage":true,"how":{"zh":"完善本地商户资料 + 发 Post，做本地 SEO","en":"Complete profile + Post for local SEO"},"submitUrl":"https://business.google.com/posts","limit":1500,"text":{"en":"某某律师事务所 — Employment & Contract Disputes Lawyer in 北京. Services: labor arbitration, severance negotiation, non-compete review, contract disputes. Free first consultation to clarify your situation. Book online or visit our office. https://law.example.com","zh":"某某律师事务所 · 北京劳动争议与合同纠纷律师。服务：劳动仲裁、经济补偿协商、竞业限制审查、合同纠纷。首次咨询免费厘清情况。线上预约或到所。https://law.example.com"},"tips":{"zh":"本地 SEO：资料填全（地址/电话/时间/照片），定期发 Post。"}}]};
+const $ = (s,r=document)=>r.querySelector(s);
+const LNAME={zh:'中文',en:'English',ja:'日本語',es:'Español',ko:'한국어',de:'Deutsch',fr:'Français',pt:'Português'};
+const LANG={
+ zh:{brand:'宣发发布台',prog:'进度',bar:'点「一键打开」在当前浏览器开发布页（用你有各平台登录态的浏览器打开本文件）· 勾选「已发」记录到本地',open:'↗ 一键打开发布页',copy:'复制',copied:'已复制 ✓',useImg:'🖼 用主图',done:'已发',foot:'由 media-publish 生成 · 关闭源软件也能发 · 不替你点「提交」，最后一步永远你自己按',masterTitle:'🖼 通配主图（一张图配所有平台 · 需配图的卡都用它）',openBig:'打开大图（右键另存/拖去发布）',copyPrompt:'复制生图提示词',promptLabel:'🎨 生图提示词（gpt-image-2 · ',promptEnd:'）',needImg:'🖼 需配图 · 用顶部「通配主图」',masterPh:'主图未生成<br>跑 gen-images.mjs 自动出图',fTitle:'标题',fText:'正文',cn:'国内',intl:'海外',preview:'👁 预览',pvNow:'刚刚',pvPro:'工厂直供 · 批发',pvChars:'字符'},
+ en:{brand:'Launch Board',prog:'Progress',bar:'Click “Open” to launch each submit page in THIS browser (open this file in the browser where you are logged in) · check “Posted” to track locally',open:'↗ Open submit page',copy:'Copy ',copied:'Copied ✓',useImg:'🖼 Use master image',done:'Posted',foot:'Generated by media-publish · post without installing the source app · never clicks “submit” for you',masterTitle:'🖼 Master image (one image for every platform)',openBig:'Open full image (right-click save / drag to post)',copyPrompt:'Copy image prompt',promptLabel:'🎨 Image prompt (gpt-image-2 · ',promptEnd:')',needImg:'🖼 Needs an image · use the master image above',masterPh:'Not generated yet<br>run gen-images.mjs',fTitle:'Title',fText:'Body',cn:'CN',intl:'Global',preview:'👁 Preview',pvNow:'now',pvPro:'Factory-direct · Wholesale',pvChars:'chars'},
+ ja:{brand:'配信ボード',prog:'進捗',bar:'「開く」で各投稿ページをこのブラウザで開きます（ログイン済みのブラウザでこのファイルを開いてください）· 「投稿済み」にチェックでローカル記録',open:'↗ 投稿ページを開く',copy:'コピー',copied:'コピーしました ✓',useImg:'🖼 メイン画像を使う',done:'投稿済み',foot:'media-publish で生成 · アプリ未インストールでも投稿可 · 「送信」は自分で押します',masterTitle:'🖼 メイン画像（全プラットフォーム共通）',openBig:'原寸で開く（右クリック保存 / ドラッグして投稿）',copyPrompt:'画像プロンプトをコピー',promptLabel:'🎨 画像プロンプト（gpt-image-2 · ',promptEnd:'）',needImg:'🖼 画像が必要 · 上のメイン画像を使用',masterPh:'未生成<br>gen-images.mjs を実行',fTitle:'タイトル',fText:'本文',cn:'国内',intl:'海外',preview:'👁 プレビュー',pvNow:'たった今',pvPro:'工場直販 · 卸売',pvChars:'文字'},
+ es:{brand:'Panel de lanzamiento',prog:'Progreso',bar:'Haz clic en «Abrir» para abrir cada página de publicación en ESTE navegador (abre este archivo en el navegador donde tienes la sesión iniciada) · marca «Publicado» para guardar localmente',open:'↗ Abrir página',copy:'Copiar ',copied:'Copiado ✓',useImg:'🖼 Usar imagen principal',done:'Publicado',foot:'Generado por media-publish · publica sin instalar la app · nunca pulsa «enviar» por ti',masterTitle:'🖼 Imagen principal (una imagen para todas las plataformas)',openBig:'Abrir imagen completa (clic derecho para guardar / arrastrar)',copyPrompt:'Copiar prompt de imagen',promptLabel:'🎨 Prompt de imagen (gpt-image-2 · ',promptEnd:')',needImg:'🖼 Necesita imagen · usa la imagen principal de arriba',masterPh:'Aún no generada<br>ejecuta gen-images.mjs',fTitle:'Título',fText:'Texto',cn:'CN',intl:'Global',preview:'👁 Vista previa',pvNow:'ahora',pvPro:'Fábrica · Mayorista',pvChars:'caracteres'}
+};
+const langs=(C.langs&&C.langs.length)?C.langs:['zh','en'];
+let lang=localStorage.getItem('mp-lang');
+if(!langs.includes(lang)) lang=langs[0];
+const L=LANG[lang]||LANG[langs[0]]||LANG.en;
+const DEFLANG=C.defaultLang||langs[0];
+// T(v)：把「字符串 | 语言对象」解析成当前语言的字符串（多级回退）
+function T(v){
+  if(v==null) return '';
+  if(typeof v!=='object'||Array.isArray(v)) return String(v);
+  if(v[lang]!=null) return v[lang];
+  if(v[DEFLANG]!=null) return v[DEFLANG];
+  for(const g of langs){ if(v[g]!=null) return v[g]; }
+  for(const k in v){ if(v[k]!=null) return v[k]; }
+  return '';
+}
+document.documentElement.lang=({zh:'zh-CN',en:'en',ja:'ja',es:'es'}[lang])||lang;
+document.title=L.brand+' · '+(T(C.title)||'');
+$('#brand').textContent=L.brand;
+$('#foot').textContent=L.foot;
+const sel=$('#lang');
+sel.innerHTML=langs.map(g=>'<option value="'+g+'"'+(g===lang?' selected':'')+'>'+esc(LNAME[g]||g)+'</option>').join('');
+sel.onchange=()=>{localStorage.setItem('mp-lang',sel.value);location.reload();};
+$('#bar').innerHTML=L.prog+' <b id="cnt">0</b> / <span id="tot">'+((C.platforms||[]).length)+'</span> · '+L.bar;
+$('#t').textContent=T(C.title)||'';
+$('#sub').textContent=T(C.subtitle)||'';
+(C.repos||[]).forEach(r=>{const a=document.createElement('a');a.href=T(r.url);a.target='_blank';a.textContent='↗ '+T(r.label);$('#repos').appendChild(a);});
+if(C.masterImage){
+  const m=C.masterImage;
+  $('#master').innerHTML='<div class="mwrap">'+
+    (m.image?'<img src="'+esc(m.image)+'" alt="master">':'<div class="mph">'+L.masterPh+'</div>')+
+    '<div class="mbody"><h3>'+L.masterTitle+'</h3>'+
+    '<div class="row" style="margin-bottom:8px">'+
+      (m.image?'<button class="openimg" id="mopen">'+L.openBig+'</button>':'')+
+      '<button class="copy imgbtn" id="mprompt">'+L.copyPrompt+'</button></div>'+
+    '<div class="field"><label>'+L.promptLabel+esc(m.size||'1024x1024')+L.promptEnd+'</label><textarea rows="3" id="mpt"></textarea></div></div></div>';
+  $('#mpt').value=T(m.prompt)||'';
+  if(m.image) $('#mopen').onclick=()=>window.open(m.image,'_blank');
+  $('#mprompt').onclick=()=>copy(T(m.prompt)||'');
+}
+const KEY='mp-done-'+(C.slug||'x');
+const done=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'));
+function save(){localStorage.setItem(KEY,JSON.stringify([...done]));const c=$('#cnt');if(c)c.textContent=done.size;}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1300);}
+function fill(tpl,p){return (tpl||'').replace(/{url}/g,encodeURIComponent(p.url||C.primaryUrl||'')).replace(/{rawurl}/g,p.url||C.primaryUrl||'').replace(/{title}/g,encodeURIComponent(p.title||'')).replace(/{text}/g,encodeURIComponent(p.text||''));}
+function copy(txt){navigator.clipboard.writeText(txt).then(()=>toast(L.copied),()=>{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast(L.copied);});}
+function cjkLen(s){let n=0;for(const ch of (s||'')){n+=/[^\x00-\xff]/.test(ch)?2:1;}return n;}
+function pvPick(p,fields){
+  const by=re=>{const f=fields.find(f=>re.test(f.label));return f?f.val:'';};
+  const title=p.title||by(/标题|Title|Tagline|タイトル|Título/)||'';
+  const body=p.text||by(/正文|Body|Description|本文|Texto|Descripción/)||(fields[0]?fields[0].val:'');
+  return {title,body};
+}
+function preview(p,fields){
+  const skin=p.id==='x'?'x':/^reddit/.test(p.id)?'reddit':p.id==='hn'?'hn':p.id==='linkedin'?'linkedin':(p.id==='xiaohongshu'||p.id==='xhs')?'xhs':(p.region==='cn'?'cn':'generic');
+  const c=pvPick(p,fields);
+  const name=(C.repos&&C.repos[0]&&T(C.repos[0].label))||'You';
+  const ini=esc(name.slice(0,1).toUpperCase());
+  const host=(((C.primaryUrl||'').replace(/^https?:/,'').split('/').filter(Boolean))[0])||'';
+  const showImg=C.masterImage&&C.masterImage.image&&(p.needsImage||skin==='xhs');
+  const img=showImg?'<img class="pvimg" src="'+esc(C.masterImage.image)+'" alt="">':'';
+  const cut=(s,n)=>{s=s||'';return esc(s.length>n?s.slice(0,n)+'…':s);};
+  if(skin==='hn') return '<div class="pv hn"><div style="font-weight:600">'+cut(c.title||c.body,80)+' <span class="hnmeta">('+esc(host.split('/')[0])+')</span></div><div class="hnmeta">▲ 1 point · by you · '+L.pvNow+' · 0 comments</div></div>';
+  if(skin==='reddit') return '<div class="pv reddit"><div class="pvsub">'+esc(p.previewSub||'r/community')+' · '+L.pvNow+'</div><div class="pvtitle">'+esc(c.title)+'</div><div class="pvbody">'+cut(c.body,220)+'</div>'+img+'</div>';
+  if(skin==='xhs'){const lines=(c.body||'').split('\n');return '<div class="pv xhs">'+img+'<div class="pvtitle">'+esc(lines[0]||c.title)+'</div><div class="pvbody">'+cut(lines.slice(1).join('\n'),140)+'</div></div>';}
+  const isX=skin==='x',isLi=skin==='linkedin';
+  const handle=isX?('@'+(C.slug||'you').replace(/[^a-z0-9_]/gi,'').slice(0,15)):(isLi?L.pvPro:host.split('/')[0]);
+  const charline=isX?'<div class="pvcnt">'+cjkLen(c.body)+'/280 '+L.pvChars+'</div>':'';
+  return '<div class="pv '+(isX?'x':isLi?'linkedin':'cn')+'">'+
+    '<div class="pvhd"><div class="av">'+ini+'</div><div><div class="nm">'+esc(name)+'</div><div class="hnd">'+esc(handle)+'</div></div></div>'+
+    (c.title&&!isX?'<div class="pvbody" style="font-weight:700;padding-bottom:0">'+esc(c.title)+'</div>':'')+
+    '<div class="pvbody">'+cut(c.body,isX?280:400)+'</div>'+charline+img+
+    ((isX||isLi)?'<div class="pvlink">🔗 '+esc(host)+'</div>':'')+'</div>';
+}
+const grid=$('#grid');
+(C.platforms||[]).forEach(p=>{
+  // 按当前语言解析这张卡的所有文案（pr = platform resolved）
+  const pr=Object.assign({},p,{name:T(p.name),how:T(p.how),title:T(p.title),text:T(p.text),tips:T(p.tips),url:T(p.url)});
+  const card=document.createElement('div');card.className='card'+(done.has(p.id)?' done':'');
+  const region=p.region==='cn'?'<span class="tag cn">'+L.cn+'</span>':'<span class="tag intl">'+L.intl+'</span>';
+  const star=p.priority?'<span class="star">'+'★'.repeat(p.priority)+'</span>':'';
+  // 统一成 fields：title/text 是隐式字段，p.fields[] 是额外带标签字段（如 Product Hunt / Amazon 表单）
+  const fields=[];
+  if(pr.title) fields.push({label:T(p.titleLabel)||L.fTitle,val:pr.title,rows:2,limit:p.limit||0});
+  if(pr.text) fields.push({label:T(p.textLabel)||L.fText,val:pr.text,rows:8,limit:0});
+  (p.fields||[]).forEach(f=>fields.push({label:T(f.label),val:T(f.value),rows:f.rows||4,limit:f.limit||0}));
+  let h='<div class="top"><span class="name">'+esc(pr.name)+'</span>'+region+star+
+    '<label class="chk"><input type="checkbox" '+(done.has(p.id)?'checked':'')+'> '+L.done+'</label></div>';
+  if(pr.how) h+='<div class="how">'+esc(pr.how)+'</div>';
+  h+='<div class="row"><button class="open">'+L.open+'</button>';
+  fields.forEach((f,i)=>{h+='<button class="copy" data-ci="'+i+'">'+L.copy+esc(f.label)+'</button>';});
+  if(p.needsImage&&C.masterImage&&C.masterImage.image) h+='<button class="openimg" data-oi="1">'+L.useImg+'</button>';
+  h+='<button class="pvbtn">'+L.preview+'</button>';
+  h+='</div>';
+  fields.forEach((f,i)=>{h+='<div class="field"><label>'+esc(f.label)+(f.limit?' <span class="cnt" data-cnt="'+i+'"></span>/'+f.limit:'')+'</label><textarea rows="'+f.rows+'" data-fi="'+i+'"></textarea></div>';});
+  if(p.needsImage) h+='<div class="tips">'+L.needImg+'</div>';
+  if(pr.tips) h+='<div class="tips">'+esc(pr.tips)+'</div>';
+  h+='<div class="pvbox" style="display:none"></div>';
+  card.innerHTML=h;
+  fields.forEach((f,i)=>{const ta=card.querySelector('[data-fi="'+i+'"]');ta.value=f.val;if(f.limit){const c=card.querySelector('[data-cnt="'+i+'"]');const upd=()=>{const n=cjkLen(ta.value);c.textContent=n;c.style.color=n>f.limit?'#ff6b6b':'#3fb98a';};upd();ta.oninput=upd;}});
+  card.querySelector('.open').onclick=()=>window.open(fill(pr.submitUrl||C.primaryUrl,pr),'_blank');
+  const oi=card.querySelector('[data-oi="1"]'); if(oi) oi.onclick=()=>window.open((C.masterImage&&C.masterImage.image)||'#','_blank');
+  card.querySelectorAll('.copy').forEach(b=>b.onclick=()=>copy(fields[+b.dataset.ci].val));
+  const pvb=card.querySelector('.pvbtn'), pvbox=card.querySelector('.pvbox');
+  if(pvb) pvb.onclick=()=>{ if(pvbox.style.display!=='none'&&pvbox.innerHTML){pvbox.style.display='none';return;} fields.forEach((f,i)=>{const ta=card.querySelector('[data-fi="'+i+'"]'); if(ta) f.val=ta.value;}); pvbox.innerHTML=preview(pr,fields); pvbox.style.display='block'; };
+  const cb=card.querySelector('.chk input');
+  cb.onchange=()=>{cb.checked?done.add(p.id):done.delete(p.id);card.classList.toggle('done',cb.checked);save();};
+  grid.appendChild(card);
+});
+function esc(s){return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+save();
+</script>
+</body>
+</html>

@@ -10,15 +10,20 @@
 scripts/
   build-launcher.mjs      引擎：campaign JSON → 单文件 HTML 发布台
   gen-images.mjs          自动生图：调你自己的生图接口生成「通配主图」，回填并重编译
-catalog.json              20+ 平台目录：id → submitUrl(+{url}/{title}/{text} 占位) + 字数限制
+catalog.json              40+ 平台目录：id → submitUrl(+{url}/{title}/{text} 占位) + 字数限制
+                          kind=software 开发者社区 / commerce 电商工厂 / service 专业服务
 references/
-  platform-copy-guidelines.md   各平台文案撰写规则（Twitter 280 硬算 / Reddit 反自夸 / HN 零营销 / 小红书 emoji…）
+  platform-copy-guidelines.md   软件类各平台文案规则（Twitter 280 硬算 / Reddit 反自夸 / HN 零营销…）
+  product-copy-guidelines.md    产品/工厂类文案规则（Amazon 五点 / Alibaba MOQ · OEM / TikTok 钩子…）
 campaigns/
-  opencodex-redline.mjs    构造脚本（模板字符串写文案）→ 生成同名 .json
-  opencodex-redline.json   编译产物：这次发布的完整 campaign 数据
+  opencodex-redline.mjs    🧑‍💻 软件类模板：开发者社区首发（20 平台，中/EN）
+  magcharge-3in1.mjs       📦 产品/工厂类模板：电商+跨境带货（20 平台，EN/中/日/ES 多语言）
+  lawyer-services.mjs      ⚖️ 专业服务类模板：律师，权威+本地获客（12 平台，中/EN）
+  *.json                   编译产物：这次发布的完整 campaign 数据
 output/
+  index.html               导航首页：列出所有发布台
   发布台-*.html            最终发布台（浏览器打开即用）
-  *-images/master.png      自动生成的通配主图
+  *-images/master.png      自动生成的通配/主图
 SKILL.md                   作为 Claude Code skill 的说明（本目录即 skill 源）
 ```
 
@@ -36,6 +41,27 @@ node scripts/gen-images.mjs campaigns/<你的>.json output/发布台-<你的>.ht
 
 # 4) 用有各平台登录态的浏览器打开 output/发布台-<你的>.html
 ```
+
+## 模板类型（换一套平台+文案 = 一个新行业）
+
+引擎与平台目录通用，`campaigns/*.mjs` 就是「行业模板」。已内置三类，复制改文案即可扩展：
+
+| 类型 | 渠道逻辑 | 典型平台 | 模板 |
+|------|----------|----------|------|
+| 🧑‍💻 软件 / 开源 | 开发者社区、技术信任 | HN / Reddit / PH / 掘金 / V2EX | `opencodex-redline` |
+| 📦 产品 / 工厂 | 电商成交、跨境带货 | Amazon / Alibaba / TikTok / 小红书 / 1688 | `magcharge-3in1` |
+| ⚖️ 专业服务 | 权威背书、本地获客、答疑 | 知乎 / 公众号 / 抖音普法 / 大众点评 / Google Business | `lawyer-services` |
+
+> 想加的方向（App/Google Play、课程/知识付费、本地店铺/餐饮…）都是「再写一个 `.mjs`」的事——复制最接近的模板，改常量与各平台文案。
+
+## 多语言
+
+- `campaign.langs`：语言下拉顺序，如 `["en","zh","ja","es"]`，第一个是默认；`campaign.defaultLang` 可另指定默认。
+- **任意文案字段**（`title`/`subtitle`/`name`/`how`/`title`/`text`/`tips`/`fields[].label`/`value`/`repos[].label`）都可以写成：
+  - 纯字符串（对所有语言通用，**向后兼容**旧 campaign），或
+  - 语言对象 `{ en:"…", zh:"…", ja:"…", es:"…" }`。
+- 发布台顶部下拉切换语言时，**UI 与所有平台文案一起换**；某字段缺某语言时回退 `lang → defaultLang → langs[0] → 任一存在`。
+- 内置 UI 语言：`zh / en / ja / es`（要加更多语言，在 `build-launcher.mjs` 的 `LANG` 表补一项即可）。
 
 ## 配图策略
 
