@@ -36,7 +36,7 @@ const html = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>宣发发布台 · ${escapeHtml(initTitle)}</title>
+<title>全媒体发布轰炸机 · ${escapeHtml(initTitle)}</title>
 <style>
   :root{--bg:#0f1115;--card:#1a1d24;--line:#2a2f3a;--fg:#e6e9ef;--mut:#9aa4b2;--acc:#5b8cff;--ok:#3fb98a;--cn:#ff7a59;--intl:#5b8cff}
   *{box-sizing:border-box}

@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 把一次宣发的文案编译成一张**自包含单文件 HTML「发布台」**：40+ 平台（见 catalog.json），每平台一张卡 —— [一键打开发布页]（在用户带登录态的浏览器里 `window.open` 提交页）+ [复制标题/正文]（平台定制文案）+ X/HN/Reddit/微博/Telegram 等 URL 预填。零 npm 依赖（只用 `node:` 内置模块），无构建系统、无测试框架、无 lint。
 
-本目录同时是一个 Claude Code skill（`media-publish`，见 SKILL.md —— campaign JSON 结构的权威文档）。
+本目录同时是一个 Claude Code skill（调用名 `bomber`，中文名「全媒体发布轰炸机」，见 SKILL.md —— campaign JSON 结构的权威文档）。
 
 **硬边界（产品原则，不可破）**：不替用户点「提交」，不碰账号密码/凭据 —— 发布台只开页 + 递文案，靠浏览器已有登录态。
 
