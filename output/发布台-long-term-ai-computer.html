@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>全媒体发布轰炸机 · 长程 AI 计算机 · 开放挑战</title>
+<style>
+  :root{--bg:#0f1115;--card:#1a1d24;--line:#2a2f3a;--fg:#e6e9ef;--mut:#9aa4b2;--acc:#5b8cff;--ok:#3fb98a;--cn:#ff7a59;--intl:#5b8cff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+  header{padding:22px 24px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(15,17,21,.94);backdrop-filter:blur(6px);z-index:5}
+  h1{margin:0 0 6px;font-size:20px}
+  .sub{color:var(--mut);font-size:13px}
+  .repos{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+  .repos a{color:var(--acc);text-decoration:none;border:1px solid var(--line);padding:4px 10px;border-radius:8px;font-size:13px}
+  .repos a:hover{border-color:var(--acc)}
+  .bar{margin-top:12px;font-size:13px;color:var(--mut)}
+  .bar b{color:var(--ok)}
+  main{padding:20px 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px;align-items:start}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+  .card.done{opacity:.5}
+  .top{display:flex;align-items:center;gap:8px}
+  .name{font-weight:600;font-size:16px}
+  .tag{font-size:11px;padding:2px 7px;border-radius:99px;border:1px solid var(--line);color:var(--mut)}
+  .tag.cn{color:var(--cn);border-color:var(--cn)}
+  .tag.intl{color:var(--intl);border-color:var(--intl)}
+  .star{color:#ffd24a;font-size:12px}
+  .how{color:var(--mut);font-size:13px}
+  .row{display:flex;gap:8px;flex-wrap:wrap}
+  button{cursor:pointer;border:1px solid var(--line);background:#222634;color:var(--fg);padding:7px 12px;border-radius:9px;font-size:13px}
+  button:hover{border-color:var(--acc)}
+  button.open{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+  button.copy{background:#20303a}
+  .field label{display:block;font-size:12px;color:var(--mut);margin:6px 0 3px}
+  textarea{width:100%;background:#0e1116;color:var(--fg);border:1px solid var(--line);border-radius:9px;padding:9px;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;resize:vertical}
+  .tips{font-size:12px;color:var(--mut);border-left:2px solid var(--line);padding-left:9px;margin-top:2px}
+  .cnt{font-weight:600}
+  button.imgbtn{background:#2a2140;border-color:#4a3a6b}
+  button.openimg{background:#20303a}
+  .imgwrap{margin-top:4px}
+  .imgwrap img{max-width:100%;border-radius:9px;border:1px solid var(--line);display:block}
+  .imgwrap .ph{color:var(--mut);font-size:12px;border:1px dashed var(--line);border-radius:9px;padding:14px;text-align:center}
+  #master{padding:2px 24px 0}
+  #master .mwrap{display:flex;gap:16px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+  #master img{width:170px;border-radius:10px;border:1px solid var(--line);display:block}
+  #master .mph{width:170px;height:170px;border:1px dashed var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:12px;text-align:center;padding:10px}
+  #master .mbody{flex:1;min-width:0}
+  #master h3{margin:0 0 6px;font-size:14px}
+  .imgchip{font-size:11px;padding:2px 7px;border-radius:99px;border:1px solid #4a3a6b;color:#b79bff}
+  button.pvbtn{background:#241f2e;border-color:#4a3a6b}
+  .pvbox{margin-top:4px}
+  .pv{border-radius:12px;overflow:hidden;font-size:13px;line-height:1.5;box-shadow:0 1px 6px rgba(0,0,0,.35)}
+  .pv .pvhd{display:flex;gap:8px;align-items:center;padding:10px 12px}
+  .pv .av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#5b8cff,#3fb98a);flex:none;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+  .pv .nm{font-weight:700}.pv .hnd{color:#8a94a6;font-size:12px}
+  .pv .pvbody{padding:2px 12px 12px;white-space:pre-wrap;word-break:break-word}
+  .pv .pvtitle{font-weight:700;padding:8px 12px 2px}
+  .pv img.pvimg{width:100%;display:block}
+  .pv .pvlink{margin:0 12px 12px;border:1px solid rgba(128,128,128,.3);border-radius:10px;padding:8px 10px;color:#3a6df0;font-size:12px;background:#f7f9fc}
+  .pv.x,.pv.linkedin,.pv.generic,.pv.cn,.pv.xhs{background:#fff;color:#0f1419}
+  .pv.reddit{background:#fff;color:#1a1a1b}
+  .pv.reddit .pvsub{color:#878a8c;font-size:12px;padding:9px 12px 0}
+  .pv.reddit .pvtitle{font-size:15px}
+  .pv.hn{background:#f6f6ef;color:#000;padding:10px 12px}
+  .pv.hn .hnmeta{color:#828282;font-size:11px}
+  .pv.linkedin .hnd{font-size:11px}
+  .pvcnt{font-size:11px;color:#8a94a6;padding:0 12px 8px}
+  .chk{margin-left:auto;font-size:12px;color:var(--mut);display:flex;align-items:center;gap:5px;cursor:pointer;user-select:none}
+  #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--ok);color:#04120c;padding:9px 16px;border-radius:10px;font-size:14px;font-weight:600;opacity:0;transition:opacity .2s;pointer-events:none}
+  #toast.show{opacity:1}
+  footer{padding:16px 24px;color:var(--mut);font-size:12px;border-top:1px solid var(--line)}
+  #lang{position:absolute;top:20px;right:24px;background:#20303a;color:var(--fg);border:1px solid var(--line);border-radius:9px;padding:7px 10px;font-weight:600;font-size:13px;cursor:pointer}
+  #lang:hover{border-color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <select id="lang" title="language"></select>
+  <h1>🦞 <span id="brand"></span> · <span id="t"></span></h1>
+  <div class="sub" id="sub"></div>
+  <div class="repos" id="repos"></div>
+  <div class="bar" id="bar"></div>
+</header>
+<section id="master"></section>
+<main id="grid"></main>
+<footer id="foot"></footer>
+<div id="toast"></div>
+<script>
+const C = {"slug":"long-term-ai-computer","title":"长程 AI 计算机 · 开放挑战","subtitle":"一人公司敲锣：模型会换、上下文会清空，状态不死，任务继续","primaryUrl":"https://blog.hequbing.com/post?slug=long-term-ai-computer-challenge","defaultLang":"zh","langs":["zh","en"],"masterImage":{"prompt":"Deep indigo editorial technology illustration: a tiny independent developer holding a bronze gong between a fragmenting chat transcript and a stable three-module AI computer architecture. No text, no logos, no watermark.","size":"1536x1024","image":"./long-term-ai-computer-images/master.png"},"repos":[{"label":"接榜令 / Announcement","url":"https://blog.hequbing.com/post?slug=long-term-ai-computer-challenge"},{"label":"Architecture","url":"https://github.com/dongsheng123132/2origin-computer"},{"label":"Submit a challenge","url":"https://github.com/dongsheng123132/2origin-computer/issues/new?template=long-task-challenge.yml"},{"label":"Evidence v4","url":"https://github.com/dongsheng123132/2origin-harness/blob/HEAD/bench/RESULTS-v4.md"}],"platforms":[{"id":"hn","name":"Hacker News","region":"intl","priority":3,"how":"Show HN：极简技术标题；正文作为首条评论","submitUrl":"https://news.ycombinator.com/submitlink?u={url}&t={title}","url":"https://github.com/dongsheng123132/2origin-computer","title":"Show HN: 2Origin – an open architecture for persistent AI computers","text":"I have been building a small open architecture around one question: if the model is the CPU, what are the disk, buses, kernel, and state format that let a task survive sessions and model swaps?\n\n2Origin Computer separates durable task state from the chat transcript. The reference harness keeps verified facts, decisions, next steps, audited actions, and source evidence outside the model context, then compiles only the relevant state back in.\n\nThe latest benchmark added mem0 as an external control and also caught a bad interpretation in our own headline result. When the answer was present in the corpus, 2Origin and our lexical RAG tied at 90%. The measurable difference was rejection of real facts belonging to another task: 100% for 2Origin vs 60% for mem0 and 55% for RAG. Single model/task/run; the reasoning probe remains retracted. Full limitations are in the repo.\n\nWe are now looking for real multi-session tasks that can break the architecture. Feedback and counterexamples are welcome.\n\nhttps://github.com/dongsheng123132/2origin-computer","tips":"无营销腔。重点讲架构、v4 主动改写结论和开放反例。"},{"id":"reddit_localllama","name":"Reddit · r/LocalLLaMA","region":"intl","priority":3,"submitUrl":"https://www.reddit.com/r/LocalLLaMA/submit?title={title}","url":"https://github.com/dongsheng123132/2origin-computer","title":"An open architecture for persistent AI tasks — looking for workloads that can break it","text":"I built an open architecture for persistent AI tasks and I am looking for real workloads that can break it.\n\nThe basic split is: Model = CPU, durable State = Memory, Harness = OS. Instead of treating an ever-growing transcript as project state, the harness stores verified facts, decisions, next steps, sources, and audited actions outside the context window.\n\nImportant limitation: our latest run does not show that structured state retrieves available facts better than lexical RAG — both scored 90% when the answer was actually present. The measured difference was task-boundary rejection: 2Origin rejected facts from other real tasks at 100%, vs 60% for mem0 and 55% for our RAG (single model/task/run; n=20 for this slice). The two-hop reasoning probe failed and remains retracted.\n\nI am opening a challenge for multi-session software work, large documents, persistent research, and other tasks where an agent loses track of what is currently true. Feedback, earlier comparable systems, and attempts to break it are welcome.\n\nArchitecture: https://github.com/dongsheng123132/2origin-computer\nEvidence: https://github.com/dongsheng123132/2origin-harness/blob/HEAD/bench/RESULTS-v4.md","tips":"先读版规；保留 trade-off 与失败指标，避免 world-first 标题。"},{"id":"reddit_machinelearning","name":"Reddit · r/MachineLearning","region":"intl","priority":2,"submitUrl":"https://www.reddit.com/r/MachineLearning/submit?title={title}","url":"https://github.com/dongsheng123132/2origin-harness/blob/HEAD/bench/RESULTS-v4.md","title":"[P] Persistent task state with an external memory control and a retracted interpretation","text":"I built an open architecture for persistent AI tasks and I am looking for real workloads that can break it.\n\nThe basic split is: Model = CPU, durable State = Memory, Harness = OS. Instead of treating an ever-growing transcript as project state, the harness stores verified facts, decisions, next steps, sources, and audited actions outside the context window.\n\nImportant limitation: our latest run does not show that structured state retrieves available facts better than lexical RAG — both scored 90% when the answer was actually present. The measured difference was task-boundary rejection: 2Origin rejected facts from other real tasks at 100%, vs 60% for mem0 and 55% for our RAG (single model/task/run; n=20 for this slice). The two-hop reasoning probe failed and remains retracted.\n\nI am opening a challenge for multi-session software work, large documents, persistent research, and other tasks where an agent loses track of what is currently true. Feedback, earlier comparable systems, and attempts to break it are welcome.\n\nArchitecture: https://github.com/dongsheng123132/2origin-computer\nEvidence: https://github.com/dongsheng123132/2origin-harness/blob/HEAD/bench/RESULTS-v4.md","tips":"按 Project 标签规则发；如果版规不接受自有博客，只发证据仓库。"},{"id":"x","name":"X / Twitter","region":"intl","priority":2,"how":"一键预填；配主视觉","submitUrl":"https://twitter.com/intent/tweet?text={text}","text":"A one-person company is opening a Long-Term AI Computer challenge. Model=CPU. State=Memory. Harness=OS. Models change; the task should continue. Code, failures and retractions are public. Bring a task that makes agents forget what is true: https://github.com/dongsheng123132/2origin-computer","needsImage":true,"tips":"已按 280 字符硬限压缩。"},{"id":"linkedin","name":"LinkedIn","region":"intl","priority":2,"submitUrl":"https://www.linkedin.com/feed/?shareActive=true","text":"I run a one-person company, so the engineer and the marketing department are unfortunately the same person — hence the loud gong.\n\nToday I am opening a Long-Term AI Computer challenge. Model = CPU. State = Memory. Harness = OS. Models change and context disappears; the task should still continue.\n\nSubmit real work that current AI cannot finish without losing its own state. Code, benchmarks, failures, and retractions are public.\n\nAnnouncement: https://blog.hequbing.com/post?slug=long-term-ai-computer-challenge\nArchitecture: https://github.com/dongsheng123132/2origin-computer","tips":"前两行保留一人公司与 long-term task 的冲突。"},{"id":"devto","name":"Dev.to","region":"intl","priority":1,"submitUrl":"https://dev.to/new","title":"Building a Long-Term AI Computer: Model as CPU, State as Memory","text":"I have been building a small open architecture around one question: if the model is the CPU, what are the disk, buses, kernel, and state format that let a task survive sessions and model swaps?\n\n2Origin Computer separates durable task state from the chat transcript. The reference harness keeps verified facts, decisions, next steps, audited actions, and source evidence outside the model context, then compiles only the relevant state back in.\n\nThe latest benchmark added mem0 as an external control and also caught a bad interpretation in our own headline result. When the answer was present in the corpus, 2Origin and our lexical RAG tied at 90%. The measurable difference was rejection of real facts belonging to another task: 100% for 2Origin vs 60% for mem0 and 55% for RAG. Single model/task/run; the reasoning probe remains retracted. Full limitations are in the repo.\n\nWe are now looking for real multi-session tasks that can break the architecture. Feedback and counterexamples are welcome.\n\nhttps://github.com/dongsheng123132/2origin-computer","tips":"扩成技术文，tags 用 ai, opensource, agents, architecture。"},{"id":"telegram","name":"Telegram","region":"intl","priority":1,"submitUrl":"https://t.me/share/url?url={rawurl}&text={text}","url":"https://github.com/dongsheng123132/2origin-computer","text":"Open challenge: an architecture for AI tasks that survive sessions and model swaps. Code, failures and retractions are public.","tips":"一句话 + 技术仓库。"},{"id":"v2ex","name":"V2EX · 分享创造","region":"cn","priority":3,"submitUrl":"https://www.v2ex.com/new","title":"做了一个「长程 AI 计算机」开放挑战，想找真实任务把架构打穿","text":"做了一个「长程 AI 计算机」开放挑战，想找真实任务把架构打穿。\n\n核心不是再造模型，而是把 Model 当 CPU、持久 State 当 Memory、Harness 当 OS。任务的已验证事实、决策、下一步、来源和审计动作不再只活在聊天记录里。\n\n最新 ShadowWork Bench v4 加入了 mem0 2.0.17 对照，也抓到了我们自己的错误归因：答案在对照语料里时，2Origin 与自写 RAG 都是 90%，所以「更会找」没证据；真正拉开差距的是拒绝别的任务事实，2Origin 100%，mem0 60%，RAG 55%。单模型/单任务/单次运行，两跳指标仍作废。\n\n想征集多会话软件工程、长文档、持续研究、多模态资料等真实任务。提交前先共同写成功标准和公开边界。也欢迎更早的相当实现、复现和反例。\n\n架构：https://github.com/dongsheng123132/2origin-computer\n证据：https://github.com/dongsheng123132/2origin-harness/blob/HEAD/bench/RESULTS-v4.md","tips":"选择「分享创造」；语气平实，守评论区。"},{"id":"juejin","name":"掘金","region":"cn","priority":2,"submitUrl":"https://juejin.cn/editor/drafts/new","title":"Model 是 CPU：长程 AI 计算机如何把状态从聊天记录里拆出来","text":"今天的大模型为什么很聪明，却很难把一个项目连续做几天、几周、几个月？\n\n因为聊天记录不等于项目状态。里面混着当前事实、旧方案、已经撤回的结论和其他任务的信息。我们的尝试是把架构拆开：Model = CPU，State = Memory，Harness = OS。\n\n最新 v4 实验加入了第三方 mem0，也让我们主动改写了旧宣传口径。答案在语料里时，2Origin 与自写词法 RAG 都是 90%，所以没有证据说状态更会「找」。真正分得开的是任务边界：拒绝把别的任务事实认成当前任务事实，2Origin 100%，mem0 60%，RAG 55%。\n\n这仍然只是单模型、单任务、单次运行，两跳推理指标已撤回。现在我们开放征集真实长程任务，用现实产物继续检验这条路线。\n\nhttps://blog.hequbing.com/post?slug=long-term-ai-computer-challenge","tips":"补一张架构图和 v4 拆分表，按教程/复盘体发布。"},{"id":"zhihu","name":"知乎专栏","region":"cn","priority":3,"submitUrl":"https://zhuanlan.zhihu.com/write","title":"为什么上下文越长，AI 仍然会把别的任务事实当成自己的？","text":"今天的大模型为什么很聪明，却很难把一个项目连续做几天、几周、几个月？\n\n因为聊天记录不等于项目状态。里面混着当前事实、旧方案、已经撤回的结论和其他任务的信息。我们的尝试是把架构拆开：Model = CPU，State = Memory，Harness = OS。\n\n最新 v4 实验加入了第三方 mem0，也让我们主动改写了旧宣传口径。答案在语料里时，2Origin 与自写词法 RAG 都是 90%，所以没有证据说状态更会「找」。真正分得开的是任务边界：拒绝把别的任务事实认成当前任务事实，2Origin 100%，mem0 60%，RAG 55%。\n\n这仍然只是单模型、单任务、单次运行，两跳推理指标已撤回。现在我们开放征集真实长程任务，用现实产物继续检验这条路线。\n\nhttps://blog.hequbing.com/post?slug=long-term-ai-computer-challenge","tips":"观点 + 对比；完整限制不能删。"},{"id":"jike","name":"即刻","region":"cn","priority":2,"submitUrl":"https://web.okjike.com/","text":"公司很小，胃口很大；宣传部只有一个人，所以锣敲得响了一点。\n\n今天正式发布「长程 AI 计算机」开放挑战：Model = CPU，State = Memory，Harness = OS。模型会换，上下文会清空，但状态不死，任务就能继续。\n\n欢迎提交传统 AI 做不好、做不完、做着做着会失忆的真实任务。代码、实验、失败和撤回全部公开。\n\n博客：https://blog.hequbing.com/post?slug=long-term-ai-computer-challenge\n技术入口：https://github.com/dongsheng123132/2origin-computer","tips":"技术圈动态，主图 + 博客链接。"},{"id":"weibo","name":"微博","region":"cn","priority":2,"submitUrl":"https://service.weibo.com/share/share.php?title={text}&url={rawurl}","url":"https://blog.hequbing.com/post?slug=long-term-ai-computer-challenge","text":"一个人的公司，今天把「长程 AI 计算机」挂上榜了：Model=CPU，State=Memory，Harness=OS。传统 AI 做不完、做着做着会失忆的任务，欢迎来打。代码、失败和撤回都公开。#长程AI计算机# #2Origin#","needsImage":true,"tips":"一张主图；评论区置顶挑战 Issue。"},{"id":"xiaohongshu","name":"小红书","region":"cn","priority":3,"submitUrl":"https://creator.xiaohongshu.com/publish/publish","text":"一个人的公司，开始挑战 AI 的「失忆症」🥁\n\n别人发布产品，是市场部敲锣。\n我这里比较特殊：研发本人一边修 Bug，一边出来敲锣😂\n\n💡 我们的思路\nModel = CPU\nState = Memory\nHarness = OS\n\n✅ 模型可以换\n✅ 上下文可以清空\n✅ 状态和任务继续活着\n✅ 失败与撤回也公开\n\n今天正式接榜：百万字内容、几十万字标书、跨模型软件项目、多模态长期整理……传统 AI 做不好、做不完、做着做着会忘的，欢迎来。\n\n不保证全赢，但先把成功标准和失败标准写清楚。\n\nhttps://blog.hequbing.com/post?slug=long-term-ai-computer-challenge\n\n#长程AI #AIAgent #独立开发者 #2Origin #人工智能","needsImage":true,"tips":"主图作为首图；标题用「一个人的公司，开始挑战 AI 的失忆症」。"},{"id":"moments","name":"微信朋友圈","region":"cn","priority":2,"submitUrl":"weixin://","text":"公司很小，胃口很大；宣传部只有一个人，所以锣敲得响了一点。\n\n今天正式发布「长程 AI 计算机」开放挑战：Model = CPU，State = Memory，Harness = OS。模型会换，上下文会清空，但状态不死，任务就能继续。\n\n欢迎提交传统 AI 做不好、做不完、做着做着会失忆的真实任务。代码、实验、失败和撤回全部公开。\n\n博客：https://blog.hequbing.com/post?slug=long-term-ai-computer-challenge\n技术入口：https://github.com/dongsheng123132/2origin-computer","needsImage":true,"tips":"手机端手动发；文案和主图已备好。"},{"id":"mp","name":"微信公众号","region":"cn","priority":3,"submitUrl":"https://mp.weixin.qq.com/","title":"公司只有一个人，口气却想挑战整个 AI 行业：长程 AI 计算机正式接榜","text":"网站长文已发布，复制正文或使用博客全文：https://blog.hequbing.com/post?slug=long-term-ai-computer-challenge\n\n证据口径补充：最新 ShadowWork Bench v4 接入了第三方 mem0。发布前复核又改写了我们自己的结论：答案在语料里时，2Origin 与自写 RAG 都是 90%，没有证据说明状态更会「找」；真正分得开的是拒绝把别的任务事实认成当前任务事实：2Origin 100%，mem0 60%，RAG 55%。\n\n单模型、单任务、单次运行；两跳推理指标仍作废。完整口径：https://github.com/dongsheng123132/2origin-harness/blob/HEAD/bench/RESULTS-v4.md","needsImage":true,"tips":"不要删掉 v4 主动改写结论和实验边界。"},{"id":"sspai","name":"少数派","region":"cn","priority":1,"submitUrl":"https://sspai.com/write","title":"一个人的 AI 计算机实验：让任务跨会话继续活着","text":"今天的大模型为什么很聪明，却很难把一个项目连续做几天、几周、几个月？\n\n因为聊天记录不等于项目状态。里面混着当前事实、旧方案、已经撤回的结论和其他任务的信息。我们的尝试是把架构拆开：Model = CPU，State = Memory，Harness = OS。\n\n最新 v4 实验加入了第三方 mem0，也让我们主动改写了旧宣传口径。答案在语料里时，2Origin 与自写词法 RAG 都是 90%，所以没有证据说状态更会「找」。真正分得开的是任务边界：拒绝把别的任务事实认成当前任务事实，2Origin 100%，mem0 60%，RAG 55%。\n\n这仍然只是单模型、单任务、单次运行，两跳推理指标已撤回。现在我们开放征集真实长程任务，用现实产物继续检验这条路线。\n\nhttps://blog.hequbing.com/post?slug=long-term-ai-computer-challenge","tips":"以个人实践与工具链为主，弱化“全球第一”。"},{"id":"bili","name":"Bilibili 专栏","region":"cn","priority":1,"submitUrl":"https://member.bilibili.com/platform/upload/text/edit","title":"模型只是 CPU：一个人为什么敢造长程 AI 计算机","text":"公司很小，胃口很大；宣传部只有一个人，所以锣敲得响了一点。\n\n今天正式发布「长程 AI 计算机」开放挑战：Model = CPU，State = Memory，Harness = OS。模型会换，上下文会清空，但状态不死，任务就能继续。\n\n欢迎提交传统 AI 做不好、做不完、做着做着会失忆的真实任务。代码、实验、失败和撤回全部公开。\n\n博客：https://blog.hequbing.com/post?slug=long-term-ai-computer-challenge\n技术入口：https://github.com/dongsheng123132/2origin-computer","tips":"配 60 秒口播和架构图。"},{"id":"douyin","name":"抖音","region":"cn","priority":2,"submitUrl":"https://creator.douyin.com/","text":"公司只有一个人，为什么敢挑战 AI 的长期失忆？模型当 CPU，状态当内存，Harness 当操作系统。传统 AI 做着做着会忘的任务，欢迎丢过来。#人工智能 #AIAgent #独立开发者","needsImage":true,"tips":"用 60 秒口播；主视觉可做封面，最后一步手动发布。"},{"id":"video_account","name":"微信视频号","region":"cn","priority":1,"submitUrl":"https://channels.weixin.qq.com/platform/post/create","title":"一个人的公司，挑战 AI 长期失忆","text":"公司很小，胃口很大；宣传部只有一个人，所以锣敲得响了一点。\n\n今天正式发布「长程 AI 计算机」开放挑战：Model = CPU，State = Memory，Harness = OS。模型会换，上下文会清空，但状态不死，任务就能继续。\n\n欢迎提交传统 AI 做不好、做不完、做着做着会失忆的真实任务。代码、实验、失败和撤回全部公开。\n\n博客：https://blog.hequbing.com/post?slug=long-term-ai-computer-challenge\n技术入口：https://github.com/dongsheng123132/2origin-computer","needsImage":true,"tips":"标题不超过 30 字；配 60 秒口播。"}]};
+const $ = (s,r=document)=>r.querySelector(s);
+const LNAME={zh:'中文',en:'English',ja:'日本語',es:'Español',ko:'한국어',de:'Deutsch',fr:'Français',pt:'Português'};
+const LANG={
+ zh:{brand:'宣发发布台',prog:'进度',bar:'点「一键打开」在当前浏览器开发布页（用你有各平台登录态的浏览器打开本文件）· 勾选「已发」记录到本地',open:'↗ 一键打开发布页',copy:'复制',copied:'已复制 ✓',useImg:'🖼 用主图',done:'已发',foot:'由 media-publish 生成 · 关闭源软件也能发 · 不替你点「提交」，最后一步永远你自己按',masterTitle:'🖼 通配主图（一张图配所有平台 · 需配图的卡都用它）',openBig:'打开大图（右键另存/拖去发布）',copyPrompt:'复制生图提示词',promptLabel:'🎨 生图提示词（gpt-image-2 · ',promptEnd:'）',needImg:'🖼 需配图 · 用顶部「通配主图」',masterPh:'主图未生成<br>跑 gen-images.mjs 自动出图',fTitle:'标题',fText:'正文',cn:'国内',intl:'海外',preview:'👁 预览',pvNow:'刚刚',pvPro:'工厂直供 · 批发',pvChars:'字符'},
+ en:{brand:'Launch Board',prog:'Progress',bar:'Click “Open” to launch each submit page in THIS browser (open this file in the browser where you are logged in) · check “Posted” to track locally',open:'↗ Open submit page',copy:'Copy ',copied:'Copied ✓',useImg:'🖼 Use master image',done:'Posted',foot:'Generated by media-publish · post without installing the source app · never clicks “submit” for you',masterTitle:'🖼 Master image (one image for every platform)',openBig:'Open full image (right-click save / drag to post)',copyPrompt:'Copy image prompt',promptLabel:'🎨 Image prompt (gpt-image-2 · ',promptEnd:')',needImg:'🖼 Needs an image · use the master image above',masterPh:'Not generated yet<br>run gen-images.mjs',fTitle:'Title',fText:'Body',cn:'CN',intl:'Global',preview:'👁 Preview',pvNow:'now',pvPro:'Factory-direct · Wholesale',pvChars:'chars'},
+ ja:{brand:'配信ボード',prog:'進捗',bar:'「開く」で各投稿ページをこのブラウザで開きます（ログイン済みのブラウザでこのファイルを開いてください）· 「投稿済み」にチェックでローカル記録',open:'↗ 投稿ページを開く',copy:'コピー',copied:'コピーしました ✓',useImg:'🖼 メイン画像を使う',done:'投稿済み',foot:'media-publish で生成 · アプリ未インストールでも投稿可 · 「送信」は自分で押します',masterTitle:'🖼 メイン画像（全プラットフォーム共通）',openBig:'原寸で開く（右クリック保存 / ドラッグして投稿）',copyPrompt:'画像プロンプトをコピー',promptLabel:'🎨 画像プロンプト（gpt-image-2 · ',promptEnd:'）',needImg:'🖼 画像が必要 · 上のメイン画像を使用',masterPh:'未生成<br>gen-images.mjs を実行',fTitle:'タイトル',fText:'本文',cn:'国内',intl:'海外',preview:'👁 プレビュー',pvNow:'たった今',pvPro:'工場直販 · 卸売',pvChars:'文字'},
+ es:{brand:'Panel de lanzamiento',prog:'Progreso',bar:'Haz clic en «Abrir» para abrir cada página de publicación en ESTE navegador (abre este archivo en el navegador donde tienes la sesión iniciada) · marca «Publicado» para guardar localmente',open:'↗ Abrir página',copy:'Copiar ',copied:'Copiado ✓',useImg:'🖼 Usar imagen principal',done:'Publicado',foot:'Generado por media-publish · publica sin instalar la app · nunca pulsa «enviar» por ti',masterTitle:'🖼 Imagen principal (una imagen para todas las plataformas)',openBig:'Abrir imagen completa (clic derecho para guardar / arrastrar)',copyPrompt:'Copiar prompt de imagen',promptLabel:'🎨 Prompt de imagen (gpt-image-2 · ',promptEnd:')',needImg:'🖼 Necesita imagen · usa la imagen principal de arriba',masterPh:'Aún no generada<br>ejecuta gen-images.mjs',fTitle:'Título',fText:'Texto',cn:'CN',intl:'Global',preview:'👁 Vista previa',pvNow:'ahora',pvPro:'Fábrica · Mayorista',pvChars:'caracteres'}
+};
+const langs=(C.langs&&C.langs.length)?C.langs:['zh','en'];
+let lang=localStorage.getItem('mp-lang');
+if(!langs.includes(lang)) lang=langs[0];
+const L=LANG[lang]||LANG[langs[0]]||LANG.en;
+const DEFLANG=C.defaultLang||langs[0];
+// T(v)：把「字符串 | 语言对象」解析成当前语言的字符串（多级回退）
+function T(v){
+  if(v==null) return '';
+  if(typeof v!=='object'||Array.isArray(v)) return String(v);
+  if(v[lang]!=null) return v[lang];
+  if(v[DEFLANG]!=null) return v[DEFLANG];
+  for(const g of langs){ if(v[g]!=null) return v[g]; }
+  for(const k in v){ if(v[k]!=null) return v[k]; }
+  return '';
+}
+document.documentElement.lang=({zh:'zh-CN',en:'en',ja:'ja',es:'es'}[lang])||lang;
+document.title=L.brand+' · '+(T(C.title)||'');
+$('#brand').textContent=L.brand;
+$('#foot').textContent=L.foot;
+const sel=$('#lang');
+sel.innerHTML=langs.map(g=>'<option value="'+g+'"'+(g===lang?' selected':'')+'>'+esc(LNAME[g]||g)+'</option>').join('');
+sel.onchange=()=>{localStorage.setItem('mp-lang',sel.value);location.reload();};
+$('#bar').innerHTML=L.prog+' <b id="cnt">0</b> / <span id="tot">'+((C.platforms||[]).length)+'</span> · '+L.bar;
+$('#t').textContent=T(C.title)||'';
+$('#sub').textContent=T(C.subtitle)||'';
+(C.repos||[]).forEach(r=>{const a=document.createElement('a');a.href=T(r.url);a.target='_blank';a.textContent='↗ '+T(r.label);$('#repos').appendChild(a);});
+if(C.masterImage){
+  const m=C.masterImage;
+  $('#master').innerHTML='<div class="mwrap">'+
+    (m.image?'<img src="'+esc(m.image)+'" alt="master">':'<div class="mph">'+L.masterPh+'</div>')+
+    '<div class="mbody"><h3>'+L.masterTitle+'</h3>'+
+    '<div class="row" style="margin-bottom:8px">'+
+      (m.image?'<button class="openimg" id="mopen">'+L.openBig+'</button>':'')+
+      '<button class="copy imgbtn" id="mprompt">'+L.copyPrompt+'</button></div>'+
+    '<div class="field"><label>'+L.promptLabel+esc(m.size||'1024x1024')+L.promptEnd+'</label><textarea rows="3" id="mpt"></textarea></div></div></div>';
+  $('#mpt').value=T(m.prompt)||'';
+  if(m.image) $('#mopen').onclick=()=>window.open(m.image,'_blank');
+  $('#mprompt').onclick=()=>copy(T(m.prompt)||'');
+}
+const KEY='mp-done-'+(C.slug||'x');
+const done=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'));
+function save(){localStorage.setItem(KEY,JSON.stringify([...done]));const c=$('#cnt');if(c)c.textContent=done.size;}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1300);}
+function fill(tpl,p){return (tpl||'').replace(/{url}/g,encodeURIComponent(p.url||C.primaryUrl||'')).replace(/{rawurl}/g,p.url||C.primaryUrl||'').replace(/{title}/g,encodeURIComponent(p.title||'')).replace(/{text}/g,encodeURIComponent(p.text||''));}
+function copy(txt){navigator.clipboard.writeText(txt).then(()=>toast(L.copied),()=>{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast(L.copied);});}
+function cjkLen(s){let n=0;for(const ch of (s||'')){n+=/[^\x00-\xff]/.test(ch)?2:1;}return n;}
+function pvPick(p,fields){
+  const by=re=>{const f=fields.find(f=>re.test(f.label));return f?f.val:'';};
+  const title=p.title||by(/标题|Title|Tagline|タイトル|Título/)||'';
+  const body=p.text||by(/正文|Body|Description|本文|Texto|Descripción/)||(fields[0]?fields[0].val:'');
+  return {title,body};
+}
+function preview(p,fields){
+  const skin=p.id==='x'?'x':/^reddit/.test(p.id)?'reddit':p.id==='hn'?'hn':p.id==='linkedin'?'linkedin':(p.id==='xiaohongshu'||p.id==='xhs')?'xhs':(p.region==='cn'?'cn':'generic');
+  const c=pvPick(p,fields);
+  const name=(C.repos&&C.repos[0]&&T(C.repos[0].label))||'You';
+  const ini=esc(name.slice(0,1).toUpperCase());
+  const host=(((C.primaryUrl||'').replace(/^https?:/,'').split('/').filter(Boolean))[0])||'';
+  const showImg=C.masterImage&&C.masterImage.image&&(p.needsImage||skin==='xhs');
+  const img=showImg?'<img class="pvimg" src="'+esc(C.masterImage.image)+'" alt="">':'';
+  const cut=(s,n)=>{s=s||'';return esc(s.length>n?s.slice(0,n)+'…':s);};
+  if(skin==='hn') return '<div class="pv hn"><div style="font-weight:600">'+cut(c.title||c.body,80)+' <span class="hnmeta">('+esc(host.split('/')[0])+')</span></div><div class="hnmeta">▲ 1 point · by you · '+L.pvNow+' · 0 comments</div></div>';
+  if(skin==='reddit') return '<div class="pv reddit"><div class="pvsub">'+esc(p.previewSub||'r/community')+' · '+L.pvNow+'</div><div class="pvtitle">'+esc(c.title)+'</div><div class="pvbody">'+cut(c.body,220)+'</div>'+img+'</div>';
+  if(skin==='xhs'){const lines=(c.body||'').split('\n');return '<div class="pv xhs">'+img+'<div class="pvtitle">'+esc(lines[0]||c.title)+'</div><div class="pvbody">'+cut(lines.slice(1).join('\n'),140)+'</div></div>';}
+  const isX=skin==='x',isLi=skin==='linkedin';
+  const handle=isX?('@'+(C.slug||'you').replace(/[^a-z0-9_]/gi,'').slice(0,15)):(isLi?L.pvPro:host.split('/')[0]);
+  const charline=isX?'<div class="pvcnt">'+cjkLen(c.body)+'/280 '+L.pvChars+'</div>':'';
+  return '<div class="pv '+(isX?'x':isLi?'linkedin':'cn')+'">'+
+    '<div class="pvhd"><div class="av">'+ini+'</div><div><div class="nm">'+esc(name)+'</div><div class="hnd">'+esc(handle)+'</div></div></div>'+
+    (c.title&&!isX?'<div class="pvbody" style="font-weight:700;padding-bottom:0">'+esc(c.title)+'</div>':'')+
+    '<div class="pvbody">'+cut(c.body,isX?280:400)+'</div>'+charline+img+
+    ((isX||isLi)?'<div class="pvlink">🔗 '+esc(host)+'</div>':'')+'</div>';
+}
+const grid=$('#grid');
+(C.platforms||[]).forEach(p=>{
+  // 按当前语言解析这张卡的所有文案（pr = platform resolved）
+  const pr=Object.assign({},p,{name:T(p.name),how:T(p.how),title:T(p.title),text:T(p.text),tips:T(p.tips),url:T(p.url)});
+  const card=document.createElement('div');card.className='card'+(done.has(p.id)?' done':'');
+  const region=p.region==='cn'?'<span class="tag cn">'+L.cn+'</span>':'<span class="tag intl">'+L.intl+'</span>';
+  const star=p.priority?'<span class="star">'+'★'.repeat(p.priority)+'</span>':'';
+  // 统一成 fields：title/text 是隐式字段，p.fields[] 是额外带标签字段（如 Product Hunt / Amazon 表单）
+  const fields=[];
+  if(pr.title) fields.push({label:T(p.titleLabel)||L.fTitle,val:pr.title,rows:2,limit:p.limit||0});
+  if(pr.text) fields.push({label:T(p.textLabel)||L.fText,val:pr.text,rows:8,limit:0});
+  (p.fields||[]).forEach(f=>fields.push({label:T(f.label),val:T(f.value),rows:f.rows||4,limit:f.limit||0}));
+  let h='<div class="top"><span class="name">'+esc(pr.name)+'</span>'+region+star+
+    '<label class="chk"><input type="checkbox" '+(done.has(p.id)?'checked':'')+'> '+L.done+'</label></div>';
+  if(pr.how) h+='<div class="how">'+esc(pr.how)+'</div>';
+  h+='<div class="row"><button class="open">'+L.open+'</button>';
+  fields.forEach((f,i)=>{h+='<button class="copy" data-ci="'+i+'">'+L.copy+esc(f.label)+'</button>';});
+  if(p.needsImage&&C.masterImage&&C.masterImage.image) h+='<button class="openimg" data-oi="1">'+L.useImg+'</button>';
+  h+='<button class="pvbtn">'+L.preview+'</button>';
+  h+='</div>';
+  fields.forEach((f,i)=>{h+='<div class="field"><label>'+esc(f.label)+(f.limit?' <span class="cnt" data-cnt="'+i+'"></span>/'+f.limit:'')+'</label><textarea rows="'+f.rows+'" data-fi="'+i+'"></textarea></div>';});
+  if(p.needsImage) h+='<div class="tips">'+L.needImg+'</div>';
+  if(pr.tips) h+='<div class="tips">'+esc(pr.tips)+'</div>';
+  h+='<div class="pvbox" style="display:none"></div>';
+  card.innerHTML=h;
+  fields.forEach((f,i)=>{const ta=card.querySelector('[data-fi="'+i+'"]');ta.value=f.val;if(f.limit){const c=card.querySelector('[data-cnt="'+i+'"]');const upd=()=>{const n=cjkLen(ta.value);c.textContent=n;c.style.color=n>f.limit?'#ff6b6b':'#3fb98a';};upd();ta.oninput=upd;}});
+  card.querySelector('.open').onclick=()=>window.open(fill(pr.submitUrl||C.primaryUrl,pr),'_blank');
+  const oi=card.querySelector('[data-oi="1"]'); if(oi) oi.onclick=()=>window.open((C.masterImage&&C.masterImage.image)||'#','_blank');
+  card.querySelectorAll('.copy').forEach(b=>b.onclick=()=>copy(fields[+b.dataset.ci].val));
+  const pvb=card.querySelector('.pvbtn'), pvbox=card.querySelector('.pvbox');
+  if(pvb) pvb.onclick=()=>{ if(pvbox.style.display!=='none'&&pvbox.innerHTML){pvbox.style.display='none';return;} fields.forEach((f,i)=>{const ta=card.querySelector('[data-fi="'+i+'"]'); if(ta) f.val=ta.value;}); pvbox.innerHTML=preview(pr,fields); pvbox.style.display='block'; };
+  const cb=card.querySelector('.chk input');
+  cb.onchange=()=>{cb.checked?done.add(p.id):done.delete(p.id);card.classList.toggle('done',cb.checked);save();};
+  grid.appendChild(card);
+});
+function esc(s){return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+save();
+</script>
+</body>
+</html>
