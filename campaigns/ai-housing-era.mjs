@@ -1,0 +1,611 @@
+// 构造「内容/观点文章类」宣发 campaign —— 《AI 的住房时代》（博客首发 + 全网分发）。
+// 母稿来自 ChatGPT 对话整理（2026-09），各平台文案按 references/platform-copy-guidelines.md 改写。
+// 这是轰炸机第 001 篇内容类 campaign：以后「一稿多发」照抄本文件的骨架。
+// 生成: node campaigns/ai-housing-era.mjs  ->  campaigns/ai-housing-era.json
+import { writeFileSync } from 'node:fs';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const here = dirname(fileURLToPath(import.meta.url));
+
+// ── 事实（发布前核对）────────────────────────────────
+const BLOG = 'https://blog.hequbing.com/post?slug=ai-housing-era'; // 博客首发：发布时 slug 用 ai-housing-era
+const SITE = 'https://www.hequbing.com';                 // 作者网站（贺去病 AI 咨询）
+const GH = 'https://github.com/dongsheng123132';        // GitHub 主页
+
+// ── 母稿（公众号/博客全量版）────────────────────────────
+const master = `# 别只盯着苹果涨价，AI 的"住房时代"才刚开始
+
+最近看到一篇文章，讨论苹果新电脑涨价，以及设计师有没有必要为新机器买单。
+
+站在个人使用的角度，这个问题当然值得讨论：旧电脑还能用，为什么要换？性能提升没有想象中大，为什么要多花钱？
+
+但我觉得，还有一个更值得关注的变化：
+
+**下一轮电脑需求，可能不只是"人要换电脑"，而是"人要给 AI 配一台电脑"。**
+
+你买它，不一定因为自己的电脑不够用了。
+
+而是因为，你准备让一个 AI 助理长期替你工作，它需要一个自己的"办公室"。
+
+先把两件事分开：眼下电子产品的价格压力，确实与内存、存储等供应链因素有关。IDC 的分析指出，AI 基础设施扩张正在影响存储产业的产能分配，给消费电子的零部件供应和价格带来压力 [1]。因此，不能把这一轮涨价简单归因于"大家都在买电脑养 AI"。
+
+但供应链解释的是眼前的成本变化。
+
+我更关心的，是另一条可能持续更久的需求逻辑：
+
+**当个人 AI 助理逐渐普及，我们可能需要重新理解，究竟是谁在"使用"电脑。**
+
+## 一、以前买电脑，是给自己用；以后买电脑，还可能是给 AI 用
+
+过去，我们买电脑，基本都围绕自己。
+
+我要写文章、做设计、剪视频、开发软件，所以需要一台电脑。电脑是工具，人是操作它的主体。
+
+但设想另一种场景：
+
+你出门之前，对 AI 说："把客户发来的资料整理好，核对几个方案的差异，形成一份报告。需要我拍板的地方，单独列出来。"
+
+然后你去开会、吃饭、坐车。
+
+这时，你希望发生的事情，不是 AI 在聊天窗口里给你回复一段建议，而是它真的继续处理资料、操作软件、保存进度，最后把结果交给你。
+
+**你离开了电脑，但工作没有停。**
+
+这就产生了一个新的问题：这个 AI，在哪里上班？
+
+总不能你合上笔记本，它就下班；你带走电脑，它就搬家；你打开软件开始工作，它又和你抢同一套操作环境。
+
+于是，给 AI 准备一个相对独立、长期在线的工作环境，就有了意义。
+
+你已经有一台电脑，不代表你不会再买一台。
+
+第二台不是拿来替换第一台的。
+
+**第一台服务于你的操作，第二台服务于 AI 的执行。**
+
+这不是传统意义上的换机，而是一种新的设备分工。
+
+## 二、AI 需要的，不只是"大脑"，还有"办公室"
+
+讨论 AI 硬件，我们很容易立刻想到显卡、算力、大模型。
+
+但对于一个长期替你工作的助理来说，聪明只是其中一部分。
+
+它还需要保存文件，记住任务进度，使用获得授权的工具，在中断后接着工作，在遇到风险时停下来找你确认。
+
+用一个比喻来说：
+
+**模型提供思考能力，工作环境提供持续行动的条件。**
+
+一个人再聪明，没有资料、没有工具、没有权限，也很难替你完成工作。AI 同样如此。
+
+所以，这条需求逻辑，不只是追求"再多一点算力"，而是追求"能不能持续、稳定、可控地干活"。
+
+这与以大规模训练和推理为中心的算力竞争不是一回事，但也不是毫无关系。两者可以互相配合：家里的设备负责保存工作状态、执行任务，需要更强的推理能力时，再调用云端模型。
+
+**你不必在家里建设一座发电厂，也能给自己的办公室接上电。**
+
+同样，你不一定要在家里运行最强的大模型，才有资格拥有一个自己的 AI 工作站。
+
+OpenClaw 的官方文档已经展示了这种部署方式：让一个长期在线的主机承载网关、会话和状态，手机或其他电脑作为客户端接入；这台主机既可以是家庭电脑，也可以是云服务器 [2]。
+
+真正值得注意的，是这种关系：
+
+**人可以移动，AI 的工作环境可以保持稳定。**
+
+## 三、手机可能是最好的指挥入口，却未必是最合适的长期工位
+
+很多人会问：为什么不直接放在手机里？
+
+手机当然重要。
+
+它随身携带，适合接收你的指令、提供现场信息、推送进度，也适合让你随时审批关键操作。
+
+但"随时能联系上助理"，和"把助理的全部工作都放在手机上"，是两件事。
+
+以 iOS 为例，普通应用进入后台后通常会被挂起，后台执行需要遵循系统允许的模式和调度规则，并不能默认像桌面进程一样无限期运行 [3]。
+
+再考虑续航、发热，以及你自己正在使用手机这件事，我更倾向于一种分工：
+
+**手机是指挥入口，常驻设备是执行工位。**
+
+你不必把办公室装进口袋，只要能随时联系办公室就可以了。
+
+那么，全部放在云端行不行？
+
+当然可以，云端也会是重要选择。但对一部分用户而言，他们未必愿意把长期记忆、私人文件、账户权限和全部工作记录，都绑定在同一家服务商那里。
+
+这里真正需要讨论的，不是简单的"云不安全、本地安全"，而是：哪些数据放在哪里，谁能访问，授权能不能收回，服务能不能迁移。
+
+云端同样可以设计隐私保护机制。苹果的 Private Cloud Compute，就是试图在需要更强计算能力时，将隐私保护延伸到云端的一种架构 [4]。
+
+所以，我认为一个很有吸引力的方案是：
+
+**手机负责交互，本地主机负责常驻工作，云端模型按需提供能力。**
+
+当然，本地部署也不意味着数据自动不出门。只要调用外部模型，就仍然需要判断哪些内容可以发送、哪些内容必须留在本地。
+
+真正重要的，不是机器摆在家里这件事，而是用户能不能掌握自己的数据和权限。
+
+## 四、为什么 Mac mini 这种形态，刚好像 AI 的"小房子"？
+
+从这个角度看，Mac mini 这类设备的价值就容易理解了。
+
+它不是因为没有显示器而"不完整"。
+
+恰恰相反，对于主要通过手机远程指挥、长期在后台工作的 AI 来说，一块始终摆在面前的大屏幕，并不是最核心的条件。
+
+更重要的是：体积小、能长期通电、日常运行成本可接受，还有足够完整的软件环境。
+
+以苹果公布的 2024 款 M4 Mac mini 测试数据为例，16GB 内存、256GB 存储的配置，空闲功耗为 4W [5]。这里说的是特定测试条件下的空闲状态，并不是运行 AI 任务时始终只耗 4W，但它能说明这种设备为什么适合被考虑为常驻主机。
+
+更值得注意的是，苹果自己也在强调这一方向。
+
+2026 年 8 月 25 日发布的新款 Mac mini 新闻稿，已经明确将全天候智能体计算列为产品用途之一，而不只是强调它能当一台普通桌面电脑 [6]。
+
+在我看来，这是一个值得重视的信号：
+
+**电脑厂商开始不仅为"坐在电脑前的人"设计卖点，也开始为"持续运行的 AI"设计卖点。**
+
+不过，这不意味着苹果拥有唯一答案。
+
+Mac mini 可以是一套装修比较完整的小公寓；其他迷你主机、家庭服务器，甚至一台重新利用起来的旧电脑，也可能成为 AI 的工位。
+
+具体选择，还要看任务需要什么软件、多少内存、是否运行本地模型，以及维护成本。
+
+**值得看好的，是这种常驻设备的需求，不是某一个品牌必然垄断未来。**
+
+## 五、Token 越便宜，AI 的"工位需求"反而可能越强
+
+这里有一个容易被忽略的关系。
+
+有人觉得，模型调用越来越便宜，甚至很多能力都能在云端获得，本地电脑的重要性应该下降。
+
+但也可能发生相反的事情：
+
+**因为 AI 干活变便宜了，人们才愿意让它干更多活。**
+
+以前，完成一个任务需要反复调用模型，成本太高，于是你只在特别重要的时候使用它。
+
+将来，假设完成同类任务的模型费用继续下降，你可能就愿意让助理更频繁地整理资料、检查变化、跟进项目、准备下一步工作。
+
+不是偶尔问一次，而是持续委托。
+
+这时，对工作环境的要求反而上来了：文件要留着，任务要接得上，工具要能调用，出了问题要能恢复。
+
+可以把它理解为：
+
+**"思考费用"降低了，"安排它持续工作"才开始划算。**
+
+而且，长期在线不等于二十四小时不停地消耗 Token。
+
+一个合理的助理，应该在没有任务时等待，在事件发生时响应，在需要推理时调用模型，而不是为了显示自己"很忙"不断运转。
+
+因此，模型费用下降与常驻设备需求增长，并不矛盾。
+
+但也要分清：**需求增长，不等于每台电脑都会持续涨价。**产能扩张、技术进步、产品竞争，都可能抵消涨价压力。
+
+我看重的是一种新的购买理由，而不是"电脑从此只涨不跌"的故事。
+
+## 六、如果未来有十亿级个人 AI 助理，它们住在哪里？
+
+把时间拉长，我认为，全球十亿乃至二十亿个人 AI 助理的服务需求，值得作为一种长期情景认真讨论。
+
+但这里必须分清：
+
+**十亿个助理，不等于十亿台新增电脑，更不等于未来一两年就会卖出十亿台。**
+
+一个家庭可以共用一台主机，一台机器可以承载多个助理，有人会复用旧设备，也有人会完全使用云服务。
+
+真正有意义的问题是：
+
+当大量用户开始需要一个长期替自己工作的 AI，其中会有多少人，愿意为它准备独立的运行环境？
+
+只要有一部分需求落到专用设备上，就可能形成传统换机逻辑之外的新增市场。
+
+过去，我们主要在计算：一个人需要几台电脑，几年换一次。
+
+未来，还可能需要计算：一个家庭、一个个体经营者、一家小公司，需要多少个持续在线的 AI 工位？
+
+**人的数量没有突然增加，但替人工作的计算环境，可能需要增加。**
+
+我愿意把这称为 AI 的"住房需求"。
+
+这里的"AI 人口"，不是说 AI 变成了人，而是说越来越多持续运行、承接任务的助理，需要自己的工作空间。
+
+有的住在云端的"集体公寓"，有的住在家庭主机的"经济适用房"，有的拥有专门的"小别墅"。
+
+房子可以不同，但都要解决同一个问题：让任务、资料和工作状态，有一个能够持续存在的地方。
+
+## 七、"养龙虾"只是演习，真正的市场是长期替人干活
+
+在我看来，OpenClaw 这类探索，更像一次公开演习。
+
+它们让"主机长期在线、手机远程联系、AI 调用工具执行任务"这种使用方式，变得更加具体 [2]。
+
+但演习和日常生活之间，还有一段距离。
+
+普通用户最终不会因为"成功安装了一个 Agent"而长期付费。
+
+他更关心的是：这个助理究竟能替我完成什么？我不盯着，它会不会乱来？任务失败后能不能接着做？说完成了，有没有结果可以检查？
+
+因此，真正需要建设的，不只是一台机器。
+
+还包括安全的授权方式、可恢复的任务进度、可追溯的操作记录、可迁移的长期记忆，以及让用户看得懂的结果验收。
+
+**机器只是房子。让助理真正住下来、稳定工作，才是完整的产品。**
+
+这也意味着，机会不会只属于卖芯片、卖电脑的公司。
+
+让普通人低门槛地部署、使用、管理自己的 AI 助理，同样可能成为一门长期生意。
+
+---
+
+所以，再看苹果和其他低功耗电脑时，我觉得不必只问：
+
+"性能比上一代提高多少？"
+
+还可以多问一句：
+
+**"它能不能成为一个长期替我工作的 AI 的工位？"**
+
+这不意味着你现在就应该去抢购电脑。先有真正值得委托的任务，再决定是否需要专用设备，比为了想象中的未来囤机器更重要。
+
+但看待电脑的逻辑，确实可以变了。
+
+过去，我们买电脑，是为了自己坐在它面前工作。
+
+未来，我们还可能买一台电脑，是为了自己不坐在它面前时，仍然有事情在被推进。
+
+**你买的，不一定是第二台电脑。**
+
+**也可能是你的第一个 AI 助理，终于有了自己的办公室。**
+
+---
+
+参考资料：
+[1] IDC：AI 基础设施扩张对存储产能分配与消费电子零部件价格影响的分析
+[2] OpenClaw 官方文档：长期在线主机承载网关/会话/状态的部署方式
+[3] Apple：iOS 后台执行模式与调度规则（App Lifecycle）
+[4] Apple：Private Cloud Compute 架构介绍
+[5] Apple：M4 Mac mini 官方测试数据（16GB/256GB 空闲功耗 4W）
+[6] Apple 新闻稿（2026-08-25）：新款 Mac mini，全天候智能体计算列为产品用途`;
+
+// ── 各平台变体 ──────────────────────────────────────────
+const xTweet = {
+  en: `Everyone asks "upgrade my PC?" Wrong question.
+
+The next one may be for your AI, not for you. Phones can't host an always-on agent; the cloud shouldn't hold your whole life.
+
+AI needs housing. 4W idle Mac mini = studio apartment.
+
+blog.hequbing.com/post?slug=ai-housing-era`,
+  zh: `别只问"要不要换电脑"。下一台，可能是买给你的 AI 的：手机装不下常驻助理，云端又不放心交出全部记忆。AI 需要"住房"——一台 4W 待机的 Mac mini，就是它的经济适用房。${BLOG}`,
+};
+const linkedinText = {
+  en: `A quiet shift is happening in consumer hardware: the next wave of PC demand may not come from people upgrading, but from people buying a second machine — as a long-term workstation for their personal AI assistant.
+
+Three reasons this makes sense:
+1. Phones are the command center, but iOS/Android suspend background apps — they can't host an always-on agent.
+2. Full-cloud assistants mean handing over your files, memory and permissions to one vendor. Local-first hosting keeps data and revocable authorization with the user.
+3. Token prices keep falling, which makes *continuous delegation* economically viable — and continuous delegation needs persistent storage, sessions and tool access.
+
+Apple's own Mac mini marketing now lists "around-the-clock agent computing" as a use case. Mini PCs, home servers, even repurposed old laptops can fill this role — the durable trend is the demand for "AI housing", not any single brand.
+
+Full essay: ${BLOG}`,
+  zh: `一个正在发生的变化：下一波电脑需求，可能不是"人换电脑"，而是"人给 AI 配电脑"。手机是指挥入口但装不下常驻 Agent；全交云端又不放心数据和授权。Token 越便宜，"持续委托"越划算，对常驻工作环境的需求反而越强。苹果 Mac mini 的宣传语里已经出现"全天候智能体计算"。看全文：${BLOG}`,
+};
+const redditText = {
+  en: `I wrote an essay arguing that the next wave of consumer PC demand won't be people upgrading their own machines — it will be people buying a second, low-power always-on box to host a personal AI agent.
+
+The reasoning: phones suspend background apps so they can't host a persistent agent; handing everything to a cloud assistant means trusting one vendor with your files, memory and permissions. A home host keeps sessions, state and revocable authorizations local, while calling cloud models when more reasoning is needed. As token prices fall, continuous delegation becomes affordable — which ironically increases the need for persistent local infrastructure.
+
+I try to be honest about counterarguments in the piece: supply-chain costs explain most of the current price hikes, ten billion assistants ≠ ten billion new PCs, and shared/cloud hosting is a legitimate path for many people. Not selling anything — the essay grew out of watching OpenClaw-style setups demonstrate that "agent + always-on host + phone as remote" actually works. Feedback welcome.`,
+};
+const hnBody = {
+  en: `The essay argues the next wave of consumer PC demand is "AI housing": low-power always-on home hosts that give personal AI agents persistent storage, sessions and tool access, with the phone as a command center and cloud models called on demand.
+
+Key points: iOS/Android suspend background apps, so phones can't host a persistent agent; full-cloud assistants concentrate files, memory and permissions with one vendor; falling token prices make continuous delegation affordable, which increases rather than decreases the need for persistent local infrastructure. Apple's Mac mini marketing already lists around-the-clock agent computing as a use case; 4W idle draw makes such machines plausible "agent apartments".
+
+I'd be interested in what HN thinks: is local-first agent hosting a real market, or does cloud win on convenience? What are the hard parts — task resumption, revocable authorization, auditable operation logs?`,
+};
+const tgText = {
+  zh: `AI 的"住房时代"：下一台电脑，可能是买给你的 AI 的。手机装不下常驻助理，云端不放心，一台低功耗常驻主机才是它的"经济适用房"。全文：`,
+  en: `The "AI housing era": your next computer may be for your AI, not for you. Phones can't host an always-on assistant; a low-power home host is its affordable apartment. Full essay: `,
+};
+const weiboText = `别只盯着苹果涨价：AI 的"住房时代"才刚开始。下一波电脑需求不是人换电脑，而是给 AI 配一台 24 小时在线的"工位"——手机是指挥入口，常驻主机才是执行工位。全文 ${BLOG} #AI助理# #人工智能# #苹果#`;
+const jikeText = `写了篇观点文：AI 的"住房时代"。
+
+• 下一波电脑需求 ≠ 人换电脑，而是给 AI 配一台常驻"工位"
+• 手机＝指挥入口（后台会被挂起，装不下常驻 Agent）
+• 全交云端＝把文件/记忆/权限都押给一家服务商
+• 本地主机保状态，云端模型按需调用，Token 越便宜越成立
+• Mac mini 官方宣传已把"全天候智能体计算"写进用途
+
+全文：${BLOG}
+适合正在折腾 Agent 部署 / 关心 local-first 的朋友。`;
+const xhsText = `你的 AI 助理，还住在"合租房"里吗🏠
+
+刷到好多人讨论电脑涨价📱 但很少有人讲这层逻辑：
+
+🔥 下一波买电脑的理由变了——不是你自己要用，是 AI 要"上班"
+✅ 手机当指挥台 OK，但它装不下 24 小时在线的助理（后台直接被杀）
+✅ 全放云端？文件、记忆、权限全押给一家公司，想想就睡不着
+✅ 所以答案是：家里放一台低功耗小主机，给它当"经济适用房"💡
+✅ Mac mini 待机才 4W，官方都开始宣传"全天候智能体计算"了
+
+📌 一句话总结：手机负责使唤，主机负责干活，云端按需加班
+
+你会给你家 AI 准备一台电脑吗？评论区聊聊👇
+
+#AI助理 #Macmini #数码科技 #人工智能 #效率工具`;
+const momentsText = `最近想明白一件事：以前买电脑是给自己用，以后可能是给 AI 用。手机装不下 24 小时在线的助理，云端又不放心交出全部记忆——所以"给 AI 一台常驻小主机"会成为新常态，苹果的 Mac mini 宣传里都已经写上"全天候智能体计算"了。写了篇长文把这个逻辑讲透：`;
+const zhihuText = `先说结论：**下一轮电脑需求的核心变量，不是人的换机周期，而是 AI 的"住房需求"。**
+
+这个判断和眼下这轮涨价要分开看。
+
+**一、眼前的涨价是供应链问题。**IDC 的分析把原因指向 AI 基础设施扩张挤占存储产能，推高消费电子零部件价格。把它归因于"大家买电脑养 AI"是错的。
+
+**二、但长期的需求逻辑藏在另一个地方：谁来"使用"电脑？**
+
+设想你出门前对 AI 说"把资料整理成报告"，然后你去开会。你希望的不是它回你一段建议，而是它真的在持续干活——保存进度、调用工具、最后交付结果。
+
+**你离开了电脑，但工作没有停。**那这个 AI 在哪里上班？
+
+手机不行：iOS 后台会挂起普通应用，装不下常驻助理 [3]。
+全云端存疑：长期记忆、私人文件、账户权限全押给一家服务商，授权能不能收回、服务能不能迁移，都是问题。
+
+所以更合理的分工是：**手机负责交互，本地主机负责常驻工作，云端模型按需提供能力。**
+
+有人会反驳：模型越便宜，越该全上云。我认为恰恰相反——"思考费用"降低，才让"持续委托"变得划算，而持续委托对持久化环境（文件、会话、工具权限、可恢复的任务状态）的要求反而更高。
+
+信号已经出现：苹果新款 Mac mini 的官方新闻稿把"全天候智能体计算"写进了产品用途 [6]，M4 款空闲功耗 4W [5]——这不是给"坐在电脑前的人"设计的卖点。
+
+**十亿个 AI 助理 ≠ 十亿台电脑。**一个家庭可以共用主机，一台机器可以承载多个助理。但只要有一部分需求落到专用常驻设备上，就是传统换机逻辑之外的新增市场。
+
+OpenClaw 这类项目只是演习 [2]；真正的市场，是让普通人低门槛地拥有一个"长期替自己干活的 AI"——以及它的房子。
+
+参考：[1] IDC 存储产能分析 [2] OpenClaw 官方文档 [3] Apple iOS 后台执行机制 [5] Apple M4 Mac mini 测试数据 [6] Apple 2026-08-25 新闻稿`;
+const juejinText = `从工程视角聊一个正在成型的部署形态：**个人 Agent 的常驻主机（Agent Resident Host）**。
+
+## 架构：手机 → 家庭主机 → 云端模型
+
+OpenClaw 官方文档给出的部署范式 [2]：一台长期在线的主机承载**网关、会话、状态**，手机/其他电脑作为瘦客户端接入。这台主机可以是家庭电脑，也可以是云服务器——但家庭主机在数据主权上有天然优势。
+
+## 为什么手机端装不下常驻 Agent
+
+iOS 后台执行有严格的模式和调度限制，普通 App 进后台即被挂起 [3]；Android 有 Doze 与后台限制。Agent 需要的是：持久化文件、可恢复的任务队列、常驻工具授权、事件驱动的唤醒——这些在一个"随时可能被杀进程"的沙箱里做不了。
+
+## 本地主机 + 云端模型的混合分工
+
+- 主机侧：状态管理、任务恢复、授权边界（可撤销）、操作日志
+- 云端侧：重推理按需调用——"不必在家建发电厂，办公室接电就行"
+
+关键设计约束：**调用外部模型时，哪些上下文可以出境、哪些必须留在本地**，这是 local-first Agent 的核心安全边界，而不是一句"本地=安全"。
+
+## 一个反直觉的经济学
+
+Token 降价通常被解读为"云端更香、本地更没用"。反过来想：推理成本下降 → 持续委托变得划算 → 对持久化基础设施（存储、会话、授权、日志）的需求上升。**思考费用降了，工位需求才起来。**
+
+## 验收难题才是产品机会
+
+机器只是房子。任务中断恢复、可追溯操作记录、可迁移长期记忆、用户可理解的结果验收——这些才是"让助理稳定住下来"的完整产品，也是当下的空白区。
+
+苹果已经把"全天候智能体计算"写进 Mac mini 的产品用途 [6]。各位折腾 Agent 部署的，怎么看这个方向？
+
+全文（含完整论证）：${BLOG}`;
+const v2exText = `背景：最近 AI Agent 圈都在讨论"给 AI 配一台常驻电脑"这件事，写了篇文章梳理底层逻辑，发出来听听 V2 友们的看法。
+
+核心观点：
+1. 下一波电脑需求不是换机，而是"第二台给 AI 用"——低功耗、24 小时在线、无头运行；
+2. 手机端因后台挂起机制装不下常驻 Agent，云端方案又有数据主权顾虑，家庭主机是折中；
+3. Token 降价反而推高常驻设备需求：持续委托变便宜了，对持久化环境要求更高；
+4. Mac mini（M4 空闲 4W [5]，苹果官方已把"全天候智能体计算"写进新闻稿 [6]）是典型形态，但迷你主机 / 家庭服务器 / 旧电脑复用都行。
+
+诚实声明：这轮涨价主要是供应链问题（IDC 分析 [1]），别当成"买电脑养 AI"的论据；十亿助理也不等于十亿台电脑。
+
+全文：${BLOG}
+
+想讨论的点：大家在自家局域网里跑 Agent 的，任务恢复、授权管理、操作审计都怎么做的？`;
+const sspaiText = `一个新视角：你可能需要为 AI 买第二台电脑。
+
+本文聊清楚三件事：
+① 为什么手机装不下 24 小时在线的 AI 助理（后台机制 + 续航发热）；
+② 为什么"全放云端"让一部分人不放心（数据、记忆、授权的归属）；
+③ 为什么一台低功耗常驻小主机是 AI 的"经济适用房"——Mac mini 待机 4W，官方宣传里已经出现"全天候智能体计算"。
+
+顺带回应两个常见质疑：这轮涨价主要是供应链原因，别归因给 AI；Token 越便宜，反而越需要给 AI 准备一个稳定的"工位"。
+
+读完你不用急着买任何东西——先想清楚：你有什么事，值得交给一个"长期在线的助理"去持续推进？`;
+const biliText = `【观点】别只盯着苹果涨价：AI 的"住房时代"才刚开始。这一期讲清楚：为什么下一波电脑需求可能是"给 AI 配电脑"而不是人换电脑？手机为什么装不下常驻 AI 助理？全交云端有什么隐患？为什么 Mac mini 待机 4W 反而是大事？Token 降价和常驻主机需求居然不矛盾？最后聊聊"养龙虾"只是演习，真正的机会在哪里。`;
+const baiduText = `很多人搜"苹果电脑为什么涨价""要不要趁涨价前买电脑"。本文讲清：一、这轮涨价的主因是 AI 基础设施扩张挤占存储产能（IDC 分析），属供应链问题；二、更长期的新需求来自个人 AI 助理——手机后台机制装不下常驻助理，云端方案存在数据与授权顾虑，一台低功耗常驻主机（如 Mac mini，M4 款空闲功耗 4W）正在成为"AI 的工位"；三、苹果新款 Mac mini 新闻稿已把"全天候智能体计算"列为产品用途；四、买不买先看需求：先有值得委托的任务，再考虑专用设备。`;
+const hnTitle = 'The AI housing era: the next computer you buy may be for your AI (not you)';
+const devtoText = {
+  en: `## The premise
+
+Everyone debates "should I upgrade my PC?" — but the more interesting question is who the *next* PC is for. My argument: a growing share of consumer PC demand will be **AI housing** — low-power, always-on home hosts that give personal AI agents persistent storage, sessions and tool access.
+
+## Why phones can't host your agent
+
+Mobile OSes suspend background apps by design. An agent that "keeps working while you're away" needs persistent processes, resumable task queues and event-driven wakeups — none of which survive in an app lifecycle built for foreground UX.
+
+## Why full-cloud isn't the default answer
+
+Handing files, long-term memory and account permissions to a single vendor concentrates risk. The interesting design space is **local host + on-demand cloud models**: keep state and revocable authorization at home, call stronger models when needed. "You don't build a power plant to light your office."
+
+## The counterintuitive economics
+
+Falling token prices are usually read as "cloud wins, local loses". The opposite may hold: cheaper inference makes *continuous delegation* viable, and continuous delegation raises the bar for persistent infrastructure — storage, sessions, revocable permissions, auditable logs.
+
+## What Apple is signaling
+
+Apple's Mac mini press materials now list around-the-clock agent computing as a use case, and the M4 model idles at 4W. Mini PCs, home servers, repurposed laptops — the durable trend is demand for agent hosting, not one brand.
+
+Full essay (Chinese): ${BLOG}
+
+Tags: ai, agents, local-first, hardware`,
+};
+const blogSeoTitle = '别只盯着苹果涨价，AI 的"住房时代"才刚开始';
+const blogSeoDesc = '下一轮电脑需求，可能不是"人要换电脑"，而是"人要给 AI 配一台电脑"。从供应链涨价、手机后台机制、数据主权到 Token 经济学，拆解个人 AI 助理的"住房需求"。';
+
+// 主图：迷你电脑像住宅楼亮灯，每台住一个 Agent（扁平编辑插画风，避开深色大屏/AI味）
+const masterPrompt = 'Flat modern editorial illustration, 1:1 square: a neat row of small house-shaped desktop mini computers on a warm wooden shelf at night, each mini PC glowing with warm lit windows like tiny apartments, one tiny friendly agent orb living inside each one, soft warm paper-tone palette with one blue accent, clean minimal composition, generous negative space, no text, no watermark, no neon, no dark sci-fi mood';
+
+const campaign = {
+  slug: 'ai-housing-era',
+  langs: ['zh', 'en'],
+  defaultLang: 'zh',
+  title: {
+    zh: 'AI 的住房时代 · 博客首发全网分发',
+    en: 'The AI Housing Era · blog-first multi-channel launch',
+  },
+  subtitle: {
+    zh: '一稿多发 001：母稿《别只盯着苹果涨价，AI 的"住房时代"才刚开始》——公众号/知乎/掘金/V2EX/X/Reddit 一轮打完',
+    en: 'Master essay + per-platform variants: WeChat/Zhihu/Juejin/X/Reddit, one pass',
+  },
+  primaryUrl: BLOG,
+  masterImage: { prompt: masterPrompt, size: '1024x1024' },
+  repos: [
+    { label: { zh: '博客全文', en: 'Full essay' }, url: BLOG },
+    { label: { zh: '作者网站', en: 'Website' }, url: SITE },
+    { label: { zh: 'GitHub', en: 'GitHub' }, url: GH },
+  ],
+  platforms: [
+    // ── 国内长文平台（priority 3）──────────────────────
+    {
+      id: 'mp', name: '微信公众号', region: 'cn', priority: 3,
+      how: { zh: '粘贴母稿全文；建议先过 mdnice/markdown 转微信格式再贴，保留标题层级与加粗', en: 'Paste master essay; convert markdown via mdnice first' },
+      submitUrl: 'https://mp.weixin.qq.com/',
+      title: { zh: '别只盯着苹果涨价，AI 的"住房时代"才刚开始' },
+      text: { zh: master },
+      tips: { zh: '公众号排版用 mdnice 主题；封面用通配主图；文末参考资料保留，显专业。' },
+    },
+    {
+      id: 'zhihu', name: '知乎专栏', region: 'cn', priority: 3,
+      how: { zh: '发专栏；观点+对比结构，可同步回答"为什么苹果电脑涨价"类高热问题后引流', en: 'Column post; also answer hot questions linking back' },
+      submitUrl: 'https://zhuanlan.zhihu.com/write',
+      title: { zh: '为什么我认为：下一台电脑可能不是买给你的，是买给你的 AI 的' },
+      text: { zh: zhihuText },
+      tips: { zh: '知乎吃观点冲突与论证；别照搬母稿，用这版问答式浓缩。' },
+    },
+    {
+      id: 'juejin', name: '掘金', region: 'cn', priority: 3,
+      how: { zh: '发前端/架构分类；技术向版本，讲部署形态与安全边界', en: 'Post under architecture; tech-focused variant' },
+      submitUrl: 'https://juejin.cn/editor/drafts/new',
+      title: { zh: '个人 Agent 的常驻主机：为什么下一波硬件需求是"AI 住房"' },
+      text: { zh: juejinText },
+      tips: { zh: '掘金看架构干货：网关/会话/状态、授权边界、任务恢复这些词留着。' },
+    },
+    {
+      id: 'v2ex', name: 'V2EX · 分享创造', region: 'cn', priority: 3,
+      how: { zh: '发「分享创造」或「奇思妙想」节点；平实第一人称，结尾抛技术讨论点', en: 'Post to /create or /ideas; plain first-person' },
+      submitUrl: 'https://www.v2ex.com/new',
+      title: { zh: '写了一篇「AI 的住房时代」：下一波电脑需求可能是给 AI 配常驻主机' },
+      text: { zh: v2exText },
+      tips: { zh: 'V2EX 讨厌营销腔；保留"诚实声明"段，附原文链接即可。' },
+    },
+    // ── 社交短内容（priority 3/2）─────────────────────
+    {
+      id: 'xiaohongshu', name: '小红书', region: 'cn', priority: 3, needsImage: true,
+      how: { zh: 'creator 后台发图文；emoji 清单体，必须配图', en: 'Creator backend; emoji list style, image required' },
+      submitUrl: 'https://creator.xiaohongshu.com/publish/publish', needsImage: true,
+      text: { zh: xhsText },
+      tips: { zh: '配通配主图；封面字可以打"你的AI住哪？"；tags 单独一行。' },
+    },
+    {
+      id: 'jike', name: '即刻', region: 'cn', priority: 3,
+      how: { zh: '发"一厢"或 AI 相关站点；bullet 干货 + 链接', en: 'Post to AI-interest circles; bullets + link' },
+      submitUrl: 'https://web.okjike.com/',
+      text: { zh: jikeText },
+      tips: { zh: '即刻工程师密度高，bullet 版正好；有人接话就展开聊。' },
+    },
+    {
+      id: 'weibo', name: '微博', region: 'cn', priority: 2, needsImage: true,
+      how: { zh: '一键打开已预填文案+链接，配主图再发', en: 'Pre-filled share; attach image' },
+      submitUrl: 'https://service.weibo.com/share/share.php?title={text}&url={rawurl}', url: BLOG, needsImage: true,
+      text: { zh: weiboText },
+      tips: { zh: '蹭"苹果涨价"话题；#话题# 已带三个，别再加了。' },
+    },
+    {
+      id: 'bilibili', name: 'Bilibili 专栏', region: 'cn', priority: 2,
+      how: { zh: '发专栏；之后可按 biliText 提纲录 5 分钟视频版', en: 'Column now; video version later from outline' },
+      submitUrl: 'https://member.bilibili.com/platform/upload/text/edit',
+      title: { zh: '别只盯着苹果涨价：AI 的"住房时代"才刚开始' },
+      text: { zh: biliText + '\n\n' + zhihuText },
+      tips: { zh: '专栏先占位；视频版封面用主图+大字"AI 的住房时代"。' },
+    },
+    {
+      id: 'baidu', name: '百度百家号', region: 'cn', priority: 2,
+      how: { zh: '问答式标题吃搜索长尾', en: 'Q&A style title for search long-tail' },
+      submitUrl: 'https://baijiahao.baidu.com/',
+      title: { zh: '苹果电脑为什么涨价？和 AI 助理有什么关系？一文讲清' },
+      text: { zh: baiduText },
+      tips: { zh: '标题用用户会搜的疑问句；正文分段短，答案前置。' },
+    },
+    {
+      id: 'sspai', name: '少数派', region: 'cn', priority: 2,
+      how: { zh: '投稿；「轻量工具叙事」改成"第二台电脑"视角', en: 'Submit; angle: your second computer' },
+      submitUrl: 'https://sspai.com/write',
+      title: { zh: '你可能需要为 AI 买第二台电脑："AI 住房时代"来了' },
+      text: { zh: sspaiText },
+      tips: { zh: '少数派读者吃"买不买"决策文；开头三问直接给答案。' },
+    },
+    {
+      id: 'moments', name: '微信朋友圈', region: 'cn', priority: 2, manual: true,
+      how: { zh: '复制短文+链接，手动发朋友圈（无网页提交页）', en: 'Copy text + link, post manually' },
+      submitUrl: 'weixin://',
+      text: { zh: momentsText + BLOG },
+      tips: { zh: '朋友圈对话感、别堆 emoji；链接放最后一段。' },
+    },
+    // ── 海外（priority 2/1）───────────────────────────
+    {
+      id: 'x', name: 'X / Twitter', region: 'intl', priority: 2,
+      how: { zh: '一键打开已预填英文推文，配主图/GIF 再发', en: 'Pre-filled tweet; attach image' },
+      submitUrl: 'https://twitter.com/intent/tweet?text={text}', text: xTweet, needsImage: true,
+      tips: { zh: '英文版主推；中文版可当回复跟帖。280 硬限已算过（URL 固定 23）。' },
+    },
+    {
+      id: 'linkedin', name: 'LinkedIn', region: 'intl', priority: 2,
+      how: { zh: '点开发帖框；前两行是折叠前黄金位', en: 'Open share box; first 2 lines are the hook' },
+      submitUrl: 'https://www.linkedin.com/feed/?shareActive=true',
+      text: linkedinText,
+      tips: { zh: '编号列表体职业化表达；结尾放全文链接。' },
+    },
+    {
+      id: 'reddit', name: 'Reddit · r/LocalLLaMA', region: 'intl', priority: 2,
+      how: { zh: '低调讨论帖：说观点、给反方、求反馈，绝不说 check it out', en: 'Low-key discussion post, honest trade-offs' },
+      submitUrl: 'https://www.reddit.com/r/LocalLLaMA/submit?title={title}',
+      title: { en: 'Essay: the next wave of consumer PC demand may be "AI housing" — second machines hosting personal agents' },
+      text: redditText,
+      tips: { zh: 'r/LocalLLaMA 或 r/singularity；标题已按"描述性不标题党"写，正文先给反方论点。' },
+    },
+    {
+      id: 'hn', name: 'Hacker News', region: 'intl', priority: 2,
+      how: { zh: '纯链接提交（标题<80字符已验）；正文贴第一条评论，零营销腔', en: 'Link submission; text goes as first comment' },
+      submitUrl: 'https://news.ycombinator.com/submitlink?u={url}&t={title}', url: BLOG,
+      title: { en: hnTitle },
+      text: hnBody,
+      tips: { zh: '标题 74 字符（<80 已验）；美西周二~四早 8-10 点投；正文当 first comment。' },
+    },
+    {
+      id: 'devto', name: 'Dev.to', region: 'intl', priority: 1,
+      how: { zh: '英文技术博客版，markdown 直接贴', en: 'English blog version, paste markdown' },
+      submitUrl: 'https://dev.to/new',
+      title: { en: 'AI housing: why the next computer you buy may be for your agent, not for you' },
+      text: devtoText,
+      tags: 'ai, agents, localfirst, hardware',
+      tips: { zh: 'tags: ai, agents, local-first, hardware；结尾链回博客。' },
+    },
+    {
+      id: 'telegram', name: 'Telegram', region: 'intl', priority: 1,
+      how: { zh: '一键预填"短句+链接"分享到频道/群', en: 'Pre-filled short share' },
+      submitUrl: 'https://t.me/share/url?url={rawurl}&text={text}', url: BLOG,
+      text: tgText,
+      tips: { zh: '发自己的频道 + 相關 AI 群各一次，别刷屏。' },
+    },
+  ],
+};
+
+const out = resolve(here, 'ai-housing-era.json');
+writeFileSync(out, JSON.stringify(campaign, null, 2), 'utf8');
+console.log('wrote', out);
