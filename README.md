@@ -1,6 +1,6 @@
 # 全媒体发布轰炸机
 
-作者 / Author：贺去病（贺方升 / Dosen）· [hequbing.com](https://www.hequbing.com)
+作者 / Author：He Fangsheng (贺方升 / 贺去病; Dosen)· [hequbing.com](https://www.hequbing.com)
 
 一份文案 → 一张自包含 HTML「发布台」，20+ 主流媒体入口（X / HN / Reddit / Product Hunt / LinkedIn / V2EX / 掘金 / 知乎 / 小红书 / 微博 / 公众号 / 抖音 / B站…），每个平台一张卡：**[一键打开发布页]**（在你登录态浏览器里开好提交页）+ **[复制标题/正文]**（平台定制文案）+ X/HN/Reddit/微博/Telegram **URL 预填**。**一张通配主图**自动生成，需配图的平台共用。进度勾选记 localStorage。
 
