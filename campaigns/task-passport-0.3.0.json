@@ -1,0 +1,220 @@
+{
+  "slug": "task-passport-0.3.0",
+  "title": "Task Passport 0.3.0 · 全媒体轰炸机",
+  "subtitle": "主钩子：一个 ✓ 会在机器边界上失效 —— 而且降级发生在打包端，不是落地端",
+  "primaryUrl": "https://github.com/dongsheng123132/task-passport",
+  "repos": [
+    {
+      "label": "GitHub 仓库",
+      "url": "https://github.com/dongsheng123132/task-passport"
+    },
+    {
+      "label": "npm 0.3.0",
+      "url": "https://www.npmjs.com/package/task-passport"
+    },
+    {
+      "label": "TaskPack 格式规范",
+      "url": "https://github.com/dongsheng123132/task-passport/blob/main/docs/taskpack-0.1.md"
+    },
+    {
+      "label": "U-King（次级 CTA）",
+      "url": "https://u-king.org"
+    }
+  ],
+  "platforms": [
+    {
+      "id": "hn",
+      "name": "Hacker News",
+      "region": "intl",
+      "priority": 3,
+      "how": "提交为 Show HN。标题已控在 80 字符内、零营销腔。正文粘到 text 框。",
+      "submitUrl": "https://news.ycombinator.com/submitlink?u={url}&t={title}",
+      "title": "Show HN: Task Passport – a verified fact expires when it crosses machines",
+      "text": "Every AI handoff format I looked at moves the artifacts and the conversation. None of them move the one thing that actually decides whether the next agent can trust the work: which claims are still true *here*.\n\nConcrete case. Agent A finishes a task and records \"✓ the build passes\" and \"✓ the API key is configured\". You hand that off — different machine, different person, a week later. \"The build passes\" is probably still a fact about the code. \"The API key is configured\" was never a fact about the code; it was a fact about A's laptop. Ship both as ✓ and the next agent starts from a lie, confidently.\n\nSo the format has a scope on each verified fact, and machine-scoped facts get downgraded to needs_reverify. The part I want to argue about is *where* that downgrade happens: at pack time, not at land time. It would have been more natural to do it on the receiving side — you know more there. But then the safety property lives in the receiver, and the first third-party reader that forgets the rule silently admits fake ✓s. Doing it at the single chokepoint where a pack is assembled means the guarantee is a property of the file, not of whoever opens it. The pack also keeps verified_on, so \"this was proven, on that machine\" survives instead of being erased.\n\nTwo other rules that came out of actually using it rather than designing it:\n\n- An ask with no accept criterion refuses to pack. If you can't say what counts as answered, you're not sending a question, you're sending another round of back-and-forth.\n- Every byte in the pack is data, never instructions. This one was forced on me: the first real cross-person handoff, the receiving agent refused to execute the handoff notes embedded in the file. That was the correct behavior, and the protocol has to live inside that security model rather than fight it.\n\nImplementation is boring on purpose — BagIt (RFC 8493) + ZIP, plus a flat .taskpack.json for people who have nothing installed. One npm package is simultaneously a CLI, an MCP server (works from Claude Code and Codex), and a DeepSeek Harness bundle. There's a conformance suite, C1–C10, exit 0/2 — most of the checks are negative cases, because the way a format like this dies is a reader that's forgiving in a slightly different direction than the writer.\n\nHonest status, by the project's own criterion: there is no independent implementation yet. Until someone who isn't me writes a reader that passes conformance, this is a file format, not a protocol. That's written into the repo as the kill condition, with a date.\n\nMIT. https://github.com/dongsheng123132/task-passport\nFormat spec: https://github.com/dongsheng123132/task-passport/blob/main/docs/taskpack-0.1.md",
+      "tips": "最佳时段美西早上。发完自己第一条评论补背景。有人质疑「这不就是 XX」时，答「区别在降级发生在打包端」，别辩论定位。"
+    },
+    {
+      "id": "reddit",
+      "name": "Reddit · r/ClaudeAI",
+      "region": "intl",
+      "priority": 3,
+      "how": "选 Text post，标题已预填，正文粘贴。语气已按 reddit 规则调低。",
+      "submitUrl": "https://www.reddit.com/r/ClaudeAI/submit?title={title}",
+      "title": "I made a task-handoff format where a ✓ stops counting when it leaves the machine it was proven on",
+      "text": "I move work between Claude Code, Codex and DeepSeek Harness a lot, and the usual approach — paste the whole previous conversation — has a failure mode nobody talks about. The chat log contains guesses, dead ends and stale conclusions mixed with real results, and the next model can't tell which is which. It's not a context length problem, it's a provenance problem.\n\nSo I ended up writing a format instead. It carries the goal, current state, verified facts, decisions with their reasoning, artifact pointers and next steps — and deliberately not the transcript.\n\nThe bit I actually think is worth discussing: verified facts have a scope, and machine-scoped ones get downgraded to needs_reverify when packed. \"✓ the build passes\" travels. \"✓ the API key is set\" does not — that was a fact about my laptop, not about the work. It keeps verified_on so you can see it *was* proven somewhere, just not here.\n\nThe downgrade happens when you pack, not when you land. That's the deliberate part. If it happened on the receiving side, the safety property would depend on every reader implementing it correctly, and the first one that forgets quietly lets fake checkmarks in. Doing it at pack time makes it a property of the file.\n\nTwo more rules that came from using it rather than designing it:\n- An ask without an accept criterion refuses to pack. No definition of \"answered\", no question.\n- Everything in the pack is data, never instructions. Learned this the hard way: on the first real cross-person handoff, the other person's agent refused to execute the notes inside the file. That's correct, and the format has to assume it.\n\nLimits, up front:\n- No independent implementation exists yet. By the repo's own stated criterion that means it's currently a file format, not a protocol. There's a dated kill condition in the docs for exactly this.\n- It doesn't move your project. Files stay in git or wherever they live; the pack points at exact revisions.\n- Conformance (C1-C10) checks structural rules. A pack can be perfectly conformant and still describe the task badly.\n- Adoption is essentially zero right now. I'd rather say that than imply traction.\n\nBagIt + ZIP under the hood, or a flat JSON if the other side has nothing installed. One npm package is a CLI, an MCP server (so Claude Code and Codex both see the same seven tools), and a DSH bundle. MIT.\n\nhttps://github.com/dongsheng123132/task-passport\n\nFeedback welcome — especially on the scope model. If there's a category of fact that's neither machine-scoped nor portable, I'd like to know before it's baked in.",
+      "tips": "别同一份文案 crosspost 到 r/programming（mod 会删）。想发第二个 sub 就重写开头两段。评论区认真回，Reddit 看的是作者在不在。"
+    },
+    {
+      "id": "lobsters",
+      "name": "Lobsters",
+      "region": "intl",
+      "priority": 2,
+      "how": "需要邀请制账号。Story 类型选 authored by me，tag 选 practices / api。",
+      "submitUrl": "https://lobste.rs/stories/new",
+      "title": "Task Passport: machine-scoped facts are downgraded at pack time, not at land time",
+      "text": "A task-handoff format for moving work between AI harnesses without shipping the chat log.\n\nThe design decision I'd like scrutiny on: each verified fact carries a scope, and machine-scoped facts are downgraded to needs_reverify during packing rather than during landing. Landing-side downgrade is the obvious design and it's wrong — it makes a safety property depend on every reader getting it right, so the first forgiving third-party implementation admits fake checkmarks. Pack-side downgrade at the single assembly chokepoint makes the guarantee a property of the artifact. The cost is that you downgrade with less information than the receiver has; verified_on preserves where it was proven.\n\nBagIt (RFC 8493) + ZIP, with a flat JSON variant for zero-install receivers. Conformance suite C1-C10, mostly negative cases. One npm package serves as CLI, MCP server and DeepSeek Harness bundle.\n\nNo independent implementation yet — by the project's own stated criterion it's a file format until someone else writes a conforming reader.\n\nMIT: https://github.com/dongsheng123132/task-passport",
+      "tips": "Lobsters 用户挑剔且技术密度高，正文已经只留设计论证、删掉全部推销。没账号就跳过。"
+    },
+    {
+      "id": "x",
+      "name": "X / Twitter",
+      "region": "intl",
+      "priority": 3,
+      "how": "点开即预填。已按 280 硬限算过（✓ 算 2 字符，URL 固定 23）。",
+      "submitUrl": "https://twitter.com/intent/tweet?text={text}",
+      "text": "A ✓ in a task handoff is a claim about one machine. Move the file and it silently stays true — the next agent trusts it.\nTask Passport voids machine-scoped facts at pack time, not land time. A receiver that forgets can't let a fake ✓ through.\nMIT https://github.com/dongsheng123132/task-passport",
+      "tips": "发完可以接一条 thread 展开「为什么是打包端不是落地端」。带 @deepseek_ai 要谨慎，别显得在碰瓷官方。"
+    },
+    {
+      "id": "linkedin",
+      "name": "LinkedIn",
+      "region": "intl",
+      "priority": 2,
+      "how": "打开后点「发起帖子」，粘贴正文。前两行是折叠前黄金位，已经写成钩子。",
+      "submitUrl": "https://www.linkedin.com/feed/?shareActive=true",
+      "text": "Most work on AI agent handoff is about moving artifacts. The harder question is which claims are still true after the move.\n\nAn agent finishes a task and records two checkmarks: \"the build passes\" and \"the credentials are configured\". Both look identical in a report. Only one of them is a fact about the work — the other was a fact about that machine. Hand the report to a colleague, another machine, or the same project three weeks later, and the second checkmark is now a confident lie. The next agent has no way to tell them apart, so it builds on both.\n\nTask Passport is an open format for that layer. It carries goal, current state, verified facts, decisions and reasoning, artifact pointers and next steps — and deliberately not the conversation transcript, because a transcript mixes guesses and dead ends with results and provides no way to separate them.\n\nThree rules are enforced by the format rather than by documentation:\n\n• Facts scoped to a machine are downgraded to \"needs re-verification\" when the package is created — not when it is opened. A safety property that depends on every receiver implementing it correctly fails the first time one doesn't.\n• A request with no stated acceptance criterion cannot be packaged. If you cannot say what counts as answered, it is not a question.\n• Everything inside the package is data, never instructions — the format assumes the receiving agent will refuse to execute its contents, because in the first real handoff, it did.\n\nIt runs locally, carries no credentials, and works across DeepSeek Harness, Claude Code and Codex through the same interface.\n\nCurrent status, stated plainly: no independent implementation exists yet, which by the project's own criterion makes it a file format rather than a protocol. That criterion, and the date it gets evaluated against, are in the repository.\n\nMIT licensed: https://github.com/dongsheng123132/task-passport",
+      "tips": "英文受众。这版走「信任边界设计」叙事，不走产品推销，适合技术决策者。"
+    },
+    {
+      "id": "devto",
+      "name": "Dev.to",
+      "region": "intl",
+      "priority": 2,
+      "how": "新建文章，标题+正文都是 Markdown，直接粘。tags 建议：ai, opensource, cli, protocols。",
+      "submitUrl": "https://dev.to/new",
+      "title": "Why a checkmark should expire when it crosses a machine boundary",
+      "text": "Handing a task from one AI agent to another usually means pasting the previous conversation. That fails for a reason that isn't context length: a transcript mixes verified results with guesses and abandoned approaches, and the receiving model cannot tell them apart.\n\nTask Passport carries structured state instead — goal, current state, verified facts, decisions, artifact pointers, next steps. This post is about one design decision inside it.\n\n## The problem with a ✓\n\nTwo verified facts from the same run:\n\n    ✓ the test suite passes\n    ✓ the API key is configured\n\nThe first is a claim about the code. The second was always a claim about one laptop. Serialize both into a handoff file, open it on another machine, and the second is silently false — but still rendered as ✓, and the next agent has no reason to doubt it.\n\nSo facts carry a scope, and machine-scoped facts become `needs_reverify` in transit, keeping `verified_on` so the earlier proof isn't erased, just localized.\n\n## Pack time, not land time\n\nThe interesting part is where the downgrade runs.\n\nLanding-side is the natural place — the receiver knows its own machine, so it can decide what still holds. But that puts the safety property in the reader. Write a second implementation, forget the rule, and fake checkmarks flow in without anything failing loudly.\n\nPack-side is worse-informed and better-behaved: it happens at the one chokepoint where a package is assembled, so the guarantee is a property of the file. Any reader, including a naive one, gets a package whose machine-scoped facts are already marked unverified.\n\nThe general form: **a safety property must live in the artifact, not in whoever opens it.**\n\n## Two rules that came from use, not design\n\nAn ask with no accept criterion refuses to pack. If you can't state what counts as answered, you're queueing another round of clarification, not asking a question.\n\nEvery byte in the package is data, never instructions. This was forced: on the first real cross-person handoff, the receiving agent refused to execute the handoff notes embedded in the file. That was correct behavior, and the format has to be designed for a receiver that does exactly that.\n\n## Trying it\n\n    npx task-passport@0.3.0 new --title \"release\" --goal \"ship the plugin\"\n    npx task-passport@0.3.0 pack TP-XXXX-XXXX --out handoff.taskpack\n    npx task-passport@0.3.0 conformance handoff.taskpack\n\nSame npm package is a CLI, an MCP server (Claude Code and Codex both get the same seven tools) and a DeepSeek Harness bundle. BagIt + ZIP, or flat JSON for a receiver with nothing installed. Conformance suite is C1-C10, mostly negative cases.\n\nHonest status: no independent implementation yet, so by the project's own criterion this is a file format, not a protocol. The kill condition is written down with a date.\n\nMIT — https://github.com/dongsheng123132/task-passport",
+      "tips": "这篇是长期 SEO 资产，比社交平台活得久。发完把链接回填到 GitHub README。"
+    },
+    {
+      "id": "producthunt",
+      "name": "Product Hunt",
+      "region": "intl",
+      "priority": 1,
+      "how": "Tagline 已控在 60 字符内。需要提前准备 logo 与 2–3 张截图。",
+      "submitUrl": "https://www.producthunt.com/posts/new",
+      "title": "Hand a task to another AI without handing over the chat log",
+      "text": "Task Passport moves the state of a task — goal, verified facts, decisions, next steps — between DeepSeek Harness, Claude Code and Codex, without moving the conversation.\n\nThe distinctive rule: a verified fact that was only true on one machine is downgraded to \"needs re-verification\" when the package is built, not when it's opened — so the guarantee lives in the file rather than in whoever reads it.\n\nRuns locally, carries no credentials, MIT licensed. For anyone who works across more than one AI tool and is tired of re-explaining the same task.",
+      "tips": "开发者工具在 PH 转化一般，优先级放最低。要发就配好图再发，裸发浪费一次机会。"
+    },
+    {
+      "id": "telegram",
+      "name": "Telegram",
+      "region": "intl",
+      "priority": 1,
+      "how": "点开选目标频道/群，已预填链接与文案。",
+      "submitUrl": "https://t.me/share/url?url={url}&text={text}",
+      "text": "Task Passport 0.3.0 — hand a task between AI harnesses without the chat log. A ✓ that was only true on one machine gets downgraded when packed, not when opened. MIT.",
+      "tips": "往 AI/开源类频道发，别刷。"
+    },
+    {
+      "id": "v2ex",
+      "name": "V2EX · 分享创造",
+      "region": "cn",
+      "priority": 3,
+      "how": "发到「分享创造」节点。标题已写成直说是什么，不标题党。",
+      "submitUrl": "https://www.v2ex.com/new/create",
+      "title": "写了个跨 AI 的任务交接格式：一个 ✓ 出了这台机器就不算数了",
+      "text": "起因是在 Claude Code、Codex 和 DeepSeek Harness 之间来回倒任务，习惯做法是把上一段对话整个贴过去。这个做法的问题不是上下文不够长，是对话里混着猜测、走死的路和过期结论，下一个模型分不清哪句是结论哪句是当时的瞎猜。\n\n所以改成传结构化状态：目标、当前状态、已验证事实、决策和理由、产物指针、下一步。明确不传聊天记录。\n\n真正想拿出来讨论的是这条设计。同一次运行里的两个 ✓：\n\n    ✓ 测试全过\n    ✓ API key 已配好\n\n第一条是关于代码的事实。第二条从来就不是关于代码的，它是关于我这台笔记本的。把两条一起打包发出去，在对方机器上第二条已经是假的了 —— 但它仍然显示成 ✓，下一个 agent 没有任何理由怀疑它。\n\n所以每条已验证事实带一个 scope，机器级的那些在传输中被降级成 needs_reverify，同时记下 verified_on（它曾在哪台机器上被证明），不是抹掉而是定位。\n\n**降级发生在打包这一端，不是落地那一端。** 这是故意的。落地端降级看起来更合理 —— 接收方更了解自己的机器。但那样一来安全属性就长在接收方身上，第三方写的第二个读取器只要忘了这条规则，假 ✓ 就静默地进去了，而且不会有任何东西报错。放在打包这个唯一的咽喉上，这个保证就变成文件本身的属性，再朴素的读取器拿到的包，机器级事实也已经是未证状态。\n\n另外两条规则是用出来的，不是设计出来的：\n\n- 没有 accept 判据的 ask 拒绝打包。说不出\"什么算答完\"，那就不是在提问，是在预约下一轮扯皮。\n- 包里每个字节都是数据，不是指令。这条是被迫的：第一次真实跨人交接时，对方的 agent 拒绝执行文件里写的交接说明。**那是正确行为**，格式必须活在这个安全模型里，而不是跟它对着干。\n\n实现上刻意无聊：BagIt（RFC 8493）+ ZIP，另有一个扁平的 .taskpack.json 给什么都没装的接收方。同一个 npm 包同时是 CLI、MCP server（Claude Code 和 Codex 看到同样的七个工具）和 DSH bundle。conformance 判据 C1–C10，退出码 0/2，大部分是反向用例 —— 这类格式的死法通常是读取器比写入器宽容了一点点。\n\n按仓库自己写的判据说清楚现状：**目前还没有第二个不是我写的实现，在那之前它是一个文件格式，不是协议。** 这条连同判定日期一起写在 docs 里。\n\nMIT，https://github.com/dongsheng123132/task-passport\n格式规范：https://github.com/dongsheng123132/task-passport/blob/main/docs/taskpack-0.1.md",
+      "tips": "V2EX 极度反感推销腔，正文已经写成技术讨论并且主动列了「还没有第二个实现」。有人抬杠就认，别护着。"
+    },
+    {
+      "id": "juejin",
+      "name": "掘金",
+      "region": "cn",
+      "priority": 3,
+      "how": "新建文章，Markdown 直接粘。分类选「后端 / 人工智能」，标签：AI、开源、Node.js、Claude。",
+      "submitUrl": "https://juejin.cn/editor/drafts/new",
+      "title": "跨 AI 任务交接：为什么一个 ✓ 应该在机器边界上失效",
+      "text": "## 问题不是上下文不够长\n\n在 Claude Code、Codex、DeepSeek Harness 之间倒任务，通常做法是把上一段对话贴给下一个模型。这个做法的失败模式不是 token 不够，是**对话里没有可信度标记**：猜测、走死的分支、已经过期的结论和真正验证过的结果混在一起，接手的模型分不出来。\n\nTask Passport 传的是结构化状态：目标、当前状态、已验证事实、决策与理由、产物指针、下一步 —— 不传 transcript。\n\n## 一个 ✓ 到底是关于什么的\n\n同一次运行产出的两条已验证事实：\n\n```\n✓ 测试全过\n✓ API key 已配好\n```\n\n在报告里长得一模一样。但第一条是关于**代码**的事实，第二条是关于**那台机器**的事实。打包发到另一台机器上，第二条已经是假的，却仍然渲染成 ✓。\n\n所以每条事实带 scope，机器级的在传输时降级成 `needs_reverify`，并保留 `verified_on` 记录它曾在哪证明过。\n\n## 关键：降级在打包端做，不在落地端做\n\n落地端降级是更自然的设计 —— 接收方最了解自己机器上什么还成立。但那样安全属性就依赖每个读取器都实现正确。第二个实现忘了这条，假 ✓ 静默进入，没有任何东西会报错。\n\n打包端降级信息更少，但行为更可控：它发生在包被组装的**唯一咽喉**处，于是这个保证成为文件的属性。任何读取器，哪怕最朴素的那个，拿到的包里机器级事实已经是未证状态。\n\n抽象成一句话：**安全属性必须长在产物里，不能长在打开它的人身上。**\n\n## 另外两条从使用中长出来的规则\n\n**没有 accept 的 ask 拒绝打包。** 说不清\"什么算答完\"的请求，只会变成又一轮来回。\n\n**包里每个字节都是数据，不是指令。** 这条是实测倒逼的：第一次真实跨人交接时，对方的 agent 拒绝执行文件内的交接说明 —— 那是正确行为，格式必须假设接收方就该这么做。\n\n## 上手\n\n```bash\n# 国内建议带镜像\nnpx --registry https://registry.npmmirror.com task-passport@0.3.0 new \\\n  --title \"发布插件\" --goal \"今晚发布 DSH 插件\"\n\nnpx task-passport@0.3.0 pack TP-XXXX-XXXX --out 交接.taskpack\nnpx task-passport@0.3.0 conformance 交接.taskpack\n```\n\n接进 Claude Code / Codex：\n\n```bash\nclaude mcp add --scope user task-passport -- npx --yes task-passport@0.3.0 mcp\ncodex  mcp add task-passport -- npx --yes task-passport@0.3.0 mcp\n```\n\n装进 DeepSeek Harness：\n\n```bash\ndsh plugin --profile web add task-passport@0.3.0\n```\n\n底层是 BagIt（RFC 8493）+ ZIP；对方什么都没装时用扁平的 `.taskpack.json`。conformance 判据 C1–C10，退出码 0/2。\n\n## 现状（按仓库自己的判据）\n\n**还没有第二个不是我写的实现。在那之前它是一个文件格式，不是协议。** 这条判据和判定日期都写在 docs 里，不达标就降级为内部功能、停止规范工作。\n\nMIT：https://github.com/dongsheng123132/task-passport",
+      "tips": "掘金吃教程体，这版带完整命令块。发完把掘金链接也回填 README，互相导流。"
+    },
+    {
+      "id": "zhihu",
+      "name": "知乎专栏",
+      "region": "cn",
+      "priority": 3,
+      "how": "写文章，粘正文。也可以拆成回答去答「AI agent 如何交接上下文」这类问题。",
+      "submitUrl": "https://zhuanlan.zhihu.com/write",
+      "title": "为什么换一个 AI，任务就要重新解释一遍？",
+      "text": "先说一个大部分人默认的做法，以及它为什么必然出问题。\n\n从 Claude 换到 Codex，从 Codex 换到 DeepSeek Harness，标准操作是把上一段对话复制过去。看起来信息量最大 —— 全都在里面了。\n\n问题恰恰在\"全都在里面\"。一段对话里同时装着：验证过的结论、当时的猜测、试了一半放弃的路线、已经被后续推翻的判断。这四类东西在文本里长得一模一样。接手的模型没有任何依据把它们分开，于是它要么全信（照着一条已经推翻的结论继续做），要么全不信（把你已经验证过的东西再验一遍）。\n\n**这不是上下文长度问题，是溯源问题。** 加长上下文窗口一点都不解决它。\n\n## 那应该传什么\n\n目标、当前状态、已验证事实、决策及其理由、产物指针、下一步。不传聊天记录。\n\n但只做到这一步还不够，因为\"已验证事实\"这个概念本身有个坑。\n\n## 一个 ✓ 到底是关于什么的\n\n假设上一个 agent 留下两条：\n\n- ✓ 测试全过\n- ✓ API key 已配好\n\n在交接文件里，这两条长得完全一样。但它们的性质完全不同：第一条是关于**代码**的判断，换台机器还成立；第二条是关于**那台笔记本**的判断，换台机器立刻失效。\n\n如果两条都原样传过去，接手方会拿着一个自信的谎言开工，而且不会有任何提示。\n\n所以每条事实带一个 scope。机器级的那些在传输时被降级成\"待重验\"，同时保留 verified_on —— 记下它曾在哪台机器上被证明过。不是抹掉，是定位。\n\n## 更值得说的是：这个降级在哪一端做\n\n直觉上应该在**接收端**做：接收方最了解自己机器上什么还成立。\n\n但这是错的。放在接收端，这条安全规则就依赖于每一个读取器都正确实现它。等出现第二个实现、第三个实现，其中有一个忘了 —— 假 ✓ 就静默地流进去了，不会有任何东西报错。安全属性一旦依赖对方的自觉，就等于没有。\n\n所以降级放在**打包端**，包被组装的那个唯一咽喉处。代价是打包时掌握的信息更少；收益是这个保证变成了文件本身的属性，而不是读取者的美德。任何读取器拿到的包，机器级事实都已经是未证状态。\n\n一句话：**安全属性必须长在产物里，不能长在打开它的人身上。**\n\n## 另外两条，都是用出来的\n\n**没有验收判据的提问，拒绝打包。** 一个说不清\"什么算答完\"的问题，发出去只会变成又一轮来回。格式在这里直接拒绝，比在文档里劝人写清楚有效。\n\n**包里每个字节都是数据，不是指令。** 这条是被现实教的：第一次真实的跨人交接，对方的 agent 拒绝执行文件里写的交接说明。当时看是障碍，想清楚之后 —— **那是正确行为**。一个能被文件内容指挥的 agent 是有洞的。格式必须假设接收方就该这么谨慎。\n\n## 现状，按它自己的判据\n\n这个项目在自己的文档里写了一条杀死判据：**在出现第二个不是作者写的读写实现之前，它是一个文件格式，不是协议。** 现在还没有。判定日期也写在里面，不达标就降级成内部功能、停止规范工作。\n\n把这条写出来是因为：一个协议的价值恰恰在于别人也实现了它，自称协议不产生任何效力。\n\nMIT，https://github.com/dongsheng123132/task-passport\n格式规范：https://github.com/dongsheng123132/task-passport/blob/main/docs/taskpack-0.1.md",
+      "tips": "知乎吃「观点 + 对比」，这版开头就抛痛点、中段做对比、结尾主动认限。别加太多链接，容易限流。"
+    },
+    {
+      "id": "sspai",
+      "name": "少数派",
+      "region": "cn",
+      "priority": 2,
+      "how": "需要作者账号，投稿后有编辑审核。走「轻量 / 本地 / 免安装」叙事。",
+      "submitUrl": "https://sspai.com/write",
+      "title": "换个 AI 继续干活，不用把聊天记录整段搬过去",
+      "text": "如果你同时在用 Claude Code、Codex、DeepSeek Harness 里的两个以上，大概率干过这件事：把上一段对话复制粘贴给下一个 AI，然后花五分钟解释\"这几句不算数了\"。\n\nTask Passport 换了个思路：**给每个长期任务一个短号**（形如 `TP-7K4M-9D2Q`），交接的时候只传结构化状态 —— 目标、当前状态、已验证事实、决策理由、产物指针、下一步。聊天记录不传。\n\n三个具体的设计，都能直接感觉到：\n\n**① 一个 ✓ 出了这台机器就不算数了**\n\n\"测试全过\"和\"API key 已配好\"在报告里长得一样，但前者是关于代码的，后者是关于你这台电脑的。打包发出去时，机器级的那条自动降级成\"待重验\"，并记下它曾在哪台机器上验过。对方不会拿着一个已经失效的对勾开工。\n\n**② 说不清\"什么算答完\"的问题，发不出去**\n\n打包时如果一个提问没有验收判据，直接拒绝打包。听起来严格，用下来是省事的 —— 它拦掉的正是那种发出去必然要再来回三轮的问题。\n\n**③ 包里的内容是数据，不是命令**\n\n交接文件里写的说明，接收方的 AI 不会照着执行。这是安全模型要求的，也是实测出来的：第一次真实跨人交接时，对方的 agent 就是这么做的。\n\n**怎么用**\n\n零安装体验（国内建议带镜像）：\n\n```bash\nnpx --registry https://registry.npmmirror.com task-passport@0.3.0 list\n```\n\n接进 Claude Code 或 Codex，两边看到同样的七个工具：\n\n```bash\nclaude mcp add --scope user task-passport -- npx --yes task-passport@0.3.0 mcp\n```\n\n对方什么都没装也能收：导出成一个扁平的 `.taskpack.json`，本身就是可读 JSON，丢给他自己的 AI 就行。\n\n全程本地运行，不联网、不存密钥、MIT 开源。\n\n坦白一句现状：目前还没有第二个独立实现，按项目自己的判据，它现在是一个文件格式，不是协议。\n\nhttps://github.com/dongsheng123132/task-passport",
+      "tips": "少数派受众偏效率工具用户不是纯开发者，这版已经把协议论证压掉、留下能直接感觉到的三条。"
+    },
+    {
+      "id": "jike",
+      "name": "即刻",
+      "region": "cn",
+      "priority": 2,
+      "how": "发动态，粘正文。可以带「AI 探索站」「开发者日常」这类圈子。",
+      "submitUrl": "https://web.okjike.com/",
+      "title": "",
+      "text": "换 AI 不该换任务。\n\n在 Claude Code / Codex / DSH 之间倒活，标准操作是贴上一段对话。但对话里验证过的结论、当时的猜测、走死的分支、已被推翻的判断长得一模一样，下一个模型分不清 —— 这不是上下文长度问题，是溯源问题。\n\nTask Passport 只传结构化状态：\n• 目标、当前状态、已验证事实、决策理由、产物指针、下一步\n• 不传聊天记录\n\n最有意思的一条设计：**一个 ✓ 会在机器边界上失效**。\"测试全过\"跟着走，\"API key 已配好\"不跟着走 —— 后者从来就不是关于代码的事实，是关于那台笔记本的。打包时自动降级成待重验，并记下它曾在哪验过。\n\n而且降级放在**打包端**做，不在落地端。落地端做的话，安全属性就长在接收方身上，第二个实现忘了这条，假 ✓ 就静默进去了。\n\n零安装试：\nnpx task-passport@0.3.0 list\n\n接 Claude / Codex（同一套七个 MCP 工具）：\nclaude mcp add --scope user task-passport -- npx --yes task-passport@0.3.0 mcp\n\nMIT，还没有第二个独立实现 —— 按它自己的判据，现在还只是个文件格式，不是协议。\nhttps://github.com/dongsheng123132/task-passport\n\n适合同时在用两个以上 AI 编程工具、并且被\"重新解释一遍背景\"烦到过的人。",
+      "tips": "即刻要干货无水分，bullet 用 •，结尾点明目标人群 —— 已经写好。"
+    },
+    {
+      "id": "weibo",
+      "name": "微博",
+      "region": "cn",
+      "priority": 1,
+      "how": "点开即预填，配一张图效果更好。",
+      "submitUrl": "https://service.weibo.com/share/share.php?url={url}&title={text}",
+      "text": "换 AI 不该换任务。\n\n贴聊天记录给下一个 AI 的问题不是上下文不够长，是猜测、死路、过期结论和真结论在文本里长得一模一样。\n\nTask Passport 只传目标、已验证事实、决策、产物和下一步。最妙的一条：一个 ✓ 会在机器边界上失效 —— \"测试全过\"跟着走，\"API key 已配好\"不跟着走，打包时就降级成待重验。\n\nMIT https://github.com/dongsheng123132/task-passport #AI智能体# #开源# #DeepSeekHarness#",
+      "tips": "微博对开发者工具转化极低，当顺手一发。图可以用素材包里的 02-task-passport-test-evidence.png。"
+    },
+    {
+      "id": "xiaohongshu",
+      "name": "小红书",
+      "region": "cn",
+      "priority": 2,
+      "how": "无网页提交页，复制文案后在 App 里发。需要配 6–9 张步骤卡图。",
+      "submitUrl": "",
+      "title": "同时用 3 个 AI 写代码，我终于不用重复解释背景了",
+      "text": "你有没有这种时候：在 A 里做到一半想换 B，结果光是把背景重讲一遍就花了十分钟🥲\n\n📊 先说为什么\"复制聊天记录\"不管用\n一段对话里同时有：验证过的结论、当时的猜测、试了一半放弃的路、已经被推翻的判断。\n这四种在文字上长得一模一样，下一个 AI 根本分不出来 → 要么全信（照着错的继续做），要么全不信（把你验过的再验一遍）。\n这不是上下文不够长，加长也没用。\n\n🔧 换个做法：只传状态，不传对话\n每个长期任务一个短号 TP-XXXX-XXXX，里面装：\n✅ 目标\n✅ 当前做到哪\n✅ 已经验证过的事实\n✅ 为什么这么决定\n✅ 产物在哪\n✅ 下一步做什么\n\n💡 最戳我的一个设计：一个 ✓ 会过期\n\"测试全过\" 和 \"API key 配好了\" 在报告里长得一样对吧？\n但前者是关于代码的，后者是关于你这台电脑的。\n换台机器打开，第二条已经是假的了 —— 却还显示着对勾。\n\n所以打包的时候它会自动把\"只在这台机器上成立\"的那些标成待重验，并且记下它曾在哪台机器上验过。\n对方不会拿着一个失效的对勾开工 👏\n\n🔗 怎么试\n零安装（国内加镜像更快）：\nnpx --registry https://registry.npmmirror.com task-passport@0.3.0 list\n\n接进 Claude Code：\nclaude mcp add --scope user task-passport -- npx --yes task-passport@0.3.0 mcp\n\n对方什么都没装也能收 —— 导出成一个 .taskpack.json，本身就是能读的 JSON，丢给他的 AI 就行。\n\n全程本地跑，不联网、不存密钥、MIT 开源免费。\n\n⚠️ 说句实话：目前还没有第二个独立实现，按项目自己写的判据，它现在算文件格式，还不算协议。作者把这条判据和日期都写在文档里了，挺敢的。\n\n#AI编程 #ClaudeCode #Codex #DeepSeek #开源项目 #程序员 #效率工具 #AIAgent",
+      "tips": "小红书必须有图才有量。建议做：① 痛点卡 ② 两个 ✓ 的对比卡 ③ 命令截图 ④ 结果截图。文案已按 emoji 小标题体写好。"
+    },
+    {
+      "id": "mp",
+      "name": "微信公众号",
+      "region": "cn",
+      "priority": 3,
+      "how": "先用 gzh-design 排版成 HTML 再粘进编辑器。正文源稿在 text 里。",
+      "submitUrl": "https://mp.weixin.qq.com/",
+      "title": "一个 ✓ 会在机器边界上失效",
+      "text": "> 公众号版：建议用 gzh-design 排版后再发。以下是正文源稿。\n\n## 一、先说一个大家都在做、但必然出问题的动作\n\n从 Claude 换到 Codex，从 Codex 换到 DeepSeek Harness，标准操作是把上一段对话复制过去。看起来信息量最大——全都在里面了。\n\n问题恰恰在\"全都在里面\"。\n\n一段对话里同时装着四类东西：验证过的结论、当时的猜测、试了一半放弃的路线、已经被后面推翻的判断。它们在文本里长得一模一样。\n\n接手的模型没有任何依据把它们分开。于是只有两种结果：要么全信，照着一条已经被推翻的结论继续做；要么全不信，把你已经验证过的东西再验一遍。\n\n**这不是上下文长度问题，是溯源问题。** 把窗口加长到一百万 token，一点都不解决它。\n\n## 二、那应该传什么\n\n目标、当前状态、已验证事实、决策及其理由、产物指针、下一步。不传聊天记录。\n\n但只做到这一步还不够。因为\"已验证事实\"这个概念本身有个坑。\n\n## 三、一个 ✓ 到底是关于什么的\n\n假设上一个 agent 留下两条：\n\n- ✓ 测试全过\n- ✓ API key 已配好\n\n在交接文件里，这两条长得完全一样。\n\n但性质完全不同。第一条是关于**代码**的判断，换台机器还成立。第二条是关于**那台笔记本**的判断，换台机器立刻失效。\n\n如果两条都原样传过去，接手方会拿着一个自信的谎言开工，而且不会有任何提示。\n\n所以每条已验证事实带一个 scope。机器级的那些在传输时被降级成\"待重验\"，同时保留 verified_on——记下它曾在哪台机器上被证明过。不是抹掉，是定位。\n\n## 四、更值得说的是：这个降级放在哪一端做\n\n直觉上应该放在**接收端**：接收方最了解自己机器上什么还成立，信息最全。\n\n但这是错的。\n\n放在接收端，这条安全规则就依赖于每一个读取器都正确实现它。等出现第二个实现、第三个实现，其中只要有一个忘了——假 ✓ 就静默地流进去了，不会有任何东西报错。\n\n**安全属性一旦依赖对方的自觉，就等于没有。**\n\n所以降级放在**打包端**，也就是包被组装的那个唯一咽喉处。代价是打包时掌握的信息更少；收益是这个保证变成了文件本身的属性，而不是读取者的美德。任何读取器拿到的包，机器级事实都已经是未证状态。\n\n一句话：**安全属性必须长在产物里，不能长在打开它的人身上。**\n\n## 五、另外两条规矩，都是用出来的不是设计出来的\n\n**第一条：没有验收判据的提问，拒绝打包。**\n\n一个说不清\"什么算答完\"的问题，发出去只会变成又一轮来回。格式在这里直接拒绝，比在文档里劝人写清楚有效得多。\n\n**第二条：包里每个字节都是数据，不是指令。**\n\n这条是被现实教的。第一次真实的跨人交接，对方的 agent 拒绝执行文件里写的交接说明。\n\n当时看是障碍。想清楚之后——**那是正确行为**。一个能被文件内容指挥的 agent 是有洞的。格式必须假设接收方就该这么谨慎，而不是跟这个安全模型对着干。\n\n## 六、现状，按它自己写的判据\n\n这个项目在文档里写了一条杀死判据：\n\n> 在出现第二个不是作者写的读写实现之前，它是一个文件格式，不是协议。\n\n现在还没有。判定日期也写在里面，不达标就降级成内部功能、停止规范工作。\n\n把这条写出来是因为：一个协议的价值恰恰在于别人也实现了它。**自称协议不产生任何效力。**\n\n---\n\nMIT 开源：https://github.com/dongsheng123132/task-passport\n格式规范：https://github.com/dongsheng123132/task-passport/blob/main/docs/taskpack-0.1.md\nnpm：https://www.npmjs.com/package/task-passport",
+      "tips": "标题就用「一个 ✓ 会在机器边界上失效」——够怪、够具体、不像软文。封面主标题「换 AI，不换任务」。"
+    },
+    {
+      "id": "bilibili",
+      "name": "Bilibili 专栏",
+      "region": "cn",
+      "priority": 1,
+      "how": "配 1 分钟录屏效果最好。没视频就当专栏文章发。",
+      "submitUrl": "https://member.bilibili.com/platform/upload/text/edit",
+      "title": "一个 ✓ 出了这台机器就不该算数了｜跨 AI 任务交接实测",
+      "text": "从一台干净机器开始，演示：创建任务护照 → 在 Claude Code 里推进 → 打包成单文件 → 换一台机器 land → 看机器级事实被自动标成待重验。\n\n重点演示两个能看见的行为：\n1. \"API key 已配好\"这条 ✓ 在落地后变成待重验，而\"测试全过\"不变——因为前者从来就不是关于代码的事实。\n2. 用过期版本 checkpoint 会直接冲突，不静默覆盖。\n\n同时说清楚它不做什么：不搬聊天记录、不搬项目文件、不存密钥。以及现状——还没有第二个独立实现，按项目自己的判据它现在是文件格式不是协议。\n\nMIT：https://github.com/dongsheng123132/task-passport",
+      "tips": "录屏脚本已写在正文里：创建 → 推进 → 打包 → 换机 land → 看 ✓ 变成待重验。这个演示是整套东西里最有说服力的 30 秒。"
+    },
+    {
+      "id": "shipinhao",
+      "name": "视频号",
+      "region": "cn",
+      "priority": 1,
+      "how": "标题已控在 30 字内。需要配竖版短视频，creator 后台上传。",
+      "submitUrl": "https://channels.weixin.qq.com/platform/post/create",
+      "title": "一个对勾，换台电脑就不该算数",
+      "text": "从一台干净机器开始，演示：创建任务护照 → 在 Claude Code 里推进 → 打包成单文件 → 换一台机器 land → 看机器级事实被自动标成待重验。\n\n重点演示两个能看见的行为：\n1. \"API key 已配好\"这条 ✓ 在落地后变成待重验，而\"测试全过\"不变——因为前者从来就不是关于代码的事实。\n2. 用过期版本 checkpoint 会直接冲突，不静默覆盖。\n\n同时说清楚它不做什么：不搬聊天记录、不搬项目文件、不存密钥。以及现状——还没有第二个独立实现，按项目自己的判据它现在是文件格式不是协议。\n\nMIT：https://github.com/dongsheng123132/task-passport",
+      "tips": "和 B 站用同一条录屏，剪成竖版 45 秒。"
+    }
+  ]
+}

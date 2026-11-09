@@ -1,0 +1,16 @@
+{
+  "total_ai_score": 12.2,
+  "verdict": "PASS",
+  "mode": "news",
+  "char_count": 4840,
+  "sentence_count": 93,
+  "dimensions": {
+    "burstiness": {"score": 38.1, "mean_length": 51.2, "cv": 0.624},
+    "phrases": {"score": 0.0, "hit_count": 0},
+    "vocab": {"score": 0.0, "total_hits": 0},
+    "structural": {"score": 0.0, "hit_count": 0},
+    "punctuation": {"score": 10.0, "flavor_points": 96},
+    "style": {"score": 16.3, "bold": 10, "emoji_total": 0}
+  },
+  "threshold": 45
+}

@@ -1,0 +1,146 @@
+{
+  "slug": "benxiang-2origin",
+  "title": "本象协议 Benxiang · 2origin 开源发布",
+  "subtitle": "两条对照臂三十三轮全部 75.0%、标准差 0 —— 检索找得回文本，找不回「钥匙此刻在谁手上」",
+  "primaryUrl": "https://github.com/dongsheng123132/2origin",
+  "repos": [
+    { "label": "GitHub · 2origin", "url": "https://github.com/dongsheng123132/2origin" },
+    { "label": "宣言 MANIFESTO", "url": "https://github.com/dongsheng123132/2origin/blob/main/MANIFESTO.md" },
+    { "label": "实验记录 results-log", "url": "https://github.com/dongsheng123132/2origin/blob/main/benchmark/shadowbench-w/results-log.md" }
+  ],
+  "platforms": [
+    {
+      "id": "hn",
+      "name": "Hacker News (Show HN)",
+      "region": "intl",
+      "priority": 3,
+      "how": "标题 <80 字符、零营销腔。技术受众，开头就抛最有意思的细节。发完别自己顶。",
+      "submitUrl": "https://news.ycombinator.com/submitlink?u={url}&t={title}",
+      "title": "Show HN: Vector RAG scored 75.0% with sd 0 across 33 runs on state tracking",
+      "text": "I built a benchmark for something that keeps breaking long-form AI work: models lose track of *derived* world state. Not text they wrote — text is retrievable. Derived state: after a key changes hands five times across fifty chapters, who holds it now? That answer appears in no passage. It only exists as the result of replaying events.\n\nSetup: world spec first, prose generated from it, so ground truth is true by construction rather than hand-annotated. 95k-character baseline, the model continues 5 chapters and writes state back as explicit fields. Graded field by field.\n\nqwen-plus, 11 runs per arm:\n\n  bare model     75.0%   (sd 0)\n  vector RAG     75.0%   (sd 0)\n  state machine  98.9%\n\nThe part I did not expect is the standard deviation. Both control arms hit exactly 75.0% every single run — 33 runs across two baseline lengths, never once moving. That is not \"worse on average\", it is a wall. Both fail the same two fields every time: who holds the key, and which planted threads are still open. RAG retrieves five contradictory excerpts about the key and cannot tell you which is current.\n\nMechanically the model never emits a finished artifact. It emits a semantic transaction (what changed, what it depends on, what it asserts). A deterministic compiler validates it against data-driven constraints and bounces it back with evidence if a check fails. Constraints are six general predicates (equals / not_equals / contains / not_contains / range / unchanged), which is why the same ~300-line compiler drives both a narrative world and a sales dataset unmodified. That cross-domain test is the actual claim — one dialect working could be a coincidence.\n\nWhat it is NOT: prose consistency is statistically indistinguishable from RAG (p=0.99, p=0.34), and it costs 25% more tokens.\n\nThe log records seven times the experiment fooled me in one day. Six were instrumentation: the judge once graded tier-M answers against the tier-S answer key, marked a *correct* answer wrong, and produced a more flattering-sounding negative result (\"the advantage disappears as the baseline grows\") which I wrote up with a plausible mechanism before finding the cause.\n\nThe seventh happened during launch. A single-run cross-model test looked great and went into the README. Ten runs later the control arms turned out to be bimodal on that model — most runs 75%, several 0% — so the single run meant nothing. I pulled those numbers off the front page while writing this post. An n=1 result that flatters you is exactly as worthless as one that doesn't.\n\nAll raw results are committed with the spec hash and judge hash they were scored under.",
+      "tips": "周二~周四 UTC 13:00-16:00 效果较好。发完不要自己投票。有人质疑就贴 results/ 原始文件——每份带 provenance。"
+    },
+    {
+      "id": "reddit",
+      "name": "Reddit · r/LocalLLaMA",
+      "region": "intl",
+      "priority": 3,
+      "sub": "LocalLLaMA",
+      "how": "谦逊、诚实说限制，绝不用 check it out / amazing。",
+      "submitUrl": "https://www.reddit.com/r/LocalLLaMA/submit?title={title}",
+      "title": "Benchmarked state tracking over long context: vector RAG hit exactly 75.0% with sd 0 across 33 runs",
+      "text": "I kept hitting a specific failure in long-form generation and wanted to measure it properly: models lose *derived* state. Not the text they wrote — that's retrievable. Derived state is \"who holds the key right now\" after fifty chapters of it changing hands. That fact is in no passage; it only exists as the result of replaying the events.\n\nGround truth by construction: the world spec comes first and prose is generated from it, so nothing is hand-annotated. 95k-char baseline, model continues 5 chapters, writes state back as explicit fields, graded field by field.\n\nqwen-plus, 11 runs per arm:\n\n    bare model      75.0%   sd 0\n    vector RAG      75.0%   sd 0\n    state machine   98.9%\n\nThe standard deviation is the interesting bit. 33 runs across two baseline lengths and the control arms never moved off 75.0% once. Same two fields wrong every time. RAG pulls back five contradictory excerpts about the key and has no way to know which one is current — the current value was never written down.\n\nTrade-offs, since this sub asks and rightly so:\n\n- Prose consistency: statistically indistinguishable from RAG (p=0.99, p=0.34). No claim there.\n- Cost: 25% more tokens on qwen.\n- Cross-model: I have a second model running now. The single-run result looked great, went into my README, and then ten runs showed the control arms are bimodal on that model (mostly 75%, sometimes 0%) — so the single run meant nothing and I pulled it. Numbers for the state-machine arm aren't in yet.\n\nThat last one is the seventh time this experiment fooled me in a day. Six were instrumentation bugs, all self-caught and logged, including one where the judge used the wrong tier's answer key and marked a *correct* answer wrong — handing me a negative result that sounded appropriately humble and that I believed for a while.\n\nRaw result files are all committed with provenance. If you re-score and get numbers different from mine, that's a bug and I want to hear about it. Especially interested in anyone who can make it fail on a third model.",
+      "tips": "r/LocalLLaMA 对 trade-off 友好但讨厌营销。回复要快要具体。也可试 r/MachineLearning。"
+    },
+    {
+      "id": "v2ex",
+      "name": "V2EX · 分享创造",
+      "region": "cn",
+      "priority": 3,
+      "how": "选「分享创造」节点。标题直说是什么，语气平实不推销。",
+      "submitUrl": "https://www.v2ex.com/new",
+      "title": "做了个基准测长文本的状态追踪：向量 RAG 三十三轮全是 75.0%，标准差 0",
+      "text": "起因很具体：长文本写作时模型会忘记「世界现在是什么样」。\n\n但「忘记」其实是两件事。忘记写过的原文——这个能检索回来。忘记推演出来的状态——这个检索不回来。黑钥匙在五十章里转手五次，此刻在谁手上？这个答案不在任何一段原文里，它只存在于事件回放的结果中。你检索「黑钥匙」，拿回五段互相矛盾的文字，没有一段告诉你哪个是当前值。\n\n于是做了个基准。世界规格先行——先有状态机，再由它生成正文，所以 ground truth 是构造出来的，不需要人工标注。9.5 万字基线，模型续写 5 章并把状态以字段写回，逐字段判分。\n\nqwen-plus，每臂 11 轮：\n\n    裸模型      75.0%   标准差 0\n    向量 RAG    75.0%   标准差 0\n    本象状态机  98.9%\n\n最有意思的是标准差。两条对照臂在两个基线长度、三十三轮里，一次都没离开过 75.0%。不是「平均差一点」，是一堵墙。每轮错的都是同样两个字段：钥匙在谁手上、哪些伏笔还没收。\n\n机制上模型不输出成品，只提交语义事务（改了什么、依赖什么、断言什么），确定性编译器校验后才落地，不过就带着证据退回重写。约束是数据不是代码——六个通用谓词，所以同一份三百行的编译器既能跑小说世界也能跑销售数据。那个跨域测试才是「这是不是协议」的判据，一个方言跑通可能是巧合。\n\n诚实的部分：正文一致性和 RAG 没有显著差异（p=0.99 / p=0.34），Token 贵 25%。\n\n跨模型验证还在跑。首轮单次结果很好看，我写进了 README，然后十轮下来发现那个模型上对照臂是双峰分布（多数 75%，若干 0%），单轮值毫无意义——写这篇的时候刚把那组数字从首页撤下来。一个 n=1 的漂亮结果，和一个 n=1 的难看结果，同样不可信。\n\n这是这个实验一天之内第七次骗过我。前六次是装置问题，都自己查出来并加了护栏，其中一次是判分器拿错了级别的答案集，把正确答案判成错，还递给我一个「优势随基线变长而消失」的结论——听起来比正面结论更像诚实的自我否定，我信了一阵。\n\n原始结果全部入库，每份带规格指纹和判分器指纹。重打分对不上就是 bug。\n\nhttps://github.com/dongsheng123132/2origin",
+      "tips": "V2EX 反感标题党。有人问就正面答，数据都能查。"
+    },
+    {
+      "id": "jike",
+      "name": "即刻",
+      "region": "cn",
+      "priority": 3,
+      "how": "开发者社区，干货无水分。bullet 用 •，别堆 emoji。",
+      "submitUrl": "https://web.okjike.com/",
+      "title": "",
+      "text": "做了个基准，测一件长文写作里一直碰到的事：模型会忘记「世界现在是什么样」。\n\n先分清两种忘记：\n\n• 忘记写过的原文 —— 检索能找回来\n• 忘记推演出来的状态 —— 检索找不回来\n\n黑钥匙转手五次后此刻在谁手上？这个答案不在任何一段原文里，它只存在于事件回放的结果里。检索「黑钥匙」会拿回五段互相矛盾的文字，没有一段是当前值。\n\n9.5 万字基线，续写 5 章，状态以字段写回，逐字段判分（qwen-plus，每臂 11 轮）：\n\n• 裸模型 75.0%，标准差 0\n• 向量 RAG 75.0%，标准差 0\n• 本象状态机 98.9%\n\n最有意思的是标准差。两条对照臂三十三轮一次都没离开过 75.0%，每轮错的都是同样两个字段。不是「平均差一点」，是一堵墙。\n\n不吹的部分：正文一致性和 RAG 无显著差异，Token 贵 25%。\n\n跨模型验证还在跑——首轮单次结果很好看，我写进了 README，十轮后发现那个模型上对照臂是双峰（多数 75%，若干 0%），单轮值毫无意义，刚把那组数字从首页撤了。一个 n=1 的漂亮结果，和一个 n=1 的难看结果，同样不可信。\n\n这是一天里第七次被自己的实验骗到。前六次是装置问题，都写在 log 里了。\n\nhttps://github.com/dongsheng123132/2origin",
+      "tips": "圈子：「AI 探索站」「开发者交流」。发完在评论区补技术细节效果好。"
+    },
+    {
+      "id": "x",
+      "name": "X / Twitter",
+      "region": "intl",
+      "priority": 2,
+      "how": "已按 280 字符算过（URL 固定算 23）。细节放 thread。",
+      "submitUrl": "https://twitter.com/intent/tweet?text={text}",
+      "title": "",
+      "text": "33 runs. Two control arms — bare LLM and vector RAG — both landed on exactly 75.0%. Standard deviation zero. Not \"worse on average\". A wall.\n\nA state machine on top: 98.9%.\n\nRetrieval finds text. It can't find who holds the key right now.\n\nhttps://github.com/dongsheng123132/2origin",
+      "tips": "thread 第二条讲判分器事故（拿错答案集把对的判成错），第三条讲发布当天推翻自己首页数据——传播力最强的是后者。"
+    },
+    {
+      "id": "zhihu",
+      "name": "知乎专栏",
+      "region": "cn",
+      "priority": 2,
+      "how": "观点 + 对比结构。开头抛痛点。",
+      "submitUrl": "https://zhuanlan.zhihu.com/write",
+      "title": "为什么向量 RAG 解决不了长文本的「状态遗忘」——三十三轮实验，它一次没动过",
+      "text": "先给结论：检索能找回文本，找不回状态。\n\n长文本里模型会忘事，这个大家都知道。但「忘事」是两件不同的事，混在一起谈就永远解决不了。\n\n**第一种是忘记写过的原文。** 这个 RAG 能解决——原文在库里，检索回来就是。\n\n**第二种是忘记推演出来的状态。** 黑钥匙在五十章里转手五次，此刻在谁手上？这个答案不在任何一段原文里。它是从一连串事件推出来的。你检索「黑钥匙」，能拿回五段互相矛盾的文字，但拿不回那个唯一正确的当前值。\n\n第二种才是长篇崩坏的真正原因，而它结构上就不是检索问题。\n\n## 实验设计\n\n世界规格先行——先有状态机，再由它生成正文，所以 ground truth 是构造出来的，不靠人工标注。9.5 万字基线，模型续写 5 章，把状态以字段形式写回，逐字段比对。\n\n## 结果（qwen-plus，每臂 11 轮）\n\n| 臂 | 状态准确率 | 标准差 |\n|---|---|---|\n| 裸模型 | 75.0% | 0 |\n| 向量 RAG | 75.0% | 0 |\n| 本象状态机 | 98.9% | — |\n\n最值得看的是标准差那一列。两条对照臂在两个基线长度、三十三轮里，**一次都没离开过 75.0%**。每轮错的都是同样两个字段：钥匙在谁手上、哪些伏笔还没收。\n\n这不是「平均差一点」，是一堵墙。而且基线从 2 万字拉到 9.5 万字，本象从 92.5% 涨到 98.9%，差距反而更大了——向量 RAG 恰恰是应该在长上下文里更有用的技术。\n\n## 机制\n\n模型不输出成品，只提交语义事务（改什么、依赖什么、断言什么），确定性编译器校验后才落地，不过就带着证据退回重写。\n\n约束是数据不是代码，六个通用谓词。所以同一份三百行的编译器，既能跑小说世界，也能跑销售报表——「主角不得知道这个秘密」和「营收字段不得为负」在协议层是同一件事。一个方言跑通可能是巧合，两个才是协议。\n\n## 不吹的部分\n\n正文一致性和 RAG 没有显著差异（p=0.99 / p=0.34），Token 贵 25%。\n\n跨模型验证还在跑。首轮单次结果很好看，我写进了 README；十轮之后发现那个模型上对照臂是双峰分布（多数 75%，若干轮直接 0%），单轮值毫无意义。写这篇的时候刚把那组数字从首页撤下来。\n\n**一个 n=1 的漂亮结果，和一个 n=1 的难看结果，同样不可信。** 我犯的错不是造假，是把「这个结果很干净、没什么解释空间」当成了「样本量够了」。\n\n## 七次被自己的实验骗到\n\n仓库里完整记着一天之内七次。前六次是实验装置在说谎——并发覆盖、规格漂移、语料泄漏、判分器没有指纹、结果被同名文件覆盖、答案集拿错。每一起都自己查出来了，每一起都补了护栏。\n\n最险的一起：判分器拿 S 级的答案集判了 M 级的答卷，把**正确答案判成了错**，给出「优势随基线变长而消失」的结论。这个结论听起来比正面结论更像诚实的自我否定，我信了，还给它编了套机制解释写进日志，之后才发现答案集拿错了。\n\n> 一个错误的负面结果，比一个错误的正面结果更难被质疑。\n\n第七次就是上面说的单轮陷阱，发生在发布当天。它和第六次正好互为镜像：一个漂亮的正面结果，在你正准备发布的时候，也几乎不会被自己质疑。\n\n原始结果全部入库，每份带着规格指纹和判分器指纹。你重打分要是对不上，那就是个 bug。\n\nhttps://github.com/dongsheng123132/2origin",
+      "tips": "可关联问题「RAG 的局限是什么」「长文本写作如何保持一致性」。"
+    },
+    {
+      "id": "juejin",
+      "name": "掘金",
+      "region": "cn",
+      "priority": 2,
+      "how": "教程风。标签：AI、大模型、开源、架构。",
+      "submitUrl": "https://juejin.cn/editor/drafts/new",
+      "title": "用状态机 + 语义事务解决长文本状态遗忘：一套代码跨两个领域的协议实现",
+      "text": "长文本场景里，模型忘的是两种东西：忘记写过的原文（RAG 能救），和忘记推演出来的状态（RAG 救不了）。后者比如「这个关键物品此刻在谁手上」——答案不在任何一段原文里，只存在于事件回放的结果中。\n\n## 核心机制\n\nAI 不输出成品，只提交语义事务：\n\n```json\n{\n  \"transaction_id\": \"tx-001\",\n  \"operation\": \"append_scene\",\n  \"state_changes\": [\n    { \"object\": \"obj:black-key\", \"field\": \"holder\",\n      \"from\": \"char:lin-zheng\", \"to\": \"char:shen-yan\" }\n  ],\n  \"assertions\": [\"zhao-qi-alive\"]\n}\n```\n\n确定性编译器校验后才落地，不过就带着证据退回重写：\n\n```js\nconst res = validateTransaction({ tx, stateBefore, constraints })\nif (!res.ok) return retry(res.violations)\nconst { state, provenance } = applyTransaction({ tx, state })\n```\n\n## 约束是数据，不是代码\n\n这是「协议」和「碰巧能跑的程序」的分界。最初约束是三个写死的类型，名字里全是小说味（knows_must_not_gain、hook_must_stay）。现在收敛成六个通用谓词：\n\n```text\nequals · not_equals · contains · not_contains · range · unchanged\n```\n\n「主角不得知道这个秘密」和「营收字段不得为负」，在协议层是同一件事：\n\n```js\n{ type: 'not_contains', object: 'char:lin-zheng', field: 'knows', value: 'k:betrayal' }\n{ type: 'range',        object: 'dataset:sales', field: 'revenue', min: 0 }\n```\n\n自测就是照这条线设计的：同一份代码零改动，跑通一个叙事世界和一份销售数据。\n\n## 实测数据（qwen-plus，每臂 11 轮）\n\n| 臂 | 状态准确率 | 标准差 |\n|---|---|---|\n| 裸模型 | 75.0% | 0 |\n| 向量 RAG | 75.0% | 0 |\n| 本象 | **98.9%** | — |\n\n两条对照臂三十三轮一次没离开过 75.0%，每轮错同样两个字段。基线从 2 万字拉到 9.5 万字，本象从 92.5% 涨到 98.9%，差距反而更大。\n\n## 三条踩坑经验\n\n1. **ID 必须自带归一化层**：模型极易漏掉命名空间前缀（写 black-key 而非 obj:black-key），语义无歧义却被判为未知对象，曾致整章作废\n2. **前值对不上只能警告不能拦截**：运行时本就知道当前值，要求模型精确复述旧值是接口刁难，曾按错误处理废掉 3 章\n3. **给模型看的格式就是它会模仿的格式**：曾为「好读」把 ID 前缀剥掉渲染，模型照抄，交上来的事务全被判为未知对象，5 章全废\n\n## 不吹的部分\n\n正文一致性和 RAG 无显著差异（p=0.99 / p=0.34），Token 贵 25%。跨模型验证进行中——首轮单次结果好看但十轮后发现该模型对照臂双峰分布，单轮不可信，已从首页撤下。\n\n无构建步骤、无依赖，Node 原生 ESM 直接跑：\n\n```bash\nnode compiler/selftest.mjs   # 27 项，跨两个领域\n```\n\nhttps://github.com/dongsheng123132/2origin",
+      "tips": "掘金喜欢代码块和可复制命令，标签选 AI / 大模型 / 开源 / 架构。"
+    },
+    {
+      "id": "lobsters",
+      "name": "Lobsters",
+      "region": "intl",
+      "priority": 2,
+      "how": "技术密度要求比 HN 更高，标签 ai / practices。需邀请码。",
+      "submitUrl": "https://lobste.rs/stories/new",
+      "title": "Vector RAG scored exactly 75.0% with zero variance across 33 runs on derived-state tracking",
+      "text": "Benchmark for derived world state over long documents — facts that appear in no single passage (\"who holds the key now\" after it changes hands five times), so retrieval structurally cannot recover them; the current value was never written down.\n\nGround truth by construction: the world spec comes first and prose is generated from it, so nothing is hand-annotated. 95k-char baseline, model continues 5 chapters and writes state back as explicit fields, graded field-by-field.\n\nqwen-plus, 11 runs per arm: bare 75.0% (sd 0) / vector RAG 75.0% (sd 0) / state machine 98.9%.\n\nZero variance across 33 runs on both control arms is the striking part — same two fields wrong every time, never once moving.\n\nThe model emits semantic transactions rather than artifacts; a deterministic compiler validates against data-driven constraints (six general predicates) and bounces failures back with evidence. The same compiler drives a narrative world and a sales dataset unmodified — that cross-domain test is the real claim.\n\nTrade-offs: prose consistency indistinguishable from RAG (p=0.99/0.34), 25% more tokens. Cross-model multi-run in flight; the single-run version was pulled from the README after ten runs showed the control arms are bimodal on that model.\n\nThe log records seven times the experiment fooled me in a day — six instrumentation bugs (including a judge using the wrong tier's answer key, marking a correct answer wrong and producing a plausible negative result) and one statistical over-read of an n=1 result during launch.\n\nhttps://github.com/dongsheng123132/2origin",
+      "tips": "Lobsters 需邀请码。没有就跳过。"
+    },
+    {
+      "id": "devto",
+      "name": "Dev.to",
+      "region": "intl",
+      "priority": 2,
+      "how": "英文技术博客。tags: ai, llm, opensource, architecture",
+      "submitUrl": "https://dev.to/new",
+      "title": "Vector RAG can't fix long-context state tracking (33 runs, zero variance)",
+      "text": "There are two different things a model forgets over a long document, and conflating them is why the problem never gets solved.\n\n**Forgetting the text it wrote.** RAG fixes this. The text is in the index; retrieve it.\n\n**Forgetting derived state.** RAG cannot fix this. After a key changes hands five times across fifty chapters, \"who holds it now\" is in no passage. Retrieve \"black key\" and you get five mutually contradictory excerpts, none of which is the current value — because the current value was never written down anywhere.\n\nThe second one is what actually breaks long-form work, and it is structurally not a retrieval problem.\n\n## The benchmark\n\nGround truth by construction — the world spec comes first, prose is generated from it, so nothing is hand-annotated. 95k-character baseline, the model continues five chapters and writes state back as explicit fields. Graded field by field.\n\n| Arm (qwen-plus, 11 runs each) | State accuracy | sd |\n|---|---|---|\n| bare model | 75.0% | 0 |\n| vector RAG | 75.0% | 0 |\n| state machine | **98.9%** | — |\n\nThe zero is the interesting part. Across 33 runs at two baseline lengths, neither control arm ever moved off 75.0%. Same two fields wrong every time. That is a wall, not a gradient.\n\nAnd stretching the baseline from 20k to 95k characters made the gap *wider* (92.5% → 98.9%) — RAG is precisely the technique that should improve with more context.\n\n## How it works\n\nThe model never emits a finished artifact. It emits a semantic transaction:\n\n```json\n{\n  \"operation\": \"append_scene\",\n  \"state_changes\": [\n    { \"object\": \"obj:black-key\", \"field\": \"holder\",\n      \"from\": \"char:lin-zheng\", \"to\": \"char:shen-yan\" }\n  ],\n  \"assertions\": [\"zhao-qi-alive\"]\n}\n```\n\nA deterministic compiler validates it and bounces failures back with evidence. Constraints are data, not code — six general predicates (`equals`, `not_equals`, `contains`, `not_contains`, `range`, `unchanged`), which is why the same compiler drives a narrative world and a sales dataset unmodified.\n\n## Trade-offs\n\nProse consistency is statistically indistinguishable from RAG (p=0.99, p=0.34). It costs 25% more tokens. Cross-model validation is still running — I pulled the single-run numbers off the README after ten runs revealed the control arms are bimodal on that model.\n\n```bash\nnode compiler/selftest.mjs   # 27 checks across two domains, no deps, no build\n```\n\nhttps://github.com/dongsheng123132/2origin",
+      "tips": "tags: ai, llm, opensource, architecture。dev.to markdown 表格支持好。"
+    },
+    {
+      "id": "linkedin",
+      "name": "LinkedIn",
+      "region": "intl",
+      "priority": 1,
+      "how": "前两行是黄金位，成果导向。",
+      "submitUrl": "https://www.linkedin.com/feed/?shareActive=true",
+      "title": "",
+      "text": "Thirty-three runs. Two control arms. Both scored exactly 75.0%, with a standard deviation of zero.\n\nI open-sourced a benchmark and reference implementation for a failure that keeps breaking long-form AI work: models lose track of derived state — facts that appear in no retrievable passage, existing only as the result of replaying events. \"Who holds the key right now\" after it has changed hands five times.\n\nMeasured on a 95k-character baseline, state written back as explicit fields and graded field-by-field (qwen-plus, 11 runs per arm):\n\n• bare model: 75.0% (sd 0)\n• vector RAG: 75.0% (sd 0)\n• state machine: 98.9%\n\nNeither control arm moved once across 33 runs. They failed the same two fields every single time. Retrieval finds text; it cannot find a value that was never written down.\n\nWhat it does not do, stated plainly: prose consistency is statistically indistinguishable from RAG, and it costs 25% more tokens.\n\nThe repository documents seven occasions in a single day where the experiment misled me — six instrumentation failures, each with the guardrail that now prevents it, and one statistical over-read of a single-run result that I caught while writing the launch post and removed from the front page.\n\nFor a benchmark, the honesty of the instrument is the entire asset.\n\nhttps://github.com/dongsheng123132/2origin",
+      "tips": "工程管理者受众吃「方法论 + 诚实边界」这套。"
+    },
+    {
+      "id": "weibo",
+      "name": "微博",
+      "region": "cn",
+      "priority": 1,
+      "how": "一句话 + 话题标签，可 URL 预填。",
+      "submitUrl": "https://service.weibo.com/share/share.php?title={text}&url={rawurl}",
+      "title": "",
+      "text": "开源了一个基准：长文本里模型会忘记「推演出来的状态」——钥匙转手五次后此刻在谁手上，这个答案不在任何一段原文里，所以向量 RAG 结构上就够不着。实测三十三轮，裸模型和 RAG 全部 75.0%、标准差 0，一次没动过；换成状态机 98.9%。检索找得回文本，找不回一个从没被写下来的值。#AI# #开源# #大模型#",
+      "tips": "可带话题 #AI# #开源# #大模型#。"
+    },
+    {
+      "id": "telegram",
+      "name": "Telegram",
+      "region": "intl",
+      "priority": 1,
+      "how": "短，一句话价值 + 链接，可 URL 预填。",
+      "submitUrl": "https://t.me/share/url?url={url}&text={text}",
+      "title": "",
+      "text": "Open-sourced a benchmark for derived state tracking in long context. Across 33 runs, bare LLM and vector RAG both scored exactly 75.0% with zero variance — same two fields wrong every time. A state machine on top: 98.9%. Retrieval finds text; it can't find a value that was never written down. Trade-offs in the README: prose consistency no better than RAG, 25% more tokens.",
+      "tips": "适合 AI/LLM 频道与群组。"
+    }
+  ]
+}

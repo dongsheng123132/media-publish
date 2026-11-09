@@ -1,0 +1,418 @@
+// U-King × DeepSeek-V4-Flash 全媒体发布 campaign。
+// 文案来源：用户 2026-08-02 提供的 8 平台稿 + 按各平台规则改写补全。
+// ⚠️ 事实校准（对照 src-tauri/src/providers.rs @ 0.9.84）：
+//   ✅ 虾盘云 preset 默认 model / small_model 都是 deepseek-v4-flash —— "默认就是 Flash" 成立
+//   ✅ apply_xiapan_everywhere 真会配 claude / codex / clawx(OpenClaw) / hermes 四件套
+//   ❌ 但 Codex 侧写的是 codex_model="gpt-5.3-codex" + wire_api=responses，**不是 DeepSeek**
+//      （DeepSeek 官方 Responses 直连的客户端改造还没做）→ 全部文案不说"Flash 进入 Codex"，
+//      改说"四件套一键配好，默认 Flash；Codex 走 Codex 专用路由、模型可自选"。
+// 战略：海外开发者平台(HN/Reddit/Lobsters)不硬推闭源安装包 —— 按已定策略，那边只做
+//      "我不是病毒"的开源背书(u-rescue / action-parity)，主火力放国内消费向平台。
+import { writeFileSync } from 'node:fs';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const here = dirname(fileURLToPath(import.meta.url));
+
+const SITE = 'https://u-king.org';
+const SITE_CN = 'https://u-claw.org.cn/uking/';
+const RESCUE = 'https://github.com/dongsheng123132/u-rescue';
+const AP = 'https://github.com/dongsheng123132/action-parity';
+
+// ── 统一定位（所有平台共用的一句话）────────────────────────────
+// 不是"卖一个模型"，是"让国产模型进入 AI Coding 工作流"；U-King = AI 时代个人操作系统入口。
+
+// ── 海外英文 ────────────────────────────────────────────────
+
+// X 长版（会超 280，作为"复制正文"用；预填走短版）
+const xLong = `Chinese AI coding is no longer blocked by the model. It's blocked by the config.
+
+U-King, one click:
+- installs Claude Code / Codex CLI / ClawX / Hermes
+- writes every config file for you
+- default model: DeepSeek-V4-Flash
+
+No API key wiring. No env vars. No 3 hours of YAML.
+
+The future PC doesn't install software. It installs AI capability.
+
+${SITE}`;
+
+// X 预填短版（含链接 ≤280，t.co 计 23）
+const xShort = `Chinese AI coding isn't blocked by the model anymore — it's blocked by the config.
+
+U-King: one click installs AND configures Claude Code, Codex CLI, ClawX and Hermes. Default model DeepSeek-V4-Flash. No key wiring, no env vars.
+
+${SITE}`;
+
+const linkedinText = `DeepSeek-V4-Flash is now the default model of a full local AI coding stack.
+
+The bottleneck in AI productivity has quietly moved. It is no longer model quality — it is setup.
+
+To run a modern AI coding workflow today, a user still has to manually deal with:
+- API providers and base URLs
+- environment variables
+- multiple config files in different formats
+- four separate CLI tools that each expect a different thing
+
+U-King collapses that into one click. It installs Claude Code, Codex CLI, ClawX and Hermes, then writes every configuration file itself — the backend probes what is actually installed on the machine rather than trusting the UI. Default model is DeepSeek-V4-Flash; Codex runs on its own Codex-grade route, and any model in the list can be switched per tool.
+
+Two principles we hold: the user's existing keys and logins are never overwritten, and every built-in provider can be deleted — and stays deleted.
+
+Our view: AI should become an operating-system layer for everyone, not a configuration exercise for experts.
+
+U-King — Personal AI OS. ${SITE}`;
+
+// HN：零营销、极简、承认闭源。走的是开源背书那条线，不是推安装包。
+const hnTitle = 'Show HN: U-rescue – 19 real field cases of AI coding tools failing on Windows';
+const hnBody = `I ship a Windows installer that sets up Claude Code / Codex CLI / ClawX / Hermes for non-technical users in China. Over ~14 months of real customer machines I collected a pile of failure modes that basically never show up on a developer's laptop, and open-sourced them as a case library.
+
+A few that cost me the most hours:
+
+- Self-update silently did nothing on any machine whose install path contained Chinese characters. The updater wrote a .bat in UTF-8; cmd.exe parses it as GBK. No error, no log, exit code useless (a self-deleting .bat always returns 1).
+- An app-wide crash from a one-line helper: tail() sliced a String by byte offset, hit a multi-byte character, panicked — and the release profile is panic=abort, so the whole GUI vanished with no dialog.
+- "The model is listed in /v1/models" is not the same as "the model answers". Two model ids that enumerated fine returned 0/4 and 503 respectively.
+- taskkill /IM Claude.exe, intended to close the Claude desktop app, also kills every Claude Code CLI session on the box — same image name.
+
+Repo (MIT, no telemetry, nothing to install): ${RESCUE}
+
+The product itself is closed-source and Windows-only, so I'm not pitching it here — the cases are the useful part. Corrections welcome, especially if you've hit the GBK/UTF-8 one on a different toolchain.`;
+
+const redditBody = `Context: I maintain a Windows installer that configures Claude Code / Codex CLI / ClawX / Hermes for non-technical users. Most of my bug reports come from machines that no developer would ever test on — Chinese usernames, OneDrive-redirected home dirs, antivirus that quarantines unsigned binaries, no proxy.
+
+I wrote up 19 of them as an open case library. Sample:
+
+- self-update wrote its replacement script as UTF-8; cmd.exe reads .bat as GBK, so any install path with a non-ASCII character failed 100% of the time, silently, with zero log output
+- a byte-offset string slice in a log helper panicked on a multi-byte char; with panic=abort the entire app disappeared with no crash dialog (this explained a batch of 0-second "unclean exit" reports)
+- a model id being present in /v1/models says nothing about whether it actually returns a completion
+- killing a desktop app by image name also killed every CLI session sharing that name
+
+${RESCUE} — MIT, just markdown, nothing to install.
+
+Not linking the product; the cases are the point. If you've hit the encoding one on a different stack I'd like to hear how you found it, it took me two customers and a week.`;
+
+const devtoTitle = 'Four Windows bugs that only exist on your customers’ machines';
+const devtoBody = hnBody;
+
+const tgText = `U-King — one click installs and configures Claude Code / Codex CLI / ClawX / Hermes on Windows. Default model DeepSeek-V4-Flash. No key wiring. ${SITE}`;
+
+const phDesc = `U-King installs and configures a complete AI coding stack in one click: Claude Code, Codex CLI, ClawX and Hermes. It writes every config file for you — the backend probes what is actually installed instead of trusting the UI — and ships DeepSeek-V4-Flash as the default model. Built-in providers can all be deleted and stay deleted; your existing keys and logins are never overwritten. Windows and macOS.`;
+const phFirst = `Hey PH 👋
+
+I built U-King because I kept watching non-technical people bounce off AI coding tools. Not because the models were bad — because getting Claude Code and Codex to actually talk to a provider means base URLs, auth tokens, env vars and four different config formats.
+
+U-King does the boring part: one click installs the tools and writes every config file. Default model is DeepSeek-V4-Flash; each tool can be switched independently.
+
+Two rules I hold myself to: it never overwrites your existing keys or logins, and every built-in provider can be deleted — and does not come back on its own.
+
+Windows + macOS. Would love feedback on what the next tool to support should be. ${SITE}`;
+
+// ── 国内中文 ────────────────────────────────────────────────
+
+const v2exTitle = '做了个 Windows 端的 AI 装机管家：一键装好并配好 Claude Code / Codex / ClawX / Hermes';
+const v2exBody = `做这个的起因很实在：AI 编程工具本身早就够用了，卡住普通人的从来不是模型，是配置。
+
+想跑起来一套现代 AI 编程环境，用户要自己搞定：
+
+- 各家的 base URL 和鉴权格式不一样（Anthropic 格式 / OpenAI 格式 / Responses）
+- 环境变量写哪、写没写生效
+- 四个工具四种配置文件：~/.claude/settings.json、~/.codex/config.toml + auth.json、%APPDATA%\\ClawX\\clawx-providers.json、%LOCALAPPDATA%\\hermes
+- 装完还得验证到底通没通
+
+U-King 把这段做掉了。一键装 + 一键配，默认模型 DeepSeek-V4-Flash（快、稳、便宜，日常对话和办公足够；要满血推理在「换模型」里切 Pro）。Codex 侧走 Codex 专用路由，模型可自选。
+
+几个实现上的取舍，可能对同样在做装机类工具的人有用：
+
+- **"配哪些工具"后端自己探，不信前端传的列表**。前端说"我装了 Codex"没有意义，后端去看盘上有没有。
+- **ClawX 不能直接写配置**。它关闭时会把内存里的副本刷回磁盘，把你写的覆盖掉。正确顺序是：检测在跑 → 优雅关闭 → 等退出 → 超时强杀 → 写配置 → 重启。
+- **绝不按镜像名杀进程**。taskkill /IM Claude.exe 本意是关 Claude 桌面版，实际把机器上所有 Claude Code CLI 会话一起端了 —— 可执行文件同名。现在一律按完整安装路径逐 PID 关。
+- **内置驱动全部可删，删了不会自己回来**。不抢用户已有的 Key 和登录态，这是硬红线。
+
+产品本身是闭源的（Windows + macOS），所以不在这求 star。真正能给同行看的那部分我开源了：${RESCUE} —— 19 条真实客户机故障病例，全是开发机上永远复现不出来的那类（中文路径、GBK/UTF-8、杀软隔离、裸网 SNI 阻断）。
+
+官网 ${SITE}（国内镜像 ${SITE_CN}）。欢迎拍砖，尤其想听听你们怎么处理多工具配置同步的。`;
+
+const zhihuTitle = '国产模型进 AI Coding 工作流，卡住的从来不是模型，是配置';
+const zhihuBody = v2exBody;
+
+const juejinTitle = '一键给四个 AI 编程工具写配置：U-King 是怎么做装机这件事的';
+const juejinBody = v2exBody;
+
+const sspaiTitle = 'U-King：一键装好并配好你的全部 AI 编程工具';
+const sspaiBody = `如果你身边有想用 AI 编程、但卡在"装不上、配不来"的人，这篇给他们。
+
+AI 工具现在的门槛已经不在模型了。Claude Code、Codex、ClawX、Hermes 都很强，但要让它们真的跑起来，普通人得面对 base URL、鉴权 token、环境变量、四种格式的配置文件 —— 这一步劝退了绝大多数人。
+
+U-King 做的事情很窄：把装和配这两步做掉。
+
+- 一键安装 Claude Code / Codex CLI / ClawX / Hermes
+- 一键写好全部配置，后端自己探测机器上到底装了什么，不问你
+- 默认模型 DeepSeek-V4-Flash，快、稳、便宜；要满血推理在「换模型」里切
+- 装完实测连通性，真调一次模型看它回不回话，不是"绿灯即成功"
+
+两条不会退让的原则：不覆盖你已有的 Key 和登录态；内置的驱动全部可以删，删了不会自己回来。
+
+Windows + macOS，官网 ${SITE}（国内镜像 ${SITE_CN}）。`;
+
+const xhsTitle = '国产AI终于开始反攻AI编程了🔥';
+const xhsText = `国产AI终于开始反攻AI编程了🔥
+
+以前想玩 AI 编程：
+❌ 不会配 API
+❌ 不懂环境变量
+❌ 不知道模型怎么接
+❌ 装一堆工具折腾一下午还是红字
+
+现在：
+
+✨ 一键装好 Claude Code / Codex / ClawX / Hermes
+✨ 一键把配置全写好，不用你碰任何文件
+✨ 默认 DeepSeek-V4-Flash，快又便宜，日常够用
+✨ 装完自动实测，真调一次模型看它回不回话
+
+最舒服的是它不抢你东西 👇
+你原来的 Key、原来的登录态，它一个都不动；内置的那些驱动你嫌多可以全删，删了不会自己偷偷回来。
+
+AI 的未来不是让所有人都变成程序员，
+是让所有人都有自己的 AI 助手。
+
+未来的电脑不是装软件，是装 AI 能力。
+
+官网搜 u-king.org（国内打不开就用 u-claw.org.cn/uking）
+
+#AI编程 #DeepSeek #ClaudeCode #Codex #人工智能 #效率工具`;
+
+const douyinTitle = '5分钟，让国产模型跑进顶级AI编程环境';
+const douyinText = `【口播稿 · 约60秒】
+
+很多人不知道，国产模型现在已经能进 AI Coding 工作流了。
+
+以前你想用 DeepSeek 写代码，得先找 API、改配置文件、研究环境变量 —— 说实话，程序员自己都要折腾半天。
+
+现在用 U-King，点一下：
+
+Claude Code，装好。
+Codex，装好。
+ClawX、Hermes，装好。
+
+配置文件？它自己写。默认模型就是 DeepSeek-V4-Flash，快、稳、便宜。
+
+而且它不抢你东西 —— 你原来的 Key 和登录态一个都不动，内置的驱动嫌多可以全删，删了不会自己回来。
+
+让 AI 编程工具，不再只是高手的玩具。
+
+未来每个人都会有自己的 AI 操作系统。
+
+这就是 U-King，官网 u-king.org。
+
+————
+【封面文案】国产模型 × AI编程，5分钟装好
+【话题】#AI编程 #DeepSeek #ClaudeCode #人工智能 #装机`;
+
+const momentsText = `AI 编程时代，最大的门槛不是模型，是配置。
+
+很多人知道 Claude Code、Codex、DeepSeek 很强。但是：
+不会装，不会配，不会用。
+
+所以我们做了 U-King —— 把这套复杂的 AI 工具链：
+Claude Code / Codex / ClawX / Hermes
+
+变成：一键安装，一键配置，一键使用。
+默认就是 DeepSeek-V4-Flash，快又便宜。
+
+它不抢你东西：原来的 Key 和登录态一个都不动，内置驱动全部可删。
+
+让普通人也拥有自己的 AI 武器库。
+
+${SITE}`;
+
+const weiboText = `AI 编程卡住普通人的从来不是模型，是配置🔧 U-King 一键装好并配好 Claude Code / Codex / ClawX / Hermes，默认 DeepSeek-V4-Flash，快又便宜。不抢你已有的 Key 和登录态，内置驱动全部可删。Windows+Mac 👉 ${SITE} #AI编程##DeepSeek##ClaudeCode#`;
+
+const jikeText = `AI 编程的门槛早就不在模型了，在配置。
+
+四个工具四种配置格式：~/.claude/settings.json、~/.codex/config.toml、%APPDATA%\\ClawX\\clawx-providers.json、%LOCALAPPDATA%\\hermes。普通人在这一步就走了。
+
+U-King 就是把这段做掉：一键装 + 一键配，默认 DeepSeek-V4-Flash。后端自己探机器上装了什么，不信前端传的列表。
+
+顺手开源了 19 条真实客户机故障病例 ${RESCUE}，全是开发机上复现不出来的那种（中文路径 + GBK 静默失败、panic=abort 整个应用消失、"/v1/models 列着"≠"调得通"）。
+
+${SITE}`;
+
+const mpTitle = '为什么我们把「装 AI」这件事做成了一键';
+const mpBody = v2exBody;
+
+const biliTitle = '一键装好全部 AI 编程工具：Claude Code / Codex / ClawX / Hermes 实机演示';
+const biliBody = sspaiBody;
+
+const shipinhaoTitle = '一键装好你的全部 AI 编程工具';
+
+// ── 通配主图 ────────────────────────────────────────────────
+const masterPrompt = 'Square 1:1 social poster, flat vector illustration, dark modern tech aesthetic, deep navy background with subtle dot grid, gold and electric-blue accents. Center: a single large glowing power button being pressed, with four clean app tiles fanning out from it in a neat arc, each tile showing a simple terminal window icon lighting up in sequence. Bold top headline in Chinese "一键装好全部 AI", a smaller wordmark "U-King" bottom center, and a small badge reading "DeepSeek-V4-Flash". Minimal, high contrast, tech-startup poster style, no photorealism, no clutter. Centered balanced composition that still reads well cropped to 3:4 or 9:16.';
+
+const campaign = {
+  slug: 'uking-deepseek-v4-flash',
+  title: 'U-King × DeepSeek-V4-Flash 全媒体发布',
+  subtitle: '不是卖一个模型，是让国产模型进入全球 AI Coding 工作流 · U-King = AI 时代个人操作系统入口',
+  primaryUrl: SITE,
+  masterImage: { prompt: masterPrompt, size: '1024x1024' },
+  repos: [
+    { label: '官网 u-king.org', url: SITE },
+    { label: '国内镜像', url: SITE_CN },
+    { label: 'u-rescue 病例库（开源）', url: RESCUE },
+    { label: 'ActionParity（开源）', url: AP },
+  ],
+  platforms: [
+    // ── 国内主火力 ──
+    {
+      id: 'xiaohongshu', name: '小红书', region: 'cn', priority: 3,
+      how: '★ 主战场。creator 后台网页发，必须配图或短视频',
+      submitUrl: 'https://creator.xiaohongshu.com/publish/publish',
+      title: xhsTitle, text: xhsText, needsImage: true,
+      tips: '这里的人正是"想用但不会配"的人群。emoji 小标题 + ❌/✨ 对比清单 + 单独一行 tags；首图用顶部主图，标题别超 20 字。',
+    },
+    {
+      id: 'douyin', name: '抖音', region: 'cn', priority: 3,
+      how: '★ 主战场。creator 后台传短视频，正文是口播稿',
+      submitUrl: 'https://creator.douyin.com/',
+      title: douyinTitle, text: douyinText, needsImage: true,
+      tips: '录"点一下 → 四个工具依次装好 → 终端里真的跑起来"的一镜到底最有说服力，别用 PPT。前 3 秒必须是痛点，不是 logo。',
+    },
+    {
+      id: 'v2ex', name: 'V2EX · 分享创造', region: 'cn', priority: 3,
+      how: '选「分享创造」节点',
+      submitUrl: 'https://www.v2ex.com/new',
+      title: v2exTitle, text: v2exBody,
+      tips: '⭐ V2EX 极度反感软文：正文已经把闭源说在明面上、把技术坑摆出来当干货、star 求在开源病例库而不是产品。别改回推销语气，会被踩死。',
+    },
+    {
+      id: 'zhihu', name: '知乎专栏', region: 'cn', priority: 2,
+      submitUrl: 'https://zhuanlan.zhihu.com/write',
+      title: zhihuTitle, text: zhihuBody,
+      tips: '知乎吃"观点 + 对比"。开头就抛"卡住的不是模型是配置"这个判断，中段用四种配置文件路径当证据。',
+    },
+    {
+      id: 'sspai', name: '少数派', region: 'cn', priority: 2,
+      how: '投稿，走"帮不懂技术的人用上 AI"叙事',
+      submitUrl: 'https://sspai.com/write',
+      title: sspaiTitle, text: sspaiBody,
+      tips: '少数派读者是"进阶普通人"，别堆技术细节，讲清楚"替你做掉了哪一步"。配安装前后对比图。',
+    },
+    {
+      id: 'juejin', name: '掘金', region: 'cn', priority: 2,
+      how: '写成技术复盘，不是产品介绍',
+      submitUrl: 'https://juejin.cn/editor/drafts/new',
+      title: juejinTitle, text: juejinBody,
+      tips: '把"ClawX 必须先关再写再重启""绝不按镜像名杀进程"这两段扩写成小节，掘金吃这个。',
+    },
+    {
+      id: 'weibo', name: '微博', region: 'cn', priority: 2,
+      how: '一键预填分享，配主图',
+      submitUrl: 'https://service.weibo.com/share/share.php?title={text}&url={rawurl}',
+      url: SITE, text: weiboText, needsImage: true,
+      tips: '一句话 + 三个话题标签，配顶部主图。',
+    },
+    {
+      id: 'jike', name: '即刻', region: 'cn', priority: 2,
+      how: '发动态，开发者浓度高',
+      submitUrl: 'https://web.okjike.com/',
+      text: jikeText, needsImage: true,
+      tips: '即刻反水分：把开源病例库放前面，产品链接放最后一行就行。',
+    },
+    {
+      id: 'moments', name: '微信朋友圈', region: 'cn', priority: 2,
+      how: '手机端发（网页无提交页），配主图',
+      submitUrl: 'weixin://', text: momentsText, needsImage: true,
+      tips: '朋友圈只能手机发，文案和主图先在这拷好。适合直接转化 U 盘/培训客户。',
+    },
+    {
+      id: 'mp', name: '微信公众号', region: 'cn', priority: 2,
+      how: '发自己的号，长文 + 演示 GIF',
+      submitUrl: 'https://mp.weixin.qq.com/',
+      title: mpTitle, text: mpBody,
+      tips: '长文排版，末尾放官网 + 国内镜像两个链接（有客户网络打不开 .org）。',
+    },
+    {
+      id: 'bilibili', name: 'Bilibili 专栏', region: 'cn', priority: 2,
+      how: '专栏 + 1 分钟实机演示视频更佳',
+      submitUrl: 'https://member.bilibili.com/platform/upload/text/edit',
+      title: biliTitle, text: biliBody, needsImage: true,
+      tips: '视频转化最高。录"干净的 Windows 上从零装到跑通"，全程不剪，这是最硬的信任背书。',
+    },
+    {
+      id: 'shipinhao', name: '视频号', region: 'cn', priority: 1,
+      how: '复用抖音那条视频，标题 ≤30 字',
+      submitUrl: 'https://channels.weixin.qq.com/platform/post/create',
+      title: shipinhaoTitle, text: douyinText, needsImage: true,
+      tips: '标题硬限 30 字。视频号观众年龄偏大，"不用懂技术"要说在标题里。',
+    },
+
+    // ── 海外（开源背书线，不硬推闭源产品）──
+    {
+      id: 'x', name: 'X / Twitter', region: 'intl', priority: 2,
+      how: '点「一键打开」会预填短版（≤280），长版在下面复制',
+      submitUrl: 'https://twitter.com/intent/tweet?text={text}',
+      text: xShort, textLabel: '预填短版（≤280）',
+      fields: [{ label: '长版正文（发长推/加评论用）', value: xLong, rows: 12 }],
+      needsImage: true,
+      tips: '配主图或安装演示 GIF，转化翻倍。别在同一条里塞四个工具名 + 三个链接，X 上会被判营销号。',
+    },
+    {
+      id: 'linkedin', name: 'LinkedIn', region: 'intl', priority: 2,
+      how: '点开发帖框，前 2 行是折叠前黄金位',
+      submitUrl: 'https://www.linkedin.com/feed/?shareActive=true',
+      text: linkedinText,
+      tips: '职业化语气，突出"瓶颈从模型质量转移到了配置"这个判断。LinkedIn 对中国产品友好度一般，靠观点而不是产品力破圈。',
+    },
+    {
+      id: 'hn', name: 'Hacker News', region: 'intl', priority: 2,
+      how: 'Show HN 走 u-rescue 病例库（开源），不是走产品。周二~四 美西早 8-10 点',
+      submitUrl: 'https://news.ycombinator.com/submitlink?u={url}&t={title}',
+      url: RESCUE, title: hnTitle, text: hnBody,
+      tips: '🔴 别改成推 U-King —— HN 对"中国区闭源 Windows 安装包"零容忍，发了会被冲。正文已明写"产品闭源，不在这推"，这句必须留着。前几小时守评论区。',
+    },
+    {
+      id: 'reddit_claude', name: 'Reddit · r/ClaudeAI', region: 'intl', priority: 2,
+      submitUrl: 'https://www.reddit.com/r/ClaudeAI/submit?title={title}',
+      title: 'I open-sourced 19 real failure cases from Windows machines running Claude Code / Codex in the field',
+      text: redditBody,
+      tips: '先看置顶规则，很多 sub 禁自我推广。正文全程不放产品链接只放开源仓库，这是能发出去的关键。',
+    },
+    {
+      id: 'reddit_llama', name: 'Reddit · r/LocalLLaMA', region: 'intl', priority: 1,
+      submitUrl: 'https://www.reddit.com/r/LocalLLaMA/submit?title={title}',
+      title: 'Field notes: 19 ways an AI coding stack breaks on real (non-developer) Windows machines',
+      text: redditBody,
+      tips: '这个社区吃"真实环境踩坑"，不吃产品。强调 DeepSeek / 任意兼容端点 / 不锁定。',
+    },
+    {
+      id: 'devto', name: 'Dev.to', region: 'intl', priority: 1,
+      how: '英文技术博客，长尾搜索流量',
+      submitUrl: 'https://dev.to/new',
+      title: devtoTitle, text: devtoBody,
+      tips: '打 tag: windows, debugging, ai, opensource。这篇是长期资产，GEO 也吃。',
+    },
+    {
+      id: 'ph', name: 'Product Hunt', region: 'intl', priority: 1,
+      how: '这条才是推产品本身的。按表单逐格填，发布日选周二/三',
+      submitUrl: 'https://www.producthunt.com/posts/new',
+      fields: [
+        { label: 'Name', value: 'U-King' },
+        { label: 'Tagline（≤60）', value: 'One click installs and configures your whole AI coding stack', rows: 2 },
+        { label: 'Description（≤500）', value: phDesc, rows: 7 },
+        { label: 'Launch tags（选 3 个）', value: 'Developer Tools · Artificial Intelligence · Productivity', rows: 2 },
+        { label: 'First comment（essential）', value: phFirst, rows: 10 },
+      ],
+      tips: 'PH 是唯一适合直推闭源产品的海外站。备好 logo + 一段 20 秒安装演示 GIF；Tagline 和首评决定成败。',
+    },
+    {
+      id: 'telegram', name: 'Telegram', region: 'intl', priority: 1,
+      how: '一键预填分享到频道/群',
+      submitUrl: 'https://t.me/share/url?url={rawurl}&text={text}',
+      url: SITE, text: tgText,
+      tips: '短一句 + 链接即可。',
+    },
+  ],
+};
+
+const out = resolve(here, 'uking-deepseek-v4-flash.json');
+writeFileSync(out, JSON.stringify(campaign, null, 2), 'utf8');
+console.log('wrote', out, '·', campaign.platforms.length, 'platforms');

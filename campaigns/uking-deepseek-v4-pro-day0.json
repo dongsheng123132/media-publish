@@ -1,0 +1,184 @@
+{
+  "slug": "uking-deepseek-v4-pro-day0",
+  "title": "U-King × DeepSeek V4 Pro · 新版线路首测",
+  "subtitle": "一键装好 Claude Code / Codex / Hermes / OpenClaw，再一键接上国产大模型",
+  "primaryUrl": "https://u-king.org",
+  "defaultLang": "zh",
+  "langs": [
+    "zh",
+    "en"
+  ],
+  "masterImage": {
+    "prompt": "Futuristic split AI workstation, cyan fast agent workflow on the left and gold deep reasoning core on the right, scientific evidence gates and tool circuits, dark navy, no text, no logo",
+    "size": "1536x1024",
+    "image": "./deepseek-v4-pro-day0-images/master.png"
+  },
+  "repos": [
+    {
+      "label": "U-King 官网 / Download",
+      "url": "https://u-king.org"
+    },
+    {
+      "label": "全媒体发布轰炸机",
+      "url": "https://github.com/dongsheng123132/media-publish"
+    }
+  ],
+  "platforms": [
+    {
+      "id": "x",
+      "name": "X / Twitter",
+      "region": "intl",
+      "priority": 2,
+      "how": "英文短帖，URL 预填",
+      "submitUrl": "https://twitter.com/intent/tweet?text={text}",
+      "text": "U-King installs Claude Code, Codex, Hermes & OpenClaw, then connects them to DeepSeek. Pilot: ungated Flash 63.3% vs Pro 90.6%. An evidence gate repaired 3/3 flagged Pro answers; Flash had 6 truncated outputs. Total CNY 2.82. https://u-king.org",
+      "needsImage": true,
+      "tips": "单次 pilot，避免使用 benchmark/world-first/100% accuracy。"
+    },
+    {
+      "id": "linkedin",
+      "name": "LinkedIn",
+      "region": "intl",
+      "priority": 1,
+      "submitUrl": "https://www.linkedin.com/feed/?shareActive=true",
+      "text": "U-King is not another chat wrapper. It installs and verifies Claude Code, Codex, Hermes and OpenClaw, then configures them to use DeepSeek and other China-accessible model backends. The idea is simple: keep mature agent workflows and use domestic models as the interchangeable brain.\n\nFor today's U-King/xiapan-cloud V4 Pro route update, I ran a small paired scientific-agent pilot instead of reposting a leaderboard. Without an evidence gate, Flash scored 63.3% on parseable outputs and Pro 90.6%; paired accuracy was 31.3% vs 81.3%, and evidence/decision conflicts fell from 9 to 2.\n\nIn a follow-up with a model-external evidence gate, 3/32 Pro first answers were intercepted and all were repaired; Pro completed 32/32. Flash completed 26/32: 9 completed traces required intervention and were repaired, while 6 outputs were truncated at 240 characters and never formed valid JSON. This does not mean the gate made either model 100% accurate; it prevented observed evidence contradictions from being submitted.\n\nTotal spend across smoke, baseline and gated runs was CNY 2.820158.\n\nThis is a 16-object, single-run engineering pilot, not a final research claim. The next phase needs fixed samples and repeated seeds.\n\nhttps://u-king.org",
+      "needsImage": true,
+      "tips": "披露本人是 U-King 开发者；保留 pilot 限制。"
+    },
+    {
+      "id": "telegram",
+      "name": "Telegram",
+      "region": "intl",
+      "priority": 1,
+      "submitUrl": "https://t.me/share/url?url={rawurl}&text={text}",
+      "text": "U-King installs Claude Code, Codex, Hermes and OpenClaw, then connects them to DeepSeek. Pilot: ungated Flash 63.3% vs Pro 90.6%; a follow-up evidence gate repaired all flagged completed answers. Total spend CNY 2.82.",
+      "tips": "短讯 + 官网。"
+    },
+    {
+      "id": "v2ex",
+      "name": "V2EX · 分享创造",
+      "region": "cn",
+      "priority": 3,
+      "submitUrl": "https://www.v2ex.com/new",
+      "title": "U-King：一键装好 Claude Code / Codex / Hermes，再接 DeepSeek",
+      "text": "做了一个 U-King AI 装机管家，解决的不是“再做一个聊天框”，而是把 Agent 真装好、真配通。\n\n它会自动下载/安装 Claude Code、Codex、Hermes、OpenClaw，处理 Node、PATH 和基础配置，然后一键接 DeepSeek 等国产模型。思路是保留国际主流 Agent 的工具链和 workflow，把国产大模型作为可切换后端。\n\n今天接入了 DeepSeek V4 Pro 新版线路，也顺手跑了一组小型 Agent pilot：4 学科、16 对象、每个对象正常/故障两臂。自然任务下 Flash 19/30（2 次输出不可解析），Pro 29/32；配对正确率 5/16 vs 13/16。工具已返回别名命中但最终仍判“缺席”的冲突，Flash 9 次、Pro 2 次。\n\n随后加模型外 evidence gate 复测：Pro 3 条初答被拦并全部修正，32/32 完成；Flash 的 26 条完成轨迹中有 9 条被拦并修正，另有 6 条输出在 240 字符处截断。闸门后“已接受结果全对”不等于模型 100% 正确，而是矛盾答案不能直接提交。\n\n工程结论：规则明确的批量任务用 Flash；含糊、多工具、判断密度高的任务用 Pro；高风险任务再加 harness 强制证据约束。全部实验累计实扣 ¥2.82。\n\n这是单次 pilot，不是最终论文结论。下一步做固定样本、多随机种子复跑。\n\n官网：https://u-king.org\n发布工具：https://github.com/dongsheng123132/media-publish",
+      "tips": "选“分享创造”；平实说明是本人项目和 pilot 限制。"
+    },
+    {
+      "id": "juejin",
+      "name": "掘金",
+      "region": "cn",
+      "priority": 2,
+      "submitUrl": "https://juejin.cn/editor/drafts/new",
+      "title": "国际 Agent + 国产模型：U-King 如何一键装好 Claude Code 与 Codex",
+      "text": "真正阻止很多人使用 Claude Code、Codex 的，往往不是模型能力，而是安装和接入。\n\nNode 怎么装、PATH 为什么不生效、CLI 去哪里下载、不同客户端怎么填 Base URL、国内网络如何连通——这些事情对开发者只是麻烦，对普通用户却足以让产品根本无法开始使用。\n\nU-King 的定位不是重新做一个聊天界面，而是把国际主流 Agent 工具真正装进用户电脑：自动安装 Claude Code、Codex、Hermes、OpenClaw，补齐依赖并逐项验证；随后一键配置 DeepSeek 等国产模型。于是用户得到的是“成熟 Agent 工作流 + 国产模型大脑”，而不是只能在网页里对话的孤立模型。\n\n今天虾盘云 / U-King 上线 DeepSeek V4 Pro 新版线路，我们没有只转发排行榜，而是做了一轮可复跑的 Agent 对照。任务要求模型区分“参考库没有查到”和“世界上不存在”。在不明示安全规则的自然任务中，Flash 在 30 条可解析输出中的标签正确率为 63.3%，另有 2 条不可解析；Pro 为 90.6%。同一对象正常/故障两臂都答对，Flash 31.3%，Pro 81.3%。工具已命中、结论却仍报缺席的冲突，Flash 9 次，Pro 2 次。\n\n这说明模型路由不该只按“贵/便宜”划分：批量、机械、规则明确的工作交给 Flash；目标含糊、需要自行规划工具与处理不确定性的工作交给 Pro。对真正高风险的任务，Pro 也不是保险箱，还需要模型外 evidence gate。\n\n第二轮保持自然任务不变，加入模型外证据闸门。Pro 的 32 条轨迹中，3 条初答被拦下并全部修正，最终 32/32 完成；Flash 有 26 条完成轨迹，其中 9 条需要干预并全部修正，另有 6 条输出在 240 字符处被截断，未形成合法 JSON。这个结果不能写成“模型被提升到 100%”：准确说法是，闸门阻止了本轮观察到的证据冲突直接提交，同时也暴露了 Flash 的输出完成问题。\n\n全部 smoke、基线和闸门复测累计实扣 ¥2.820158。U-King 本体免费，模型按量使用。\n\n实验只有 16 个对象、单次运行，属于工程 pilot，不是最终论文结论。下一步应做固定样本、多随机种子复跑，并把模型质量、接口完成率与闸门收益分开报告。\n\nhttps://u-king.org",
+      "tips": "按技术复盘发，首图用通配主图。"
+    },
+    {
+      "id": "zhihu",
+      "name": "知乎专栏",
+      "region": "cn",
+      "priority": 3,
+      "submitUrl": "https://zhuanlan.zhihu.com/write",
+      "title": "为什么有了 DeepSeek，普通人仍然用不起来 Claude Code 和 Codex？",
+      "text": "真正阻止很多人使用 Claude Code、Codex 的，往往不是模型能力，而是安装和接入。\n\nNode 怎么装、PATH 为什么不生效、CLI 去哪里下载、不同客户端怎么填 Base URL、国内网络如何连通——这些事情对开发者只是麻烦，对普通用户却足以让产品根本无法开始使用。\n\nU-King 的定位不是重新做一个聊天界面，而是把国际主流 Agent 工具真正装进用户电脑：自动安装 Claude Code、Codex、Hermes、OpenClaw，补齐依赖并逐项验证；随后一键配置 DeepSeek 等国产模型。于是用户得到的是“成熟 Agent 工作流 + 国产模型大脑”，而不是只能在网页里对话的孤立模型。\n\n今天虾盘云 / U-King 上线 DeepSeek V4 Pro 新版线路，我们没有只转发排行榜，而是做了一轮可复跑的 Agent 对照。任务要求模型区分“参考库没有查到”和“世界上不存在”。在不明示安全规则的自然任务中，Flash 在 30 条可解析输出中的标签正确率为 63.3%，另有 2 条不可解析；Pro 为 90.6%。同一对象正常/故障两臂都答对，Flash 31.3%，Pro 81.3%。工具已命中、结论却仍报缺席的冲突，Flash 9 次，Pro 2 次。\n\n这说明模型路由不该只按“贵/便宜”划分：批量、机械、规则明确的工作交给 Flash；目标含糊、需要自行规划工具与处理不确定性的工作交给 Pro。对真正高风险的任务，Pro 也不是保险箱，还需要模型外 evidence gate。\n\n第二轮保持自然任务不变，加入模型外证据闸门。Pro 的 32 条轨迹中，3 条初答被拦下并全部修正，最终 32/32 完成；Flash 有 26 条完成轨迹，其中 9 条需要干预并全部修正，另有 6 条输出在 240 字符处被截断，未形成合法 JSON。这个结果不能写成“模型被提升到 100%”：准确说法是，闸门阻止了本轮观察到的证据冲突直接提交，同时也暴露了 Flash 的输出完成问题。\n\n全部 smoke、基线和闸门复测累计实扣 ¥2.820158。U-King 本体免费，模型按量使用。\n\n实验只有 16 个对象、单次运行，属于工程 pilot，不是最终论文结论。下一步应做固定样本、多随机种子复跑，并把模型质量、接口完成率与闸门收益分开报告。\n\nhttps://u-king.org",
+      "tips": "观点先行；保留实验边界。"
+    },
+    {
+      "id": "jike",
+      "name": "即刻",
+      "region": "cn",
+      "priority": 2,
+      "submitUrl": "https://web.okjike.com/",
+      "text": "想用 Claude Code、Codex、Hermes，却卡在安装、Node、PATH、API 和网络配置？\n\nU-King 一次帮你装好国际主流 Agent，再一键接上 DeepSeek 国产大模型：成熟 Agent 做工具与工作流，国产模型做大脑，国内直连、按量计费。\n\n今天新版 Pro 线路首测：无闸门时，Flash 可解析结果正确率 63.3%，Pro 90.6%。加证据闸门后，Pro 32/32 完成；Flash 26/32 完成，剩余 6 条输出截断。全部实验实扣 ¥2.82。\n\n规则明确用 Flash，复杂判断用 Pro。下载：https://u-king.org",
+      "needsImage": true,
+      "tips": "开发者圈，正文控制短。"
+    },
+    {
+      "id": "weibo",
+      "name": "微博",
+      "region": "cn",
+      "priority": 2,
+      "submitUrl": "https://service.weibo.com/share/share.php?title={text}&url={rawurl}",
+      "text": "U-King 一键装好 Claude Code、Codex、Hermes、OpenClaw，再接 DeepSeek 国产大模型。Pro 新线路实测：无闸门 Flash 可解析结果 63.3%，Pro 90.6%；加证据闸门后，Pro 3 条被拦初答全部修正并完成 32/32。全部实验实扣 ¥2.82。#DeepSeek# #ClaudeCode# #UKing#",
+      "needsImage": true,
+      "tips": "页面会预填；确认数字和链接后再发。"
+    },
+    {
+      "id": "xiaohongshu",
+      "name": "小红书",
+      "region": "cn",
+      "priority": 3,
+      "submitUrl": "https://creator.xiaohongshu.com/publish/publish",
+      "title": "Claude Code + DeepSeek，我终于一键装好了",
+      "text": "不会配环境，也能把 Claude Code 和 Codex 装进电脑？🤖\n\n我做的 U-King，不是又一个聊天框，而是一台 AI 装机管家：\n\n🔧 自动下载并装好\n✅ Claude Code\n✅ Codex\n✅ Hermes\n✅ OpenClaw\n\n🧠 再一键接上国产大模型\n✅ DeepSeek Flash：批量、便宜、规则明确的活\n✅ DeepSeek Pro：复杂、含糊、高判断密度的活\n\n📊 今天新版 Pro 线路首测\n无证据闸门、同一套自然科学 Agent 任务：\nFlash 可解析结果正确率 63.3%\nPro 正确率 90.6%\n配对正确率 31.3% → 81.3%\n\n🛡️ 第二轮加模型外证据闸门\nPro：3 条初答被拦，全部修正，32/32 完成\nFlash：9 条完成轨迹被拦并修正，另有 6 条输出截断\n\n💰 全部 smoke、基线和闸门复测一共实扣 ¥2.82\n\n国际主流 Agent 的工具能力 + 国产大模型的大脑，国内直连，不用自己折腾 Node、PATH、Key 和配置。\n\nU-King 管家本体免费：https://u-king.org\n\n注：这是 16 个对象的单次工程 pilot，不是最终论文结论；闸门后的结果也不等于模型本身 100% 正确。\n\n#AI工具 #DeepSeek #ClaudeCode #Codex #国产大模型 #效率工具 #独立开发者",
+      "needsImage": true,
+      "tips": "标题建议二选一；通配主图作首图。"
+    },
+    {
+      "id": "moments",
+      "name": "微信朋友圈",
+      "region": "cn",
+      "priority": 3,
+      "submitUrl": "weixin://",
+      "text": "想用 Claude Code、Codex、Hermes，却卡在安装、Node、PATH、API 和网络配置？\n\nU-King 一次帮你装好国际主流 Agent，再一键接上 DeepSeek 国产大模型：成熟 Agent 做工具与工作流，国产模型做大脑，国内直连、按量计费。\n\n今天新版 Pro 线路首测：无闸门时，Flash 可解析结果正确率 63.3%，Pro 90.6%。加证据闸门后，Pro 32/32 完成；Flash 26/32 完成，剩余 6 条输出截断。全部实验实扣 ¥2.82。\n\n规则明确用 Flash，复杂判断用 Pro。下载：https://u-king.org",
+      "needsImage": true,
+      "tips": "复制到手机发送；最后一步本人确认。"
+    },
+    {
+      "id": "mp",
+      "name": "微信公众号",
+      "region": "cn",
+      "priority": 3,
+      "submitUrl": "https://mp.weixin.qq.com/",
+      "title": "DeepSeek V4 Pro 真有 Opus 4.8 水平吗？我花了22元跑了一遍",
+      "text": "# DeepSeek V4 Pro 真有 Opus 4.8 水平吗？我花了22元跑了一遍\n\n> 同一套科学 Agent 任务里，DeepSeek V4 Pro 比 Opus 4.8 便宜 16 倍，但正确率和证据遵循没有打平。所谓“约20倍”，得先问清是挂牌价，还是真实任务成本。\n\n¥22.003804。这是我今天实跑四款模型，全部的真实花费。\n\n今天是 2026-08-13，DeepSeek V4 Pro 0813 新版路由上线的当天。网上正在传一句话：\"DeepSeek V4 Pro 与 Opus 4.8 性能相当，弱于 Sol 或 Fable，价格便宜约 20 倍。\"\n\n我盯着这句话看了很久。作为 U-King 的开发者，我天天把各家模型接进 Agent 工作流跑真实任务——这种传播口径，我的第一反应不是兴奋，是怀疑。\"相当\"是多相当？\"便宜 20 倍\"用的是挂牌价还是真实扣费？\n\n而且这话我自己也说过。新版路由上线前，我基于官方规格和人云亦云的印象，跟人聊天时顺过一句\"与 Opus 4.8 相当、弱于 Sol 或 Fable、便宜约 20 倍\"。话传出去就收不回来了。今天数据回来了，我先拿自己的话开刀——实测和传播口径要是对不上，我第一个改口。\n\n为什么非得自己跑？因为到了 Agent 时代，传统 benchmark 只能回答一部分问题。真实用户遇到的往往不是“选择题做对没有”，而是：工具我给你了，证据也回来了，你照不照做。AbsenceBench 测的就是这件事——给三个工具、两条任务臂，看模型会不会查证、会不会在工具已经返回别名命中时仍然误判。它不比排行榜“高级”，只是更贴近我们这次关心的故障。\n\n具体怎么跑的，交代清楚，方便你复跑：@@AbsenceBench@@ v0.2 natural prompt，16 个对象 × healthy/broken 两臂 = 32 条任务；工具只有 exact_lookup、alias_lookup、positive_control 三个；thinking 关闭；全部走同一个 U-King OpenAI-compatible 路由。三个工具各司其职：exact_lookup 做精确匹配，alias_lookup 查目标的别名，positive_control 查同库中一个已知对象。**阳性对照命中只说明仪器能工作，不说明目标一定存在；目标是否存在，要看 exact/alias 的证据。** 四款模型，DeepSeek V4 Pro、Claude Opus 4.8、GPT-5.6 Sol、Claude Fable 5，各跑一遍，实扣费用照单全收。\n\n为什么 thinking 关闭、用 natural prompt？因为我想测的是一个很窄的问题：不把安全规则直接喂到提示词里，模型能不能凭工具返回约束自己的结论。关闭 thinking 也让四个路由保持同一接口条件。**这不是任何模型的能力上限**；换成 high/max reasoning，结果和成本都可能变化。\n\n![图1：封面](images/01.png)\n\n结果在这，先看表：\n\n![图2：四模型 AbsenceBench 实测结果](images/02.png)\n\n| 模型 | 完成 | 标签正确率 | 配对正确 | 证据冲突 | 实扣 |\n|---|---:|---:|---:|---:|---:|\n| DeepSeek V4 Pro | 32/32 | 29/32 = 90.6% | 13/16 = 81.3% | 2 | ¥0.571400 |\n| Claude Opus 4.8 | 32/32 | 32/32 = 100% | 16/16 = 100% | 0 | ¥9.149792 |\n| GPT-5.6 Sol | 32/32 | 32/32 = 100% | 16/16 = 100% | 0 | ¥3.961778 |\n| Claude Fable 5 | 16/32 预算截断；14 条有答案 | 12/14 = 85.7% | 完成 8 对中 5 对全对 | 1；另 2 次空正文 | ¥8.320834 |\n\n四张实扣单加起来，正好 ¥22.003804。这个数，就是这篇的预算。\n\n表怎么读？看三列。完成数：任务有没有跑完，跑不完本身就是可靠性信号；标签正确率：判\"存在/缺席\"判对没有；配对正确：同一个对象的 healthy/broken 两臂是不是都判对了——这个最难，它要求模型在\"有证据\"和\"没证据\"两种情境下保持一致的判断标准。DeepSeek Pro 的 81.3% 就输在这里：13/16 对全对，还有 2 次证据冲突——查到了证据，结论却和证据打架。90.6% 的正确率很体面，但 2 次冲突说明它离\"证据说什么就信什么\"还差一口气。\n\n但先别急着下结论。==这张表只回答一个问题：在同一套\"给工具、查证据、判缺席\"的 Agent 行为测试里，谁把活干对了。== 它不等于总榜，也不等于\"谁更聪明\"。\n\n口径这种事，比模型本身更值得较真。\"与 Opus 相当\"和\"落后 Opus 一档\"，对决策的影响天差地别——前者你会把合同、发布、对外交付都交给它，后者你只敢拿它跑批量。传播句省掉一个限定词，买家就多冒一分险。补回来的方法也不复杂：每个数字都标注它来自哪一层——@@广义 benchmark@@、单项测试、挂牌单价，还是真实扣费。\n\n**结论一：DeepSeek V4 Pro ≠ Opus 4.8。** 这次实测，Pro 标签正确率 90.6%、配对正确 81.3%，Opus 是 100% / 100%。广义基准也一样——OpenAI 发布页引的 AA Intelligence Index v4.1：Sol 58.9、Fable 59.9、Opus 4.8 55.7（[GPT-5.6 官方页](https://openai.com/index/gpt-5-6/)）；Artificial Analysis 给 DeepSeek V4 Pro Max 的指数是 44（[AA 页面](https://artificialanalysis.ai/models/deepseek-v4-pro)）。^^广义榜上，它离第一梯队确实还有距离。^^ \"已经等于 Opus\"这句话，我这边没有任何数据支持。注意，这不是打脸，是两个口径方向一致：广义指数 44 vs 55.7，差 11.7；实测 90.6% vs 100%，差 9.4 个百分点。都在说同一件事——Pro 能打，但离旗舰闭源还有肉眼可见的一档差距。硬说\"相当\"，既对不起 Opus 用户，也对不起 DeepSeek：它不需要靠碰瓷证明自己。\n\n**结论二：\"便宜约 20 倍\"是传播级近似，口径必须拆开。** 注意区分四个东西：@@广义 benchmark@@、@@单项 Agent 行为测试@@、@@模型单价@@、@@真实任务总成本@@。四个概念，正好对应四个不同的数，混着用就会得出\"20 倍\"这种看着精确、其实模糊的结论。\n\n- 挂牌单价：DeepSeek V4 Pro 0813 是 cache miss $0.435/M、output $0.87/M，命中缓存读只要 $0.003625/M（[DeepSeek 定价页](https://api-docs.deepseek.com/quick_start/pricing/)）；Opus 4.8 是 $5/M 进、$25/M 出（[Anthropic Opus 页](https://www.anthropic.com/claude/opus)）。输入约 11.5 倍、输出约 28.7 倍。\n- 真实任务：这次 Pro 实扣 ¥0.571400，Opus 实扣 ¥9.149792，**真实便宜 16.0 倍**。\n- 对 Sol：挂牌输出价差 34 倍多，真实任务只便宜 6.9 倍（¥0.571400 vs ¥3.961778）——因为 Sol 用更少的输出 token 就把任务做完了。\n\n看出问题没有？\"20 倍\"介于 11.5 和 28.7 之间，是挂牌口径取了个中间数；换成真实扣费，对 Opus 是 16.0 倍，对 Sol 直接缩到 6.9 倍。输出 token 才是成本大头——DeepSeek 输出 $0.87 对 Opus 的 $25，差 28.7 倍，但 Sol 这类模型输出更精简，单价差就补不回来。++挂牌单价替代不了任务总成本，谁拿单价吹倍数，谁就在偷换概念。++ 另外提醒一句：命中缓存时 DeepSeek 读 token 只要 $0.003625/M，长上下文反复读的场景，实际成本还能再往下压一截。\n\n![图3：四模型官方定价对比](images/03.png)\n\n**结论三：Fable 这次很反常，反常到我必须单独说。** 它是广义榜第一（AA 59.9），单价 $10/$50 全场最贵。但在 AbsenceBench 上：32 条任务预算截断只完成 16 条，标签正确率 85.7%，1 次证据冲突，2 次空正文。最离谱的是第一条 healthy 轨迹——它已经用 alias_lookup 拿到了 alias hit，positive_control 也命中了阳性对照，证据全齐，%%它还是判了\"缺席\"。%%\n\n空正文不是“答错”，是“没形成可交付答案”——harness 收到的 content 为空，于是把这一条单列为输出失败，然后继续下一条。这更像接口完成率或兼容性问题：再聪明的模型，到了特定 harness 里交不出正文，生产上也得算事故。Fable 是不是真这么差？未必。%%小样本 + 特定接口 + 特定 Agent 组合，推不出总能力结论。%% 模型排名和接口/Agent 的兼容性不能划等号。它是不是不适合 `thinking disabled + tool calls` 这组配置？阳性对照通过、alias 已命中却仍判缺席，究竟是提示语义冲突，还是真判断失误？——**都要单独复跑才能定位。16 条样本，我不给它写总评。**\n\n![图4：Fable 拿到阳性证据仍判缺席的事故轨迹](images/04.png)\n\n那现在能确定的边界只有三条：\n\n1. !!DeepSeek V4 Pro 已经等于 Opus——不成立。!! 部分公开基准接近旗舰闭源，但本次证据遵循任务里明确落后 Opus/Sol。\n2. !!\"模型 100%\"——不存在。!! 90.6% 的正确率里藏着 2 次证据冲突，@@evidence gate@@（模型外的证据校验层）不是可选项，是必需品。\n3. \"弱于 Sol/Fable\"在广义榜上大体成立，但 Fable 的反常样本提醒我：单项测试结果必须连上下文一起读。\n\n说到 evidence gate，具体是什么？一句话：模型之外再加一道证据校验。模型给出结论时，先要求它交证据链——查过哪个工具、返回什么、命中哪条——再由独立步骤核对“证据支不支持这个结论”。Fable 那条 healthy 轨迹就是现成的反面教材：alias 已经命中、阳性对照也证明仪器正常，结论却是缺席；证据层一核对就能拦下来。==高风险任务里，模型的判断是建议，证据层的核对才是裁决。==\n\n那 DeepSeek V4 Pro 到底值不值？**值。它的价值不是绝对第一，而是用明显更低的成本，把能力拉到\"可生产使用\"的区间。** 0.5714 元跑完 32 条自然任务，这是天天能用的价格。DeepSeek 官方自己就说 Pro 支持 Claude Code / OpenClaw 这类 Agent（[官方新闻页](https://api-docs.deepseek.com/news/news260424/)），Pro 1.6T 总参数 / 49B 激活，1M 上下文——架子就是给 Agent 搭好的。\n\n问题是：架子搭好了，普通用户还是装不上。Node 版本、PATH、网络、base URL、API Key，任何一处错了都可能让 Agent 原地趴窝。这些正是 U-King 想处理的事：**自动下载并配置 Claude Code、Codex、Hermes、OpenClaw，处理 Node / PATH / 网络 / API，再一键连接 DeepSeek。** 我想卖的不是又一个聊天框，而是“国际一流 Agent 工作流 + 国产大模型大脑”真正落到电脑里。\n\n![图6：U-King 一键接入国产大模型](images/06.png)\n\n最后给普通用户一张可以直接抄的任务路由：\n\n- &&低风险批量任务（总结、改写、抽取）：DeepSeek Flash——284B 总参 / 13B 激活那档，最便宜，量大不心疼。&&\n- &&复杂判断任务（多步推理、代码、证据核实）：DeepSeek Pro，90.6% 的底子 + 16 倍价差，性价比区间。&&\n- &&极高价值任务（合同、发布、对外交付）：Sol / Opus 起草，本轮配对正确 100%；最终仍由人确认。&&\n- &&任何高风险任务：无论用哪个模型，挂上 evidence gate，让模型外的证据层做最终裁决。&&\n\n![图5：普通用户任务路由建议](images/05.png)\n\n22 块钱买到什么？一个可复跑的答案，一张\"传播口径 vs 实测数据\"的对照表，和一个诚实的结论：DeepSeek V4 Pro 是\"便宜的可用\"，不是\"免费的吊打\"。四份结果 JSON 都留在本地归档，harness 和路由配置也都在，想复跑随时可以。\n\n顺便说一句，这篇当然带着产品立场：我是 U-King 的开发者，文章最后也会放官网。但 DeepSeek 没给我一毛钱，数据全是实扣，Fable 的事故一个字没删。利益关系写明白，比装中立靠谱。\n\n下次再有人跟你说\"DeepSeek 已经等于 Opus\"，把这篇甩给他，然后问他一句：**你那个 20 倍，用的是挂牌价，还是真实扣费？**\n",
+      "needsImage": true,
+      "tips": "完整文章与6张精确数字排版卡已生成；图片目录见 mp-articles/main/2026-08-13-deepseek-v4-pro-agent-test/images。"
+    },
+    {
+      "id": "sspai",
+      "name": "少数派",
+      "region": "cn",
+      "priority": 2,
+      "submitUrl": "https://sspai.com/write",
+      "title": "把国际主流 Agent 接上国产大模型：U-King 的一键装机尝试",
+      "text": "真正阻止很多人使用 Claude Code、Codex 的，往往不是模型能力，而是安装和接入。\n\nNode 怎么装、PATH 为什么不生效、CLI 去哪里下载、不同客户端怎么填 Base URL、国内网络如何连通——这些事情对开发者只是麻烦，对普通用户却足以让产品根本无法开始使用。\n\nU-King 的定位不是重新做一个聊天界面，而是把国际主流 Agent 工具真正装进用户电脑：自动安装 Claude Code、Codex、Hermes、OpenClaw，补齐依赖并逐项验证；随后一键配置 DeepSeek 等国产模型。于是用户得到的是“成熟 Agent 工作流 + 国产模型大脑”，而不是只能在网页里对话的孤立模型。\n\n今天虾盘云 / U-King 上线 DeepSeek V4 Pro 新版线路，我们没有只转发排行榜，而是做了一轮可复跑的 Agent 对照。任务要求模型区分“参考库没有查到”和“世界上不存在”。在不明示安全规则的自然任务中，Flash 在 30 条可解析输出中的标签正确率为 63.3%，另有 2 条不可解析；Pro 为 90.6%。同一对象正常/故障两臂都答对，Flash 31.3%，Pro 81.3%。工具已命中、结论却仍报缺席的冲突，Flash 9 次，Pro 2 次。\n\n这说明模型路由不该只按“贵/便宜”划分：批量、机械、规则明确的工作交给 Flash；目标含糊、需要自行规划工具与处理不确定性的工作交给 Pro。对真正高风险的任务，Pro 也不是保险箱，还需要模型外 evidence gate。\n\n第二轮保持自然任务不变，加入模型外证据闸门。Pro 的 32 条轨迹中，3 条初答被拦下并全部修正，最终 32/32 完成；Flash 有 26 条完成轨迹，其中 9 条需要干预并全部修正，另有 6 条输出在 240 字符处被截断，未形成合法 JSON。这个结果不能写成“模型被提升到 100%”：准确说法是，闸门阻止了本轮观察到的证据冲突直接提交，同时也暴露了 Flash 的输出完成问题。\n\n全部 smoke、基线和闸门复测累计实扣 ¥2.820158。U-King 本体免费，模型按量使用。\n\n实验只有 16 个对象、单次运行，属于工程 pilot，不是最终论文结论。下一步应做固定样本、多随机种子复跑，并把模型质量、接口完成率与闸门收益分开报告。\n\nhttps://u-king.org",
+      "needsImage": true,
+      "tips": "以装机体验、轻量与实测为主。"
+    },
+    {
+      "id": "bili",
+      "name": "Bilibili 专栏",
+      "region": "cn",
+      "priority": 1,
+      "submitUrl": "https://member.bilibili.com/platform/upload/text/edit",
+      "title": "Claude Code + DeepSeek，普通人如何五分钟装好 AI Agent",
+      "text": "U-King 不是再做一个聊天壳。\n\n它做的是更费事、但更接近真实开工的一步：把 Claude Code、Codex、Hermes、OpenClaw 这些国际主流 Agent 下载装好，补齐 Node、PATH 和运行环境，再一键接上 DeepSeek 等国产大模型。前端继续使用成熟 Agent，后端使用国内可直连、按量计费的模型能力。\n\n今天虾盘云 / U-King 上线 DeepSeek V4 Pro 新版线路，我们顺手用一套科学 Agent 任务做了首轮实测。无证据闸门时，在可解析结果中 Flash 正确率 63.3%，Pro 90.6%；配对正确率 31.3% → 81.3%；“工具已经查到，最终仍判缺席”的证据冲突 9 次 → 2 次。\n\n随后保持自然任务不变，加上模型外证据闸门复测：Pro 的 32 条轨迹中有 3 条初答被拦下，3 条全部修正，最终 32/32 完成；Flash 的 32 条中有 26 条完成，其中 9 条需要干预并全部修正，另有 6 条输出在 240 字符处截断，未形成合法 JSON。闸门没有让模型“变成 100%”，它只是让与工具证据冲突的答案不能直接提交。\n\n怎么选很直观：规则明确、批量重复的任务用 Flash；目标含糊、判断密度高、需要自己规划工具的任务用 Pro。高风险任务即使使用 Pro，也要加模型外证据闸门。\n\n全部 smoke、基线与闸门复测累计实扣 ¥2.820158。U-King 管家本体免费，模型按量使用。\n\n下载与介绍：https://u-king.org",
+      "needsImage": true,
+      "tips": "可配 60 秒录屏：下载→选择模型→连通测试。"
+    },
+    {
+      "id": "douyin",
+      "name": "抖音",
+      "region": "cn",
+      "priority": 2,
+      "submitUrl": "https://creator.douyin.com/",
+      "title": "5分钟装好4个AI Agent",
+      "text": "不会装 Claude Code？U-King 自动装好 Claude Code、Codex、Hermes、OpenClaw，再一键配置 DeepSeek。Flash 跑批量，Pro 做难题，高风险任务再加证据闸门。首轮 63.3% vs 90.6%，全部实验实扣 ¥2.82。#DeepSeek #ClaudeCode #AI工具",
+      "needsImage": true,
+      "tips": "建议录 30–45 秒真机操作，别只发静态图。"
+    },
+    {
+      "id": "video_account",
+      "name": "微信视频号",
+      "region": "cn",
+      "priority": 2,
+      "submitUrl": "https://channels.weixin.qq.com/platform/post/create",
+      "title": "一键装好4个Agent再接DeepSeek",
+      "text": "想用 Claude Code、Codex、Hermes，却卡在安装、Node、PATH、API 和网络配置？\n\nU-King 一次帮你装好国际主流 Agent，再一键接上 DeepSeek 国产大模型：成熟 Agent 做工具与工作流，国产模型做大脑，国内直连、按量计费。\n\n今天新版 Pro 线路首测：无闸门时，Flash 可解析结果正确率 63.3%，Pro 90.6%。加证据闸门后，Pro 32/32 完成；Flash 26/32 完成，剩余 6 条输出截断。全部实验实扣 ¥2.82。\n\n规则明确用 Flash，复杂判断用 Pro。下载：https://u-king.org",
+      "needsImage": true,
+      "tips": "标题不超过30字；配真机录屏。"
+    }
+  ]
+}
