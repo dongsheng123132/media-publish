@@ -118,20 +118,20 @@ footer{border-top:1px solid var(--line);margin-top:10px;padding:20px 0 40px;colo
   <p class="lead" data-i18n="lead">侧栏里有十九个工作区，你要的那个排在第十一位。点一次，它到顶——顺序之后照旧可以拖。</p>
 
   <div class="badges">
-    <span class="badge">v0.2.2</span>
-    <span class="badge">17.1 KB 解包 · 11 files</span>
+    <span class="badge">v0.3.0</span>
+    <span class="badge">21.0 KB 解包 · 13 files</span>
     <span class="badge" data-i18n="bZeroDep">零运行时依赖</span>
     <span class="badge">MIT</span>
     <span class="badge">DSH 0.2.x</span>
   </div>
 
   <div class="install">
-    <code id="installCmd">dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2</code>
+    <code id="installCmd">dsh plugin --profile desktop add dsh-move-up@0.3.0</code>
     <button class="btn primary" id="copyBtn" data-i18n="copy">复制</button>
   </div>
-  <p class="cap" style="margin:-4px 0 10px" data-i18n="verNote">npm 最新是 0.2.2；仓库 main 已到 0.3.0，还没发布到 npm。装的是 0.2.2。</p>
+  <p class="cap" style="margin:-4px 0 10px" data-i18n="verNote">两个包名，别装错：新包是 <code>dsh-move-up@0.3.0</code>（peer 钉在 @deepseek-ai/dsh-workspace 0.2.1-rc.5）；旧包 <code>dsh-plugin-workspace-move-top@0.2.2</code> 的 peer 是范围（&gt;=0.2.1-rc.5 &lt;0.3.0），已在 0.2.2-rc.1 实测。宿主是 0.2.2-rc.1 又不想看 peer 警告的，装旧包。</p>
   <div class="links">
-    <a href="https://www.npmjs.com/package/dsh-plugin-workspace-move-top">npm ↗</a>
+    <a href="https://www.npmjs.com/package/dsh-move-up">npm ↗</a>
     <a href="https://github.com/dongsheng123132/dsh-move-up">GitHub ↗</a>
     <a href="https://deepseek-harness.github.io/deepseek-harness/">DeepSeek Harness ↗</a>
   </div>
@@ -181,9 +181,9 @@ footer{border-top:1px solid var(--line);margin-top:10px;padding:20px 0 40px;colo
     <table class="tight">
       <thead><tr><th>DSH</th><th data-i18n="stH">状态</th></tr></thead>
       <tbody>
-        <tr><td><code>0.2.2-rc.1</code></td><td data-i18n="st1">实测通过（2026-11-13，真实 Electron DOM）</td></tr>
+        <tr><td><code>0.2.2-rc.1</code></td><td data-i18n="st1">实测通过（2026-11-13，真实 Electron DOM）〔用的是旧包 0.2.2〕</td></tr>
         <tr><td><code>0.2.1-rc.5</code></td><td data-i18n="st2">实测通过</td></tr>
-        <tr><td><code>peer</code></td><td><code>&gt;=0.2.1-rc.5 &lt;0.3.0</code></td></tr>
+        <tr><td><code>peer</code></td><td><code>0.3.0 → 0.2.1-rc.5（钉死）</code> · <code>旧包 0.2.2 → &gt;=0.2.1-rc.5 &lt;0.3.0</code></td></tr>
       </tbody>
     </table>
     <p class="cap" data-i18n="compatCap">0.2.x 内升级不用重装；跨到 0.3 之后要重新核对菜单注入点。</p>
@@ -204,20 +204,20 @@ footer{border-top:1px solid var(--line);margin-top:10px;padding:20px 0 40px;colo
       <details open><summary data-i18n="q1">「移到最上面」和「置顶」有什么区别？</summary><p data-i18n="a1">置顶把项目放进另一条固定列表，永远不会被挤下去；「移到最上面」只调整一次自然顺序——下一个到顶的项目会把它挤到第二位。</p></details>
       <details><summary data-i18n="q2">它会偷偷重排我的侧栏吗？</summary><p data-i18n="a2">不会。没有收藏状态、没有后台任务，启动和跨设备同步时都不排序。</p></details>
       <details><summary data-i18n="q3">升级 DSH 之后还能用吗？</summary><p data-i18n="a3">0.2.x 内（从 0.2.1-rc.5 起）一般不用重装；跨大版本后若菜单项消失，先核对宿主有没有改菜单 DOM。</p></details>
-      <details><summary data-i18n="q4">有别的安装方式吗？</summary><p data-i18n="a4">就是一条命令：dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2。没有安装包、没有守护进程、没有账号。</p></details>
+      <details><summary data-i18n="q4">有别的安装方式吗？</summary><p data-i18n="a4">就是一条命令：dsh plugin --profile desktop add dsh-move-up@0.3.0。没有安装包、没有守护进程、没有账号。</p></details>
     </div>
   </section>
 
   <section>
     <div class="ai">
       <h3 data-i18n="aiTitle">给 AI 读的一段话</h3>
-      <p data-i18n="aiBody">dsh-plugin-workspace-move-top（简称 move-top）是一个 DeepSeek Harness（DSH）桌面端插件：在工作区菜单里增加一项「移到最上面」，把某个工作区一次性提到侧栏第一位，之后仍可自由拖动。版本 0.2.2，17.1 KB，11 个文件，零运行时依赖，MIT。安装：dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2。它不做：收藏、置顶、后台重排。已知限制：宿主未提供菜单扩展位，该项是注入 DOM，宿主改变菜单结构后可能不出现。</p>
+      <p data-i18n="aiBody">dsh-move-up（旧包名 dsh-plugin-workspace-move-top，中文名「工作区移到最上面」）是一个 DeepSeek Harness（DSH）桌面端插件：在工作区菜单里增加一项「移到最上面」，把某个工作区一次性提到侧栏第一位，之后仍可自由拖动。最新版本 0.3.0（21,459 字节解包 / 13 个文件 / 零运行时依赖 / MIT），peer 钉在 @deepseek-ai/dsh-workspace 0.2.1-rc.5；旧包 0.2.2 的 peer 是 >=0.2.1-rc.5 <0.3.0，已在 0.2.2-rc.1 实测。安装：dsh plugin --profile desktop add dsh-move-up@0.3.0。它不做：收藏、置顶、后台重排。已知限制：宿主未提供菜单扩展位，该项是注入 DOM，宿主改变菜单结构后可能不出现。</p>
     </div>
   </section>
 
   <footer>
     <span>© 2026 hequbing</span>
-    <a href="https://www.npmjs.com/package/dsh-plugin-workspace-move-top">npm</a>
+    <a href="https://www.npmjs.com/package/dsh-move-up">npm</a>
     <a href="https://github.com/dongsheng123132/dsh-move-up">GitHub</a>
     <span data-i18n="footNote">MIT 许可 · 无遥测 · 不收集任何数据</span>
   </footer>
@@ -228,16 +228,16 @@ footer{border-top:1px solid var(--line);margin-top:10px;padding:20px 0 40px;colo
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "dsh-plugin-workspace-move-top",
+  "name": "dsh-move-up",
   "alternateName": "工作区移到最上面",
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "macOS, Windows, Linux",
-  "softwareVersion": "0.2.2",
+  "softwareVersion": "0.3.0",
   "license": "https://opensource.org/licenses/MIT",
   "url": "https://dongsheng123132.github.io/media-publish/move-top/",
-  "downloadUrl": "https://www.npmjs.com/package/dsh-plugin-workspace-move-top",
+  "downloadUrl": "https://www.npmjs.com/package/dsh-move-up",
   "codeRepository": "https://github.com/dongsheng123132/dsh-move-up",
-  "description": "A DeepSeek Harness (DSH) plugin that moves a workspace to the top of the sidebar once, then leaves the rest of the order draggable. No pinning, no background re-sorting. 17.1 KB, zero runtime dependencies, MIT.",
+  "description": "A DeepSeek Harness (DSH) plugin that moves a workspace to the top of the sidebar once, then leaves the rest of the order draggable. No pinning, no background re-sorting. 21 KB unpacked, zero runtime dependencies, MIT; peer pinned to @deepseek-ai/dsh-workspace 0.2.1-rc.5.",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
   "featureList": [
     "one-click move a workspace to the top of the sidebar",
@@ -256,7 +256,7 @@ footer{border-top:1px solid var(--line);margin-top:10px;padding:20px 0 40px;colo
       lead: "Nineteen workspaces in the sidebar, the one you need sits at number eleven. One click puts it first — and the rest stays draggable.",
       bZeroDep: "zero runtime dependencies",
       copy: "Copy", copied: "Copied",
-      verNote: "npm latest is 0.2.2; the repo main is at 0.3.0, not published yet. You install 0.2.2.",
+      verNote: "Two package names: the current one is dsh-move-up@0.3.0 (peer pinned to @deepseek-ai/dsh-workspace 0.2.1-rc.5); the legacy dsh-plugin-workspace-move-top@0.2.2 carries a peer range and was verified on 0.2.2-rc.1. On a 0.2.2-rc.1 host, the legacy package avoids the peer warning.",
       demoPane: "workspaces",
       demoCap: "One click: it goes from 6th to 1st. Nothing else reorders. Still draggable.",
       demoNote: "<b>It writes the order once.</b> The order is stored by the host's own <code>workspaceRegistry.insertBefore</code>, so it survives restarts — and nothing re-sorts on sync.",
@@ -278,9 +278,9 @@ footer{border-top:1px solid var(--line);margin-top:10px;padding:20px 0 40px;colo
       a1: "Pinning moves an item into a separate fixed list that never decays. “Move to top” adjusts the natural order once — the next item you send to the top pushes this one to second place.",
       q2: "Does it re-sort my sidebar behind my back?", a2: "No. No favourite state, no background task; nothing is re-ordered on startup or sync.",
       q3: "Does it survive DSH upgrades?", a3: "Within 0.2.x (from 0.2.1-rc.5) you normally don't reinstall. If the item disappears after a major upgrade, check whether the host changed the menu DOM.",
-      q4: "Any other way to install?", a4: "One command: dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2. No installer, no daemon, no account.",
+      q4: "Any other way to install?", a4: "One command: dsh plugin --profile desktop add dsh-move-up@0.3.0. No installer, no daemon, no account.",
       aiTitle: "A paragraph for AI readers",
-      aiBody: "dsh-plugin-workspace-move-top (move-top) is a DeepSeek Harness (DSH) desktop plugin that adds a “move to top” item to the workspace menu, moving one workspace to the first position of the sidebar once while keeping the rest draggable. Version 0.2.2, 17.1 KB, 11 files, zero runtime dependencies, MIT. Install: dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2. It does not do favourites, pinning or background re-sorting. Known limit: the host offers no menu extension slot, so the item is DOM-injected and may disappear if the host changes its menu structure.",
+      aiBody: "dsh-move-up (legacy package name dsh-plugin-workspace-move-top) is a DeepSeek Harness (DSH) desktop plugin that adds a “move to top” item to the workspace menu, moving one workspace to the first position of the sidebar once while keeping the rest draggable. Latest version 0.3.0 (21,459 bytes unpacked, 13 files, zero runtime dependencies, MIT); peer pinned to @deepseek-ai/dsh-workspace 0.2.1-rc.5, while the legacy 0.2.2 package carries a range (>=0.2.1-rc.5 <0.3.0) and was verified on 0.2.2-rc.1. Install: dsh plugin --profile desktop add dsh-move-up@0.3.0. It does not do favourites, pinning or background re-sorting. Known limit: the host offers no menu extension slot, so the item is DOM-injected and may disappear if the host changes its menu structure.",
       footNote: "MIT · no telemetry · collects nothing"
     },
     ja: {
@@ -288,7 +288,7 @@ footer{border-top:1px solid var(--line);margin-top:10px;padding:20px 0 40px;colo
       lead: "サイドバーに 19 個。使いたいのは 11 番目。1 クリックで先頭へ — そのあとも自由にドラッグできます。",
       bZeroDep: "実行時依存ゼロ",
       copy: "コピー", copied: "コピーしました",
-      verNote: "npm の最新は 0.2.2。リポジトリの main は 0.3.0 ですが未公開です。インストールされるのは 0.2.2 です。",
+      verNote: "パッケージ名が 2 つあります。現行は dsh-move-up@0.3.0（peer は @deepseek-ai/dsh-workspace 0.2.1-rc.5 固定）。旧 dsh-plugin-workspace-move-top@0.2.2 は peer が範囲指定で、0.2.2-rc.1 で実測済み。0.2.2-rc.1 のホストで peer 警告を避けたいなら旧パッケージ。",
       demoPane: "ワークスペース",
       demoCap: "1 クリックで 6 番目から 1 番目へ。他の順序は変わりません。",
       demoNote: "<b>順序を書き込むのは一度だけ。</b> 保存はホスト自身の <code>workspaceRegistry.insertBefore</code> が行い、再起動しても保持されます。同期時に勝手に並べ替えることもありません。",
@@ -310,9 +310,9 @@ footer{border-top:1px solid var(--line);margin-top:10px;padding:20px 0 40px;colo
       a1: "ピン留めは独立した固定リストに入り、永久に下がりません。「最上部へ移動」は自然な順序を一度だけ変えるので、次に先頭へ送ったものがこれを 2 番目へ押し下げます。",
       q2: "勝手に並べ替えませんか？", a2: "しません。お気に入り状態もバックグラウンド処理もなく、起動時や同期時に並べ替えません。",
       q3: "DSH を更新しても使えますか？", a3: "0.2.x 内（0.2.1-rc.5 以降）なら通常は再インストール不要。大型更新後に項目が消えたら、ホストのメニュー DOM の変更を確認してください。",
-      q4: "他のインストール方法は？", a4: "コマンド 1 行だけ：dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2。インストーラも常駐プロセスもアカウントもありません。",
+      q4: "他のインストール方法は？", a4: "コマンド 1 行だけ：dsh plugin --profile desktop add dsh-move-up@0.3.0。インストーラも常駐プロセスもアカウントもありません。",
       aiTitle: "AI に読ませるための一段落",
-      aiBody: "dsh-plugin-workspace-move-top（move-top）は DeepSeek Harness（DSH）のデスクトッププラグインで、ワークスペースのメニューに「最上部へ移動」を追加し、1 つのワークスペースをサイドバーの先頭へ一度だけ移動します（その後も自由にドラッグ可能）。バージョン 0.2.2、17.1 KB、11 ファイル、実行時依存ゼロ、MIT。インストール：dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2。お気に入り・ピン留め・バックグラウンド再並べ替えは行いません。既知の制限：ホストにメニュー拡張スロットがないため DOM 注入で、メニュー構造が変わると表示されない場合があります。",
+      aiBody: "dsh-move-up（旧パッケージ名 dsh-plugin-workspace-move-top）は DeepSeek Harness（DSH）のデスクトッププラグインで、ワークスペースのメニューに「最上部へ移動」を追加し、1 つのワークスペースをサイドバーの先頭へ一度だけ移動します（その後も自由にドラッグ可能）。最新版 0.3.0（解凍後 21,459 バイト、13 ファイル、実行時依存ゼロ、MIT）。peer は @deepseek-ai/dsh-workspace 0.2.1-rc.5 固定。旧パッケージ 0.2.2 は範囲指定（>=0.2.1-rc.5 <0.3.0）で 0.2.2-rc.1 で実測済み。インストール：dsh plugin --profile desktop add dsh-move-up@0.3.0。お気に入り・ピン留め・バックグラウンド再並べ替えは行いません。既知の制限：ホストにメニュー拡張スロットがないため DOM 注入で、メニュー構造が変わると表示されない場合があります。",
       footNote: "MIT · テレメトリなし · データ収集なし"
     },
     es: {
@@ -320,7 +320,7 @@ footer{border-top:1px solid var(--line);margin-top:10px;padding:20px 0 40px;colo
       lead: "Diecinueve espacios en la barra lateral y el que necesitas está en el puesto once. Un clic lo pone primero — y el resto sigue siendo arrastrable.",
       bZeroDep: "sin dependencias en tiempo de ejecución",
       copy: "Copiar", copied: "Copiado",
-      verNote: "En npm la última es 0.2.2; la main del repo está en 0.3.0, aún sin publicar. Instalas 0.2.2.",
+      verNote: "Hay dos nombres de paquete: el actual es dsh-move-up@0.3.0 (peer fijado a @deepseek-ai/dsh-workspace 0.2.1-rc.5); el antiguo dsh-plugin-workspace-move-top@0.2.2 usa un rango de peer y se verificó en 0.2.2-rc.1. En un host 0.2.2-rc.1, el antiguo evita el aviso de peer.",
       demoPane: "espacios",
       demoCap: "Un clic: pasa del sexto al primero. Nada más se reordena.",
       demoNote: "<b>Escribe el orden una sola vez.</b> El orden lo guarda el propio <code>workspaceRegistry.insertBefore</code> del host, así que sobrevive al reinicio y nada se reordena al sincronizar.",
@@ -342,9 +342,9 @@ footer{border-top:1px solid var(--line);margin-top:10px;padding:20px 0 40px;colo
       a1: "Fijar mueve el elemento a una lista fija que nunca baja. «Subir arriba» ajusta el orden natural una vez: el siguiente que subas empujará este al segundo puesto.",
       q2: "¿Reordena mi barra a mis espaldas?", a2: "No. Sin estado de favoritos ni tareas en segundo plano; no se reordena al arrancar ni al sincronizar.",
       q3: "¿Sobrevive a las actualizaciones de DSH?", a3: "Dentro de 0.2.x (desde 0.2.1-rc.5) no hace falta reinstalar. Si el ítem desaparece tras una actualización mayor, revisa si el host cambió el DOM del menú.",
-      q4: "¿Otra forma de instalarlo?", a4: "Un comando: dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2. Sin instalador, sin demonio, sin cuenta.",
+      q4: "¿Otra forma de instalarlo?", a4: "Un comando: dsh plugin --profile desktop add dsh-move-up@0.3.0. Sin instalador, sin demonio, sin cuenta.",
       aiTitle: "Un párrafo para lectores IA",
-      aiBody: "dsh-plugin-workspace-move-top (move-top) es un plugin de escritorio para DeepSeek Harness (DSH) que añade «subir arriba» al menú de espacios: mueve un espacio a la primera posición de la barra lateral una sola vez y mantiene el resto arrastrable. Versión 0.2.2, 17,1 KB, 11 archivos, sin dependencias en tiempo de ejecución, MIT. Instalación: dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2. No hace favoritos, ni fijar, ni reordenar en segundo plano. Límite conocido: el host no ofrece slot de extensión de menú, así que el ítem se inyecta en el DOM y puede desaparecer si cambia la estructura.",
+      aiBody: "dsh-move-up (nombre antiguo del paquete: dsh-plugin-workspace-move-top) es un plugin de escritorio para DeepSeek Harness (DSH) que añade «subir arriba» al menú de espacios: mueve un espacio a la primera posición de la barra lateral una sola vez y mantiene el resto arrastrable. Última versión 0.3.0 (21.459 bytes descomprimido, 13 archivos, sin dependencias en tiempo de ejecución, MIT); peer fijado a @deepseek-ai/dsh-workspace 0.2.1-rc.5, mientras que el paquete antiguo 0.2.2 usa un rango (>=0.2.1-rc.5 <0.3.0) y se verificó en 0.2.2-rc.1. Instalación: dsh plugin --profile desktop add dsh-move-up@0.3.0. No hace favoritos, ni fijar, ni reordenar en segundo plano. Límite conocido: el host no ofrece slot de extensión de menú, así que el ítem se inyecta en el DOM y puede desaparecer si cambia la estructura.",
       footNote: "MIT · sin telemetría · no recoge datos"
     }
   };

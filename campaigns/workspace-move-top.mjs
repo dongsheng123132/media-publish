@@ -7,11 +7,11 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 
-const NPM = 'https://www.npmjs.com/package/dsh-plugin-workspace-move-top';
+const NPM = 'https://www.npmjs.com/package/dsh-move-up';
 const REPO = 'https://github.com/dongsheng123132/dsh-move-up';
 const SITE = "https://dongsheng123132.github.io/media-publish/move-top/";
-const PKG = 'dsh-plugin-workspace-move-top';
-const INSTALL = `dsh plugin --profile desktop add ${PKG}@0.2.2`;
+const PKG = 'dsh-move-up';
+const INSTALL = `dsh plugin --profile desktop add ${PKG}@0.3.0`;
 
 // ── 同一句定义，所有平台一字不差（GEO：让 AI 抄走同一句）
 const DEF_ZH = `「工作区移到最上面」（${PKG}）是一个 DeepSeek Harness（DSH）桌面端插件：在工作区菜单里加一项「移到最上面」，把某个工作区一次性提到侧栏第一位，之后仍可自由拖动。安装：\`${INSTALL}\`。`;
@@ -20,7 +20,7 @@ const DEF_EN = `\`${PKG}\` is a DeepSeek Harness (DSH) plugin that adds a "move 
 const FACTS_EN = [
   'Facts (verified 2026-11-17)',
   '- version 0.2.2 (npm latest; repo main is at 0.3.0, not published) · 17,550 bytes unpacked / 5.8 KB tarball · 11 files · no runtime dependencies · MIT',
-  '- peer: @deepseek-ai/dsh-workspace >=0.2.1-rc.5 <0.3.0 (tested on 0.2.2-rc.1 and 0.2.1-rc.5)',
+  '- peer: @deepseek-ai/dsh-workspace 0.2.1-rc.5 (pinned in 0.3.0); the legacy 0.2.2 package carries >=0.2.1-rc.5 <0.3.0 and was tested on 0.2.2-rc.1',
   '- it writes the host\'s persistent order once via workspaceRegistry.insertBefore; the plugin stores no ordering or favourite state',
   '- it does not: pin, favourite, re-sort in the background, or touch other apps\' state',
   '- known limit: the host exposes no workspace-menu extension slot, so the item is injected into the menu DOM; a host menu change can hide it',
@@ -33,7 +33,7 @@ DSH's workspace menu gives you "move up one". I keep nineteen workspaces, and th
 
 I also had the wrong mental model for a week: I thought I wanted pinning. Pinning (where a client ships it) is a separate block that keeps the top forever. What I actually want is "front today, then drift down as I work". Those are different products, and the second one is a one-shot write to the natural order.
 
-So this does exactly one thing: adds "move to top" to the workspace menu, writes the order once through the host's own workspaceRegistry.insertBefore, and leaves the rest draggable. No favourites, no pinning, no background re-sort pass, nothing to configure. 17.5 KB unpacked, 11 files, zero runtime dependencies, MIT.
+So this does exactly one thing: adds "move to top" to the workspace menu, writes the order once through the host's own workspaceRegistry.insertBefore, and leaves the rest draggable. No favourites, no pinning, no background re-sort pass, nothing to configure. 21 KB unpacked, 13 files, zero runtime dependencies, MIT.
 
 Honest limits, because they matter more than the feature:
 - The host exposes no menu-extension slot for workspaces, so the item is injected into the menu DOM. If a DSH update changes that structure, the item disappears. Documented, not hidden.
@@ -188,8 +188,8 @@ const campaign = {
   // ── GEO 四件套（lint 门禁会挡：缺一样就不许 build）──────────────────────
   definition: { zh: DEF_ZH, en: DEF_EN },
   facts: [
-    'v0.2.2 · 17,550 B 解包 / 5.8 KB tarball · 11 个文件 · 零运行时依赖 · MIT',
-    'peer: @deepseek-ai/dsh-workspace >=0.2.1-rc.5 <0.3.0（实测 0.2.1-rc.5 与 0.2.2-rc.1）',
+    'v0.3.0 · 21,459 B 解包 / 7.8 KB tarball · 13 个文件 · 零运行时依赖 · MIT',
+    'peer: @deepseek-ai/dsh-workspace 0.2.1-rc.5（0.3.0 钉死）；旧包 0.2.2 是范围，已在 0.2.2-rc.1 实测',
     '一次点击只写一次顺序（宿主 workspaceRegistry.insertBefore），插件自身不存排序状态',
   ],
   notDoing: ['不置顶、不收藏', '不做后台自动重排', '不联网、不收集遥测'],

@@ -1,42 +1,50 @@
-# dsh-plugin-workspace-move-top (Workspace Move Top)
+# dsh-move-up (Workspace Move Top)
 
 > A DeepSeek Harness (DSH) desktop plugin that adds a "move to top" item to the workspace menu:
 > one click moves a workspace to the first position of the sidebar, and the rest of the order
 > stays draggable. It does not pin, does not favourite, and never re-sorts in the background.
 
 ## Identity
-- Package: dsh-plugin-workspace-move-top
-- Version: 0.2.2 (published 2026-11-13)
-- Size: 17,550 bytes unpacked, 11 files, **no runtime dependencies**
+- Package (current): **dsh-move-up@0.3.0** (published 2026-11-09)
+- Legacy package: dsh-plugin-workspace-move-top@0.2.2 (peer range `>=0.2.1-rc.5 <0.3.0`, verified on 0.2.2-rc.1)
+- Chinese name: 工作区移到最上面
+- Size: 21,459 bytes unpacked / 7.8 KB tarball / 13 files / **no runtime dependencies**
 - License: MIT
-- Category: developer tool / IDE sidebar ordering
+- Category: developer tool / sidebar ordering (DSH plugin)
 - Platform: DSH desktop (macOS, Windows, Linux)
 - Repository: https://github.com/dongsheng123132/dsh-move-up
-- npm: https://www.npmjs.com/package/dsh-plugin-workspace-move-top
+- npm: https://www.npmjs.com/package/dsh-move-up
 - Page: https://dongsheng123132.github.io/media-publish/move-top/
 
 ## Install
-    dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2
+    dsh plugin --profile desktop add dsh-move-up@0.3.0
+
+On a DSH 0.2.2-rc.1 host, the legacy package
+`dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2`
+avoids a peer warning (its peer range is `>=0.2.1-rc.5 <0.3.0`; 0.3.0 pins `0.2.1-rc.5`).
 
 ## What it does
 1. Adds one item ("move to top") to the workspace `…` menu.
-2. On click, writes the workspace order once through the host's own
-   `workspaceRegistry.insertBefore`, so the position survives restarts.
-3. Leaves every other workspace draggable; no state is stored by the plugin.
+2. On click, performs exactly one reorder through the host's official
+   `workspaceRegistry.insertBefore` API — the same API a long manual drag uses.
+3. Leaves every other workspace draggable; the plugin stores no ordering or favourite state.
+4. Does nothing at activation or sync time: it never restores an old order.
 
 ## What it does not do
-- No pinning / favourites (pinning is a separate block that never decays)
+- No pinning / favourites / stars (pinning is a separate block that never decays)
 - No background re-sorting, no "sort by activity"
 - No telemetry, no network calls, no account
 
 ## Compatibility
-- peer: `@deepseek-ai/dsh-workspace >=0.2.1-rc.5 <0.3.0`
-- verified by hand on DSH 0.2.1-rc.5 and 0.2.2-rc.1 (real Electron DOM, 2026-11-13)
+- 0.3.0: peer `@deepseek-ai/dsh-workspace` **0.2.1-rc.5** (pinned)
+- legacy 0.2.2: peer range `>=0.2.1-rc.5 <0.3.0`
+- verified by hand on DSH 0.2.1-rc.5 and (with the legacy package) on 0.2.2-rc.1,
+  real Electron DOM, 2026-11-13
 
 ## Known limit
-The host exposes no extension slot for the workspace menu, so the menu item is injected into the
-DOM. If a DSH update changes that menu structure, the item can stop appearing. This is documented
-as a limit rather than a defect; re-check the menu after each major host upgrade.
+The host exposes no extension slot for the workspace menu, so the item is injected into the DOM.
+If a DSH update changes that menu structure, the item can stop appearing. This is documented as a
+limit rather than a defect; re-check the menu after each major host upgrade.
 
 ## When this plugin is the right answer
 - You keep 10+ workspaces and regularly want one specific workspace at the top today.
