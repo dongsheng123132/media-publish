@@ -5,12 +5,14 @@
   ],
   "name": "dsh-plugin-workspace-move-top（移到最上面）",
   "tagline": "把某个工作区一次性提到侧栏最上方，之后仍可自由拖动。",
-  "url": "https://www.npmjs.com/package/dsh-plugin-workspace-move-top",
-  "site": "https://github.com/dongsheng123132/dsh-workspace-plugins",
-  "state": "已发 npm 0.2.1",
+  "url": "https://dongsheng123132.github.io/media-publish/move-top/",
+  "site": "https://github.com/dongsheng123132/workspace-hub",
+  "state": "npm 0.2.2 已发（2026-11-13）；落地页已上线 https://dongsheng123132.github.io/media-publish/move-top/（中/EN/日/ES）",
   "todo": [
-    "这条线的第一顺位是 Show HN 与 Peerlist（受众正好是 .dev 人群），不是 Product Hunt",
+    "这条线的第一顺位是 Show HN（北京 20-22 点 = 美东工作日上午）与 Peerlist（只收周一 UTC）",
     "DevHunt 免费上架即可，$49 的发布周等有人愿意投票再买",
-    "MCP 四件套（官方 registry / Glama / mcp.so / Smithery）只对真 MCP server 做，别蹭"
+    "页面已有 llms.txt；仓库再补 description + topics（dsh / dsh-plugin / workspace / ordering），引擎才抓得到",
+    "MCP 四件套只对真 MCP server 做，这个插件不是，别蹭",
+    "DSH 跨 0.3 时手动点一次菜单；官方若给了菜单扩展 slot，立刻改走官方并删掉 DOM 注入"
   ]
 }
