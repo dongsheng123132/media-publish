@@ -1,6 +1,6 @@
 ---
 name: bomber
-description: "全媒体轰炸机：把一次开源/产品发布的文案编译成一张自包含 HTML「宣发发布台」，20+ 海内外平台（HN/Reddit/PH/X + V2EX/掘金/知乎/微博/小红书/公众号/B站…）各一张卡——一键用你的登录态开好提交页、一键拷平台定制文案，进度存 localStorage；另带「发布/注册矩阵」：35 家发布榜与目录站（Peerlist/Uneed/DevHunt/indie-apps/AlternativeTo/SaaSHub/MCP 目录…）各一张卡，标好费用、门槛与外链属性。触发「轰炸机」「宣发」「推广」「发帖」「开源发布」「多平台分发」「去哪些平台发布」「要注册哪些站」。不替你按提交。"
+description: "全媒体轰炸机：把一次开源/产品发布的文案编译成一张自包含 HTML「宣发发布台」，20+ 海内外平台（HN/Reddit/PH/X + V2EX/掘金/知乎/微博/小红书/公众号/B站…）各一张卡——一键开好提交页、一键拷定制文案，进度存 localStorage；另带「发布/注册矩阵」（37 家发布榜/目录站：Peerlist/Uneed/Fazier/DevHunt/Crowdstax/indie-apps/AlternativeTo/SaaSHub/MCP 目录…，标好费用、门槛、外链属性），并能用 ClawMe 把「今天该注册的 3 个」推到 iPhone，点一下直接进页面。触发「轰炸机」「宣发」「推广」「发帖」「开源发布」「多平台分发」「去哪些平台发布」「要注册哪些站」「推到我手机」。不替你按提交。"
 ---
 
 # bomber · 全媒体轰炸机（宣发发布台）
@@ -18,6 +18,12 @@ description: "全媒体轰炸机：把一次开源/产品发布的文案编译�
 - **发布榜 / 目录站 / 注册清单（「去哪占位」而不是「说什么」）**：见 `references/launch-directories.md`——35 家（PH / Peerlist / Uneed / Fazier / DevHunt / indie-apps / AlternativeTo / SaaSHub / TAAFT / MCP 四件套 / Reddit 各版…）的费用、外链属性、硬门槛、坑，以及「AI 凭什么推荐你」的写法；
   引擎 `scripts/build-matrix.mjs` 吃 `launch/platforms.json` + 一个产品 JSON，出「注册与投放作战台」（单文件 HTML，按三条泳道筛、一键开提交页/注册页、勾进度）。
   两者的分工：**campaign 管「说什么」，矩阵管「去哪发、什么时候发、先去注册谁」**。数据每条带 `verified`/`source`，`src3p` 是第三方口径，`unverified` 的不许排期。
+- **第三个投递面：ClawMe（手机）**。`scripts/send-clawme.mjs` 吃同一份平台数据，把「今天该注册的 3 个站」推到 iPhone：
+  1 张简报 `alert` + N 张 `open_url` 卡（iOS 端 alert 只有 message+知道了，塞不进链接；open_url 才能点一下落到页面）。
+  平台带 `phone:false` 的是「必须到电脑上做」的（传截图/写长文/进 App Store Connect），手机不投。
+  进度存 `~/.clawme-bomber/<slug>.json`；判据是 `delivery.ok`，**不是 HTTP 201**。
+- **被发现的机制与邮件营销**：见该 reference 的 §9——引擎读的是 repo description/topics、npm keywords、README 首段、peerDependencies；
+  我们自己跑同一台引擎时是「先发现值得联系的人，再写 3 句话的信」，不是买名单群发。
 - 工作台现状：`dsh-broadcast` 插件**已发 npm（0.1.x）**，吃 campaign JSON 出单文件发布台，与本 skill 的 `scripts/build-launcher.mjs` 同源同产物；BYOK 回落与钱包按次扣费**仍未做**。三态口径见 `references/workbench-direction.md`。
 
 ## 首要目标：让 AI 收录并推荐我们（不是让人读完点赞）

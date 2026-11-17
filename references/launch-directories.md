@@ -85,6 +85,7 @@ listing 四件套（每条都要能被单独抄走）：
 | Discover Indie Apps | $9 | 已上架 | dofollow |
 | Indie App Santa | $150/天 | 必须真有限时优惠 | — |
 | BetaList | 纯付费 | 自有域名落地页 | — |
+| **Crowdstax** | 免费审核提交 | 先过审再谈钱；mobile app 没写在收录类型里 | 免费档产品页外链 / Pro $4.99 起永久 dofollow |
 
 ## 6. 六个会让你白忙的坑
 
@@ -107,6 +108,46 @@ node scripts/build-matrix.mjs templates/launch-platforms.json \
 
 数据里每条平台都带 `verified`（核实日期）与 `source`（证据链接）；`src3p:true` = 第三方口径，
 `unverified:true` = 没核到官方提交页，**不要排进日程**。
+
+## 8. 第三个投递面：ClawMe（手机上只做「点一下去注册」）
+
+| 渠道 | 干什么 | 不适合 |
+|---|---|---|
+| 发布台（电脑浏览器） | 看全量、切泳道、勾进度、复制物料 | 碎片时间 |
+| 目录页（电脑浏览器） | **真正提交**（截图、长文、仓库 URL） | 出门在外 |
+| ClawMe（iPhone） | **打开 → 注册 → 回来勾掉** | 任何要上传/长文的动作 |
+
+平台数据里带 `phone: true/false`：要传截图/写长文/进 App Store Connect 的（本轮 21 家）是 `phone:false`。
+
+```bash
+node scripts/send-clawme.mjs launch/platforms.json --product launch/products/blockwipe.json --dry-run
+node scripts/send-clawme.mjs launch/platforms.json --product launch/products/blockwipe.json --limit 3 --wait
+```
+
+一次投递 = **1 张简报 alert + N 张 open_url 卡（N≤3）**：iOS 端 `alert` 只有 message + 「知道了」，
+塞不进链接按钮；`open_url` 是唯一「点一下就落到具体页面」的类型。进度存 `~/.clawme-bomber/<slug>.json`。
+
+**实测坑（2026-11-17）**：ClawMe 后端若在带代理变量的终端里启动（`https_proxy` + `NODE_USE_ENV_PROXY=1`），
+APNs 报 `The pending stream has been canceled` —— 卡片照样入队、App 里能看到，**但锁屏推送不响**。
+改用 LaunchAgent（`net.clawme.bridge`，不继承 shell 环境）后 `delivery:{ok:true,sent:1,total:1}`。
+**判据是 `delivery.ok`，不是 HTTP 201。**
+
+## 9. 反向工程：被「发现型引擎」找到，和正确的邮件营销
+
+引擎/简报会主动发现「Move to Top」这类功能并写信，它读的元数据是：
+
+| 它读什么 | 要写成什么 |
+|---|---|
+| repo description / topics | 一句话定义 + 产品名当搜索词 |
+| npm 包名 / keywords | `dsh-<用户会搜的词>`，名字本身就是关键词 |
+| README 第一段 | 定义句 + 安装命令 + 一句「不做什么」 |
+| peerDependencies | 写清宿主版本，机器才知道「给谁用」 |
+
+**被 AI/引擎发现，不靠内容多，靠字段齐。**
+
+自己跑同一台引擎的正确形态：源（Crowdstax 71 家目录 / PH 日榜 / GitHub trending / HN Show / App Store 新上架）
+→ 判据（这人最近 30 天有没有在做同类产品）→ 3 句话的信（我看到你在做 X / 我们做了什么 / 链接，不用回复）
+→ 台账。红线：一封一写、留退订、同人 30 天不超 2 封、不买名单。
 
 ## 出处
 

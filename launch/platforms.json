@@ -9,7 +9,8 @@
       "unverified=没核到官方提交页，不要排进日程。",
       "free=不花钱；freemium=有免费入口但要满足条件（挂回链/评分/排队）；paid=纯付费。",
       "linkType 是该目录上「指向你官网」那条链接的属性；none=没有外链（只有榜单曝光）。",
-      "lanes=平台自述的受众；筛选用 fit（strong/some/limited/none）——MCP 目录对「不是 MCP server 的产品」只算 some，别硬蹭。"
+      "lanes=平台自述的受众；筛选用 fit（strong/some/limited/none）——MCP 目录对「不是 MCP server 的产品」只算 some，别硬蹭。",
+      "phone=false 表示「要到电脑上做」（要上传截图/写长文/填仓库 URL/进 App Store Connect）；手机上只投 phone=true 的那批。"
     ],
     "lanes": [
       {
@@ -93,7 +94,8 @@
       "signupUrl": "https://developer.apple.com/programs/",
       "signupAuth": "已有开发者账号即可（Account Holder/Admin/App Manager/Marketing 角色可提）",
       "verified": "2026-11-17",
-      "source": "https://developer.apple.com/help/app-store-connect/manage-featuring-nominations/nominate-your-app-for-featuring"
+      "source": "https://developer.apple.com/help/app-store-connect/manage-featuring-nominations/nominate-your-app-for-featuring",
+      "phone": false
     },
     {
       "id": "producthunt",
@@ -133,7 +135,8 @@
       "signupUrl": "https://www.producthunt.com/",
       "signupAuth": "个人邮箱/Google/X 登录，必须个人账号",
       "verified": "2026-11-05",
-      "source": "https://www.producthunt.com/launch"
+      "source": "https://www.producthunt.com/launch",
+      "phone": true
     },
     {
       "id": "peerlist",
@@ -173,7 +176,8 @@
       "signupUrl": "https://peerlist.io/",
       "signupAuth": "个人账号 + 身份验证",
       "verified": "2026-11-05",
-      "source": "https://help.peerlist.io/individual/launchpad/frequently-asked-questions-about-spotlight-by-peerlist"
+      "source": "https://help.peerlist.io/individual/launchpad/frequently-asked-questions-about-spotlight-by-peerlist",
+      "phone": true
     },
     {
       "id": "uneed",
@@ -214,7 +218,8 @@
       "signupAuth": "表单先填，保存时才要求注册",
       "verified": "2026-10-28",
       "src3p": true,
-      "source": "https://afterlaunch.io/learn/how-to-launch-on-uneed"
+      "source": "https://afterlaunch.io/learn/how-to-launch-on-uneed",
+      "phone": true
     },
     {
       "id": "fazier",
@@ -252,7 +257,8 @@
       "signupUrl": "https://fazier.com/",
       "signupAuth": "邮箱/账号注册",
       "verified": "2026-11-17",
-      "source": "https://fazier.com/submit"
+      "source": "https://fazier.com/submit",
+      "phone": true
     },
     {
       "id": "devhunt",
@@ -292,7 +298,8 @@
       "signupUrl": "https://devhunt.org/",
       "signupAuth": "GitHub 登录",
       "verified": "2026-11-17",
-      "source": "https://devhunt.org/faq"
+      "source": "https://devhunt.org/faq",
+      "phone": false
     },
     {
       "id": "tinylaunch",
@@ -329,7 +336,8 @@
       "signupUrl": "https://tinylaun.ch/",
       "signupAuth": "邮箱注册",
       "verified": "2026-11-17",
-      "source": "https://tinylaun.ch/pricing"
+      "source": "https://tinylaun.ch/pricing",
+      "phone": true
     },
     {
       "id": "microlaunch",
@@ -366,7 +374,8 @@
       "signupUrl": "https://microlaunch.net",
       "signupAuth": "X 或 Google 登录",
       "verified": "2026-11-17",
-      "source": "https://microlaunch.net"
+      "source": "https://microlaunch.net",
+      "phone": false
     },
     {
       "id": "codehype",
@@ -405,7 +414,8 @@
       "signupUrl": "https://www.codehype.ai/",
       "signupAuth": "邮箱注册",
       "verified": "2026-11-17",
-      "source": "https://www.codehype.ai/submit"
+      "source": "https://www.codehype.ai/submit",
+      "phone": false
     },
     {
       "id": "startupbase",
@@ -441,7 +451,8 @@
       "signupUrl": "https://startupbase.io/",
       "signupAuth": "邮箱注册",
       "verified": "2026-11-05",
-      "source": "https://startupbase.io/launch"
+      "source": "https://startupbase.io/launch",
+      "phone": false
     },
     {
       "id": "launchingnext",
@@ -479,7 +490,8 @@
       "signupUrl": "https://launchingnext.com/",
       "signupAuth": "邮箱",
       "verified": "2026-11-17",
-      "source": "https://launchingnext.com/submit/"
+      "source": "https://launchingnext.com/submit/",
+      "phone": true
     },
     {
       "id": "alternativeto",
@@ -520,7 +532,8 @@
       "signupAuth": "账号 + 邮箱验证",
       "verified": "2026-11-05",
       "src3p": true,
-      "source": "https://alternativeto.net/faq/"
+      "source": "https://alternativeto.net/faq/",
+      "phone": false
     },
     {
       "id": "saashub",
@@ -559,7 +572,8 @@
       "signupAuth": "账号（建议自有域名邮箱）",
       "verified": "2026-11-05",
       "src3p": true,
-      "source": "https://www.saashub.com/services/submit"
+      "source": "https://www.saashub.com/services/submit",
+      "phone": false
     },
     {
       "id": "taaft",
@@ -597,7 +611,8 @@
       "signupUrl": "https://theresanaiforthat.com/",
       "signupAuth": "邮箱",
       "verified": "2026-11-17",
-      "source": "https://theresanaiforthat.com/get-featured/"
+      "source": "https://theresanaiforthat.com/get-featured/",
+      "phone": false
     },
     {
       "id": "futuretools",
@@ -633,7 +648,8 @@
       "signupUrl": "https://www.futuretools.io/",
       "signupAuth": "邮箱",
       "verified": "2026-11-17",
-      "source": "https://www.futuretools.io/submit-a-tool"
+      "source": "https://www.futuretools.io/submit-a-tool",
+      "phone": true
     },
     {
       "id": "toolify",
@@ -669,7 +685,8 @@
       "signupAuth": "邮箱",
       "verified": "2026-10-18",
       "src3p": true,
-      "source": "https://alpstack.com/product-launch-sites/for/ai-tools"
+      "source": "https://alpstack.com/product-launch-sites/for/ai-tools",
+      "phone": false
     },
     {
       "id": "glama",
@@ -706,7 +723,8 @@
       "signupUrl": "https://glama.ai/",
       "signupAuth": "GitHub",
       "verified": "2026-11-17",
-      "source": "https://glama.ai/mcp/servers"
+      "source": "https://glama.ai/mcp/servers",
+      "phone": false
     },
     {
       "id": "mcpso",
@@ -742,7 +760,8 @@
       "signupUrl": "https://mcp.so/",
       "signupAuth": "GitHub",
       "verified": "2026-11-17",
-      "source": "https://mcp.so/submit"
+      "source": "https://mcp.so/submit",
+      "phone": false
     },
     {
       "id": "smithery",
@@ -778,7 +797,8 @@
       "signupUrl": "https://smithery.ai/",
       "signupAuth": "GitHub",
       "verified": "2026-11-17",
-      "source": "https://smithery.ai"
+      "source": "https://smithery.ai",
+      "phone": false
     },
     {
       "id": "mcp-registry",
@@ -815,7 +835,8 @@
       "signupUrl": "https://registry.modelcontextprotocol.io/",
       "signupAuth": "GitHub OIDC",
       "verified": "2026-11-17",
-      "source": "https://registry.modelcontextprotocol.io/"
+      "source": "https://registry.modelcontextprotocol.io/",
+      "phone": false
     },
     {
       "id": "indie-apps",
@@ -849,7 +870,8 @@
       "signupUrl": "https://indie-apps.com/",
       "signupAuth": "邮箱/账号",
       "verified": "2026-11-17",
-      "source": "https://indie-apps.com/submit"
+      "source": "https://indie-apps.com/submit",
+      "phone": true
     },
     {
       "id": "indieappcatalog",
@@ -884,7 +906,8 @@
       "signupAuth": "邮箱",
       "verified": "2026-11-05",
       "src3p": true,
-      "source": "https://indieappcatalog.com/app/submit"
+      "source": "https://indieappcatalog.com/app/submit",
+      "phone": true
     },
     {
       "id": "discoverindieapps",
@@ -921,7 +944,8 @@
       "signupAuth": "邮箱",
       "verified": "2026-11-05",
       "src3p": true,
-      "source": "https://www.discoverindieapps.com/submit"
+      "source": "https://www.discoverindieapps.com/submit",
+      "phone": true
     },
     {
       "id": "launchindieapps",
@@ -955,7 +979,8 @@
       "signupUrl": "https://launchindieapps.com/",
       "signupAuth": "邮箱",
       "verified": "2026-11-17",
-      "source": "https://launchindieapps.com/submit"
+      "source": "https://launchindieapps.com/submit",
+      "phone": true
     },
     {
       "id": "indieappsanta",
@@ -991,7 +1016,8 @@
       "signupAuth": "邮箱",
       "verified": "2026-11-05",
       "src3p": true,
-      "source": "https://indieappsanta.com/pricing/"
+      "source": "https://indieappsanta.com/pricing/",
+      "phone": true
     },
     {
       "id": "betalist",
@@ -1030,7 +1056,8 @@
       "signupAuth": "邮箱",
       "verified": "2026-11-05",
       "src3p": true,
-      "source": "https://betalist.com/criteria"
+      "source": "https://betalist.com/criteria",
+      "phone": false
     },
     {
       "id": "hn",
@@ -1067,7 +1094,8 @@
       "signupUrl": "https://news.ycombinator.com/login",
       "signupAuth": "账号（无邮箱验证，但新号发帖会被限）",
       "verified": "2026-11-05",
-      "source": "https://news.ycombinator.com/showhn.html"
+      "source": "https://news.ycombinator.com/showhn.html",
+      "phone": false
     },
     {
       "id": "reddit-iosapps",
@@ -1104,7 +1132,8 @@
       "signupUrl": "https://www.reddit.com/register",
       "signupAuth": "Reddit 账号（看 karma/年龄）",
       "verified": "2026-11-05",
-      "source": "https://www.reddit.com/r/iosapps/about/rules/"
+      "source": "https://www.reddit.com/r/iosapps/about/rules/",
+      "phone": false
     },
     {
       "id": "reddit-apple",
@@ -1138,7 +1167,8 @@
       "signupUrl": "https://www.reddit.com/register",
       "signupAuth": "Reddit 账号",
       "verified": "2026-11-05",
-      "source": "https://www.reddit.com/r/apple/wiki/rules/"
+      "source": "https://www.reddit.com/r/apple/wiki/rules/",
+      "phone": false
     },
     {
       "id": "reddit-iosprogramming",
@@ -1173,7 +1203,8 @@
       "signupUrl": "https://www.reddit.com/register",
       "signupAuth": "Reddit 账号",
       "verified": "2026-11-05",
-      "source": "https://www.reddit.com/r/iOSProgramming/wiki/app-saturday/"
+      "source": "https://www.reddit.com/r/iOSProgramming/wiki/app-saturday/",
+      "phone": false
     },
     {
       "id": "reddit-testflight",
@@ -1207,7 +1238,8 @@
       "signupUrl": "https://www.reddit.com/register",
       "signupAuth": "Reddit 账号",
       "verified": "2026-11-05",
-      "source": "https://www.reddit.com/r/TestFlight/about/rules/"
+      "source": "https://www.reddit.com/r/TestFlight/about/rules/",
+      "phone": true
     },
     {
       "id": "hackingwithswift",
@@ -1243,7 +1275,8 @@
       "signupUrl": "https://www.hackingwithswift.com/login",
       "signupAuth": "邮箱注册",
       "verified": "2026-11-05",
-      "source": "https://www.hackingwithswift.com/forums/app-announcements"
+      "source": "https://www.hackingwithswift.com/forums/app-announcements",
+      "phone": false
     },
     {
       "id": "indiehackers",
@@ -1280,7 +1313,8 @@
       "signupUrl": "https://www.indiehackers.com/",
       "signupAuth": "邮箱",
       "verified": "2026-11-05",
-      "source": "https://www.indiehackers.com/products"
+      "source": "https://www.indiehackers.com/products",
+      "phone": false
     },
     {
       "id": "v2ex",
@@ -1317,7 +1351,8 @@
       "signupUrl": "https://www.v2ex.com/signup",
       "signupAuth": "V2EX 账号（需邀请或邮箱）",
       "verified": "2026-11-17",
-      "source": "https://www.v2ex.com/new"
+      "source": "https://www.v2ex.com/new",
+      "phone": false
     },
     {
       "id": "agents-launchpad",
@@ -1351,7 +1386,88 @@
       "signupAuth": "未知",
       "verified": "2026-11-17",
       "unverified": true,
-      "source": "https://agentspace.cc/tool/agents-launchpad"
+      "source": "https://agentspace.cc/tool/agents-launchpad",
+      "phone": true
+    },
+    {
+      "id": "crowdstax",
+      "name": "Crowdstax",
+      "phase": "launch",
+      "lanes": [
+        "dev",
+        "ai"
+      ],
+      "fit": {
+        "ios": "limited",
+        "dev": "some",
+        "ai": "strong"
+      },
+      "cost": "免费审核 / Pro $4.99 一个月 / Sponsor $19.99 三个月（一次性，无订阅）",
+      "pay": "freemium",
+      "linkType": "免费档：过审后给产品页外链；Pro/Sponsor：永久 dofollow 外链",
+      "dr": "站点自称 96（未独立核实）",
+      "gate": "提交要登录（你已建好 profile）；免费档是「人工审核的社区 listing」，不保证 featured；Pro/Sponsor 才能选周一开跑 + 30/90 天 featured。产品类型写的是 startup / SaaS / AI tool / web app / developer tool，**没写 mobile app**。",
+      "review": "人工审核",
+      "rank": "周一开跑的 launch feed + leaderboard；付费档在 feed 里带曝光百分比角标",
+      "assets": [
+        "产品名 + 一句话 tagline",
+        "可读的描述（问题/受众/场景）",
+        "logo",
+        "官网 URL",
+        "分类 + launch tags",
+        "maker 背景",
+        "截图或视频",
+        "挑一个跟你发布节奏对的周一"
+      ],
+      "steps": [
+        "先走免费审核提交（不要一上来买 Pro）",
+        "过审后看它的 launch feed 有没有真实互动，再决定 $4.99 值不值",
+        "要买就买 Pro（$4.99/30 天）：永久 dofollow + newsletter + 选周一；Sponsor $19.99/3 个月是给「要连续曝光」的"
+      ],
+      "gotcha": "它写的「GitHub directory listing and website link (DR96)」口径含糊——DR96 大概率是它自己站或某个 GitHub 目录的指标，不是你能拿到的 DR96 外链，付钱前问清「我这条链接落在哪个域名」。",
+      "submitUrl": "https://www.crowdstax.com/submit",
+      "signupUrl": "https://www.crowdstax.com/profile",
+      "signupAuth": "邮箱注册（你已注册成功）",
+      "verified": "2026-11-17",
+      "source": "https://www.crowdstax.com/pricing",
+      "phone": true
+    },
+    {
+      "id": "crowdstax-platforms",
+      "name": "Crowdstax · 71 家已审平台目录（第二批弹药库）",
+      "phase": "launch",
+      "lanes": [
+        "dev",
+        "ai",
+        "ios"
+      ],
+      "fit": {
+        "ios": "some",
+        "dev": "some",
+        "ai": "some"
+      },
+      "cost": "免费看",
+      "pay": "free",
+      "linkType": "none（这是研究页，不是提交位）",
+      "dr": null,
+      "gate": "不是提交页：这是 Crowdstax 用同一套口径逐条审过的 71 家发布平台目录（Resource.fyi / Sidehunt / Firsto / 10words / LandBook / Hunt for Tools / Makerhunt / ProjectHunt / Startup Stash / Directory Hunt…），每条标了平台类型（直接发布板 / 反馈社区 / 软件目录 / 启动目录）与审核日期。",
+      "review": "—",
+      "rank": "—",
+      "assets": [
+        "当前批次里「弱适配」或「没流量」的平台名"
+      ],
+      "steps": [
+        "第一批（本表 35 家）铺完、有 2-3 家给出真实点击之后，再来这里挑第二批",
+        "只挑「平台类型 = Direct launch platform」且能挂 App Store 链接或仓库链接的",
+        "挑中的不要直接上：先按本表同样的字段（费用/外链/门槛）补一条，再排期"
+      ],
+      "gotcha": "71 家里至少一半是「收录了但没人看」的空壳站。判断标准只有一条：它自己的 launch feed 最近 30 天有没有 10 条以上的真实发布。",
+      "submitUrl": "https://www.crowdstax.com/launch-platforms",
+      "signupUrl": "",
+      "signupAuth": "不需要",
+      "verified": "2026-11-17",
+      "source": "https://www.crowdstax.com/launch-platforms",
+      "phone": true
     }
   ]
 }

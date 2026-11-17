@@ -228,6 +228,7 @@ function card(p) {
   add('费用', p.cost);
   add('外链', p.linkType === 'none' ? '无（只曝光）' : p.linkType);
   add('DR', p.dr);
+  add('设备', p.phone === false ? '要到电脑上做' : '手机可做');
   add('审核', p.review);
   add('排名', p.rank);
   add('门槛', p.gate, 'gate');
