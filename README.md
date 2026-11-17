@@ -42,6 +42,24 @@ node scripts/gen-images.mjs campaigns/<你的>.json output/发布台-<你的>.ht
 # 4) 用有各平台登录态的浏览器打开 output/发布台-<你的>.html
 ```
 
+## 第二种产物：发布 / 注册矩阵（去哪占位，不是说什么）
+
+发布台解决「同一份文案怎么发到 20 个站」；**发布矩阵解决「先注册谁、什么时候发、哪家根本不收你」**。
+
+```bash
+node scripts/build-matrix.mjs launch/platforms.json \
+  --product launch/products/blockwipe.json --out launch/dist/发布矩阵-<产品>.html
+```
+
+产物同样是零依赖单文件 HTML：35 家（Product Hunt / Peerlist / Uneed / Fazier / DevHunt / TinyLaunch /
+indie-apps / Indie App Catalog / AlternativeTo / SaaSHub / TAAFT / MCP 四件套 / Reddit 各版…）各一张卡，
+标好**费用 / 外链属性 / 硬门槛 / 排名机制 / 核实日期 + 证据链接**，按三条泳道（消费者 App / 开发者工具 / AI）
+筛，一键开提交页与注册页，勾选进度存 localStorage。
+
+- 判断与顺序：`references/launch-directories.md`、`launch/发布矩阵-作战手册.md`
+- 数据：`launch/platforms.json`（每条的 `verified` / `source` / `src3p` / `unverified` 字段别删）
+- 一句话口径：**发布板不是流量来源，是证据链**（AI 语料 + dofollow 外链 + 首批真评论）。
+
 ## 模板类型（换一套平台+文案 = 一个新行业）
 
 引擎与平台目录通用，`campaigns/*.mjs` 就是「行业模板」。已内置三类，复制改文案即可扩展：

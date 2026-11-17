@@ -1,0 +1,17 @@
+{
+  "slug": "blockwipe",
+  "lanes": [
+    "ios"
+  ],
+  "name": "Blockwipe（回忆方块）",
+  "tagline": "Your camera roll, now playable.",
+  "url": "",
+  "site": "",
+  "state": "App Store 审核中（v1.0 build 5 WAITING_FOR_REVIEW，2026-11-16）",
+  "todo": [
+    "上线前：先把 App Store 推荐提名提了（这一条过了时点就补不回）",
+    "没有官网 → Fazier / TinyLaunch / BetaList / CodeHype / SaaSHub 这 5 家一律不收，别排期",
+    "想要 dofollow 外链，先花半天做一个单页官网（hequbing.com/blockwipe）",
+    "评分是 0 → r/iosapps 要求「上架满 30 天 + 50 评分」走不通，先走 r/TestFlight 拿首批测试者"
+  ]
+}

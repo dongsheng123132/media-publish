@@ -1,0 +1,1357 @@
+{
+  "meta": {
+    "title": "发布矩阵 · 注册与投放作战台",
+    "built": "2026-11-17",
+    "verified": "2026-11-17",
+    "scope": "能被 AI 与搜索引擎当作「证据」的提交位：发布榜、目录站、MCP/AI 索引、社区、付费加速。",
+    "rules": [
+      "verified=本机 curl/web_fetch 直读原页的日期；src3p=第三方清单转述，价格/规则以官网为准。",
+      "unverified=没核到官方提交页，不要排进日程。",
+      "free=不花钱；freemium=有免费入口但要满足条件（挂回链/评分/排队）；paid=纯付费。",
+      "linkType 是该目录上「指向你官网」那条链接的属性；none=没有外链（只有榜单曝光）。",
+      "lanes=平台自述的受众；筛选用 fit（strong/some/limited/none）——MCP 目录对「不是 MCP server 的产品」只算 some，别硬蹭。"
+    ],
+    "lanes": [
+      {
+        "id": "ios",
+        "name": "消费者 iOS App",
+        "hint": "Blockwipe / 十点睡 / Dopamine Tax 这类面向普通用户的 App"
+      },
+      {
+        "id": "dev",
+        "name": "开发者工具 / 开源",
+        "hint": "DSH 插件、U-King、OpenClaw 周边"
+      },
+      {
+        "id": "ai",
+        "name": "AI 产品 / Agent / MCP",
+        "hint": "dsh-aigc、MCP server、Agent 类产品"
+      }
+    ],
+    "phases": [
+      {
+        "id": "pre",
+        "name": "0 · 上线前（免费，最容易被忘）",
+        "hint": "这几件事只能你做，且必须提前做"
+      },
+      {
+        "id": "launch",
+        "name": "1 · 发布周（有榜单的板）",
+        "hint": "一次性铺开，别一周挤一个"
+      },
+      {
+        "id": "longtail",
+        "name": "2 · 长尾目录（挂上就不动）",
+        "hint": "SEO 外链 + AI 语料，越早越好"
+      },
+      {
+        "id": "community",
+        "name": "3 · 社区（守版规，按天排）",
+        "hint": "一天最多一个，违规会被拉黑"
+      },
+      {
+        "id": "paid",
+        "name": "4 · 付费加速（有预算再开）",
+        "hint": "先算清 CPI 再掏钱"
+      }
+    ]
+  },
+  "platforms": [
+    {
+      "id": "appstore-featuring",
+      "name": "App Store 推荐提名（Featuring Nomination）",
+      "phase": "pre",
+      "lanes": [
+        "ios"
+      ],
+      "fit": {
+        "ios": "strong",
+        "dev": "none",
+        "ai": "none"
+      },
+      "cost": "免费",
+      "pay": "free",
+      "linkType": "none",
+      "dr": null,
+      "gate": "App Store Connect → 你的 App → Featuring → Nominations；官方要至少提前 2 周（帮助页写 3 周），建议提前 3 个月；每个开发者账号最多 10 个 App；提交后不能改提名类型。",
+      "review": "苹果编辑决定，没有保证",
+      "rank": "—",
+      "assets": [
+        "提名类型（如 App Launch）",
+        "名称 + 详细描述",
+        "平台 + 上线日期/时间窗",
+        "最多 5 条支撑材料链接",
+        "（可能要）宣传图"
+      ],
+      "steps": [
+        "上线前就提，不要等过审再提",
+        "提名类型选 App Launch，日期填真实首发周",
+        "描述里写清「首发时有什么是新的」"
+      ],
+      "gotcha": "这是唯一一个「免费但必须提前几周」的入口，错过就只能等下次大版本。",
+      "submitUrl": "https://appstoreconnect.apple.com/apps",
+      "signupUrl": "https://developer.apple.com/programs/",
+      "signupAuth": "已有开发者账号即可（Account Holder/Admin/App Manager/Marketing 角色可提）",
+      "verified": "2026-11-17",
+      "source": "https://developer.apple.com/help/app-store-connect/manage-featuring-nominations/nominate-your-app-for-featuring"
+    },
+    {
+      "id": "producthunt",
+      "name": "Product Hunt",
+      "phase": "launch",
+      "lanes": [
+        "ios",
+        "dev",
+        "ai"
+      ],
+      "fit": {
+        "ios": "some",
+        "dev": "strong",
+        "ai": "some"
+      },
+      "cost": "免费",
+      "pay": "free",
+      "linkType": "nofollow",
+      "dr": null,
+      "gate": "必须用个人号（公司号不能发产品）；新号要满 7 天才能发（订阅 newsletter 可立刻）；12:01 AM 太平洋时间开榜；最多提前 30 天排期；有 waitlist / 邀请码的产品不会被推荐。",
+      "review": "当天上线，可预约",
+      "rank": "当天按 upvote 排；2026 算法惩罚「直接求 upvote」，要换成求反馈",
+      "assets": [
+        "240×240 方图",
+        "≥1 张 1270×760 画廊图",
+        "tagline ≤60 字符",
+        "描述 ≤500 字符",
+        "≤3 个 launch tag"
+      ],
+      "steps": [
+        "提前 7 天注册个人号（或订阅 newsletter 解封当天可发）",
+        "建产品页 → 填 tagline/描述/画廊 → 选日期",
+        "当天全程在线回评论，首评写你做它的原因"
+      ],
+      "gotcha": "「90% 的发布拿不到首页」是平台自己的说法；把它当曝光补充，不当主渠道。",
+      "submitUrl": "https://www.producthunt.com/posts/new",
+      "signupUrl": "https://www.producthunt.com/",
+      "signupAuth": "个人邮箱/Google/X 登录，必须个人账号",
+      "verified": "2026-11-05",
+      "source": "https://www.producthunt.com/launch"
+    },
+    {
+      "id": "peerlist",
+      "name": "Peerlist Launchpad",
+      "phase": "launch",
+      "lanes": [
+        "dev",
+        "ai",
+        "ios"
+      ],
+      "fit": {
+        "ios": "some",
+        "dev": "strong",
+        "ai": "strong"
+      },
+      "cost": "免费（身份验证可能收一次性小费）",
+      "pay": "free",
+      "linkType": "仅周榜前 5 有外链",
+      "dr": null,
+      "gate": "只收「已验证的个人资料」（真名+真人照片，工作证明免费、身份证验证小额一次性）；公司号不能发；项目必须 100% 完成；周一 UTC 00:00–23:59 开榜；不能求票（算 spam）。",
+      "review": "周一开榜，挂一周",
+      "rank": "综合分 = upvote + 评论 + 浏览 + 链接点击 + 整体牵引力；周一/周二随机排序；只有「有内容的评论」计入；已验证用户权重更高",
+      "assets": [
+        "项目名",
+        "一句话 tagline",
+        "封面图",
+        "可点的 demo / App Store 链接",
+        "已完成的个人资料（含头像）"
+      ],
+      "steps": [
+        "先把 Peerlist 个人资料验证掉（这一步最容易卡住排期）",
+        "选一个周一，UTC 零点开榜",
+        "周一周二被随机排序曝光后，重点拉「有内容的评论」而不是票"
+      ],
+      "gotcha": "受众是开发者和设计师，不是普通用户；周榜前 5 之外没有外链。印度流量约占 45%（第三方口径）。",
+      "submitUrl": "https://peerlist.io/launchpad",
+      "signupUrl": "https://peerlist.io/",
+      "signupAuth": "个人账号 + 身份验证",
+      "verified": "2026-11-05",
+      "source": "https://help.peerlist.io/individual/launchpad/frequently-asked-questions-about-spotlight-by-peerlist"
+    },
+    {
+      "id": "uneed",
+      "name": "Uneed",
+      "phase": "launch",
+      "lanes": [
+        "dev",
+        "ai",
+        "ios"
+      ],
+      "fit": {
+        "ios": "some",
+        "dev": "strong",
+        "ai": "strong"
+      },
+      "cost": "免费排队 / Fast-track $14.99 / Skip $39.99",
+      "pay": "freemium",
+      "linkType": "免费线：分数 ≥20 dofollow，10–19 nofollow；Skip $39.99 永久 dofollow",
+      "dr": "官网自述 75（第三方指标）",
+      "gate": "免费排队日期在 30–50 天之外（两份来源口径不一致，以提交页为准）；免费线开榜日分数 <10 会被下架；有 waitlist / 邀请码一律拒；提交 ≠ 排期，必须回 dashboard 选发布方式。",
+      "review": "人工审核，付费档不审",
+      "rank": "日/周/月/年榜；每票按投票者 streak 权重 x1–x5；每周前三进 26,000 人 newsletter",
+      "assets": [
+        "产品名",
+        "能被抓取的在线页面",
+        "真实截图",
+        "和官网一致的一句话说明",
+        "一个对得上的分类"
+      ],
+      "steps": [
+        "先用官网首页的原话填名字和一句话",
+        "提交后回 dashboard 选：免费排队 / Fast-track / Skip（不选就永远不发）",
+        "等待期可挂「Launching Soon on Uneed」角标攒分"
+      ],
+      "gotcha": "最常见的死法：提交完就去睡觉，没在 dashboard 选发布方式。买票会被下架。",
+      "submitUrl": "https://www.uneed.best/submit-a-tool",
+      "signupUrl": "https://www.uneed.best/",
+      "signupAuth": "表单先填，保存时才要求注册",
+      "verified": "2026-10-28",
+      "src3p": true,
+      "source": "https://afterlaunch.io/learn/how-to-launch-on-uneed"
+    },
+    {
+      "id": "fazier",
+      "name": "Fazier",
+      "phase": "launch",
+      "lanes": [
+        "dev",
+        "ai"
+      ],
+      "fit": {
+        "ios": "limited",
+        "dev": "strong",
+        "ai": "some"
+      },
+      "cost": "免费（需挂回链）/ Lite $29–39",
+      "pay": "freemium",
+      "linkType": "免费档要求你首页/页脚挂 Fazier 链接；付费档不需要，且日榜前三给高权重外链",
+      "dr": null,
+      "gate": "免费档必须在自己网站首页或页脚放 Fazier 回链；免费提交 30 天内审核完；App Store-only（没有官网）大概率不成。",
+      "review": "免费 30 天内；付费可立即/排期",
+      "rank": "不用票数：一对一 PK（This or That），按胜场数和胜率排",
+      "assets": [
+        "官网 URL（免费档硬要求）",
+        "产品名 + 一句话",
+        "截图",
+        "分类"
+      ],
+      "steps": [
+        "先做一个能挂回链的落地页（哪怕一页）",
+        "免费提交 → 挂回链 → 等审核",
+        "想立刻上就买 Lite，当日榜前三才有外链"
+      ],
+      "gotcha": "「免费」的代价是挂回链；一对一 PK 意味着你的对手是同期另一个产品，选周很关键。",
+      "submitUrl": "https://fazier.com/submit",
+      "signupUrl": "https://fazier.com/",
+      "signupAuth": "邮箱/账号注册",
+      "verified": "2026-11-17",
+      "source": "https://fazier.com/submit"
+    },
+    {
+      "id": "devhunt",
+      "name": "DevHunt",
+      "phase": "launch",
+      "lanes": [
+        "dev",
+        "ai"
+      ],
+      "fit": {
+        "ios": "none",
+        "dev": "strong",
+        "ai": "some"
+      },
+      "cost": "免费上架 / $49 发布周",
+      "pay": "freemium",
+      "linkType": "免费=永久页但 nofollow；$49=永久 dofollow",
+      "dr": "62（第三方）",
+      "gate": "只收开发者工具（开源、API、测试工具…）；投票/评论必须 GitHub 登录；每周一批发布；$49 可选发布周 + 上 newsletter + X 推 + 同票时排前面。",
+      "review": "人工，按周排",
+      "rank": "一周内按票排，周榜",
+      "assets": [
+        "名称",
+        "官网",
+        "描述",
+        "logo",
+        "截图",
+        "GitHub 账号"
+      ],
+      "steps": [
+        "GitHub 登录 → 账户页提交工具",
+        "先免费挂永久页（nofollow 也有品牌曝光）",
+        "要 dofollow 就买 $49 选一个流量好的周"
+      ],
+      "gotcha": "非开发者产品（含普通 iOS App）不收；不要浪费排期。",
+      "submitUrl": "https://devhunt.org/",
+      "signupUrl": "https://devhunt.org/",
+      "signupAuth": "GitHub 登录",
+      "verified": "2026-11-17",
+      "source": "https://devhunt.org/faq"
+    },
+    {
+      "id": "tinylaunch",
+      "name": "TinyLaunch",
+      "phase": "launch",
+      "lanes": [
+        "dev",
+        "ai"
+      ],
+      "fit": {
+        "ios": "limited",
+        "dev": "some",
+        "ai": "some"
+      },
+      "cost": "免费标准档 / Premium $39",
+      "pay": "freemium",
+      "linkType": "免费：前三名 + 在你站上嵌 badge 才 dofollow；Premium 保证外链",
+      "dr": null,
+      "gate": "免费档排 standard queue；要 dofollow 必须把 badge 嵌到自己网站；Premium 跳过队列并保证外链。",
+      "review": "排队",
+      "rank": "每日 launch 竞争，前三拿 badge",
+      "assets": [
+        "官网 URL（要能嵌 badge）",
+        "产品名 + 一句话",
+        "logo"
+      ],
+      "steps": [
+        "注册",
+        "提交产品",
+        "把 badge 嵌进自己站，否则拿不到 dofollow"
+      ],
+      "gotcha": "又是一个「免费=挂 badge」的站；badge 掉了外链就没了。",
+      "submitUrl": "https://tinylaun.ch/submit",
+      "signupUrl": "https://tinylaun.ch/",
+      "signupAuth": "邮箱注册",
+      "verified": "2026-11-17",
+      "source": "https://tinylaun.ch/pricing"
+    },
+    {
+      "id": "microlaunch",
+      "name": "Microlaunch",
+      "phase": "launch",
+      "lanes": [
+        "dev",
+        "ai"
+      ],
+      "fit": {
+        "ios": "some",
+        "dev": "some",
+        "ai": "some"
+      },
+      "cost": "Pro $49 / Plus $99 / Launch Everywhere $199（常有折扣码）",
+      "pay": "paid",
+      "linkType": "Pro 起 dofollow",
+      "dr": null,
+      "gate": "公开页面没写免费档；需 X 或 Google 登录；每个 launch 是 30 天 campaign，不是单日。",
+      "review": "—",
+      "rank": "月度榜",
+      "assets": [
+        "X 或 Google 账号",
+        "产品名/网址/描述",
+        "截图"
+      ],
+      "steps": [
+        "登录",
+        "买档位",
+        "选 30 天窗口"
+      ],
+      "gotcha": "官方页没确认还有免费档，别按免费规划；重新发布只限大版本。",
+      "submitUrl": "https://microlaunch.net/submit",
+      "signupUrl": "https://microlaunch.net",
+      "signupAuth": "X 或 Google 登录",
+      "verified": "2026-11-17",
+      "source": "https://microlaunch.net"
+    },
+    {
+      "id": "codehype",
+      "name": "CodeHype",
+      "phase": "launch",
+      "lanes": [
+        "ai",
+        "dev"
+      ],
+      "fit": {
+        "ios": "limited",
+        "dev": "some",
+        "ai": "strong"
+      },
+      "cost": "免费（14 天队列）/ Plus $15 / Pro $25",
+      "pay": "freemium",
+      "linkType": "免费档 dofollow 依赖挂 badge（每 3 天检查）；付费档不需要",
+      "dr": null,
+      "gate": "定位 AI 产品 + 要有真实 HTTPS 官网；有 Mobile Apps 分类；人工审核约 24h，付费也不跳审。",
+      "review": "约 24 小时",
+      "rank": "首页展示 + 日榜",
+      "assets": [
+        "官网 URL（硬要求）",
+        "方 logo",
+        "tagline",
+        "≤5 张截图",
+        "单独的 App Store 链接字段"
+      ],
+      "steps": [
+        "注册免费账号",
+        "提交（免费排队 14 天）",
+        "要立刻上买 Plus/Pro"
+      ],
+      "gotcha": "没有官网的纯 App Store 产品大概率过不了；免费外链靠 badge 续命。",
+      "submitUrl": "https://www.codehype.ai/submit",
+      "signupUrl": "https://www.codehype.ai/",
+      "signupAuth": "邮箱注册",
+      "verified": "2026-11-17",
+      "source": "https://www.codehype.ai/submit"
+    },
+    {
+      "id": "startupbase",
+      "name": "StartupBase",
+      "phase": "launch",
+      "lanes": [
+        "dev",
+        "ai"
+      ],
+      "fit": {
+        "ios": "limited",
+        "dev": "some",
+        "ai": "some"
+      },
+      "cost": "免费（挂 badge，4–5 周）/ Premium $39",
+      "pay": "freemium",
+      "linkType": "免费档需挂 StartupBase badge；Premium 有永久外链",
+      "dr": "76（官网自述）",
+      "gate": "免费档必须在自己网站挂 badge；Premium 可在 30 天内选日期。",
+      "review": "约 4–5 周",
+      "rank": "日榜",
+      "assets": [
+        "官网（要能挂 badge）",
+        "产品资料"
+      ],
+      "steps": [
+        "提交",
+        "挂 badge",
+        "等 4–5 周"
+      ],
+      "gotcha": "又是一个 badge 换外链；没有官网就别排。",
+      "submitUrl": "https://startupbase.io/launch",
+      "signupUrl": "https://startupbase.io/",
+      "signupAuth": "邮箱注册",
+      "verified": "2026-11-05",
+      "source": "https://startupbase.io/launch"
+    },
+    {
+      "id": "launchingnext",
+      "name": "Launching Next",
+      "phase": "launch",
+      "lanes": [
+        "dev",
+        "ai",
+        "ios"
+      ],
+      "fit": {
+        "ios": "some",
+        "dev": "some",
+        "ai": "some"
+      },
+      "cost": "免费",
+      "pay": "free",
+      "linkType": "（未标）",
+      "dr": null,
+      "gate": "免费提交，人工挑；站方自述已收录 45,669 个创业项目。",
+      "review": "人工，时间不定",
+      "rank": "—",
+      "assets": [
+        "产品名",
+        "官网",
+        "一句话",
+        "logo"
+      ],
+      "steps": [
+        "提交页填表",
+        "等收录"
+      ],
+      "gotcha": "老站，流量一般；当成一次免费外链+存档。",
+      "submitUrl": "https://launchingnext.com/submit/",
+      "signupUrl": "https://launchingnext.com/",
+      "signupAuth": "邮箱",
+      "verified": "2026-11-17",
+      "source": "https://launchingnext.com/submit/"
+    },
+    {
+      "id": "alternativeto",
+      "name": "AlternativeTo",
+      "phase": "longtail",
+      "lanes": [
+        "dev",
+        "ai",
+        "ios"
+      ],
+      "fit": {
+        "ios": "some",
+        "dev": "strong",
+        "ai": "some"
+      },
+      "cost": "免费 / 优先审核付费",
+      "pay": "freemium",
+      "linkType": "dofollow（第三方口径 DR 80–85）",
+      "dr": "80–85（第三方，实测口径不一）",
+      "gate": "要账号 + 验证邮箱才能提交；免费队列极长（官方说多数很久都不会被看）；付费优先审核 1–2 个工作日，付费也不保证通过。",
+      "review": "免费=很久；付费=1–2 工作日",
+      "rank": "按「替代品/比较」搜索长尾排",
+      "assets": [
+        "App 描述",
+        "平台清单",
+        "许可（免费/付费）",
+        "标签",
+        "你替代的那几个知名 App"
+      ],
+      "steps": [
+        "注册 + 验证邮箱",
+        "提交 App，平台勾 iPhone",
+        "关键一步：列出 5–10 个你替代的知名产品，长尾搜索才会把你捞出来"
+      ],
+      "gotcha": "没有「替代谁」的定位，在这个站基本没流量。游戏类没有替代品，收益接近 0。",
+      "submitUrl": "https://alternativeto.net/manage/new-app/",
+      "signupUrl": "https://alternativeto.net/",
+      "signupAuth": "账号 + 邮箱验证",
+      "verified": "2026-11-05",
+      "src3p": true,
+      "source": "https://alternativeto.net/faq/"
+    },
+    {
+      "id": "saashub",
+      "name": "SaaSHub",
+      "phase": "longtail",
+      "lanes": [
+        "dev",
+        "ai"
+      ],
+      "fit": {
+        "ios": "limited",
+        "dev": "strong",
+        "ai": "some"
+      },
+      "cost": "免费 / Featured $99 每月",
+      "pay": "freemium",
+      "linkType": "dofollow（第三方口径 DR 70–80）",
+      "dr": "70–80（第三方）",
+      "gate": "必须已发布（不收 waitlist）；移动 App 只有在有像样官网时才收；必须自有域名（不收 vercel.app）；必须填竞品，否则排队到底。",
+      "review": "人工",
+      "rank": "按分类与竞品比较页",
+      "assets": [
+        "官网（自有域名）",
+        "分类",
+        "竞品清单",
+        "自家域名邮箱（优先）"
+      ],
+      "steps": [
+        "用自家域名邮箱注册",
+        "提交 + 填 3–5 个竞品",
+        "等收录"
+      ],
+      "gotcha": "「填竞品」不是可选项，是排队优先级；不填等于沉底。",
+      "submitUrl": "https://www.saashub.com/services/submit",
+      "signupUrl": "https://www.saashub.com/",
+      "signupAuth": "账号（建议自有域名邮箱）",
+      "verified": "2026-11-05",
+      "src3p": true,
+      "source": "https://www.saashub.com/services/submit"
+    },
+    {
+      "id": "taaft",
+      "name": "There's An AI For That (TAAFT)",
+      "phase": "longtail",
+      "lanes": [
+        "ai"
+      ],
+      "fit": {
+        "ios": "none",
+        "dev": "none",
+        "ai": "strong"
+      },
+      "cost": "编辑收免费 / 付费档 $437（2026-11 页面，含 BF 20% off）",
+      "pay": "freemium",
+      "linkType": "dofollow（第三方口径 DR ~78）",
+      "dr": "~78（第三方）",
+      "gate": "必须真的是 AI 产品；人工审核，不收就全额退；第三方 2026-10 读到的 $49 基础档当前页面上没出现，提交前看实时价格。",
+      "review": "人工 1–2 天",
+      "rank": "按「has AI」搜索长尾 + Just Released 位",
+      "assets": [
+        "官网",
+        "logo",
+        "一句话（who + what）",
+        "截图",
+        "定价"
+      ],
+      "steps": [
+        "提交工具表单",
+        "等审核",
+        "要求付费位再谈"
+      ],
+      "gotcha": "月访问 900 万（官网页），但这是 AI 工具垂类；跟你的 App 无关就别上。",
+      "submitUrl": "https://theresanaiforthat.com/get-featured/",
+      "signupUrl": "https://theresanaiforthat.com/",
+      "signupAuth": "邮箱",
+      "verified": "2026-11-17",
+      "source": "https://theresanaiforthat.com/get-featured/"
+    },
+    {
+      "id": "futuretools",
+      "name": "Future Tools",
+      "phase": "longtail",
+      "lanes": [
+        "ai"
+      ],
+      "fit": {
+        "ios": "none",
+        "dev": "none",
+        "ai": "strong"
+      },
+      "cost": "免费提交",
+      "pay": "free",
+      "linkType": "（未标）",
+      "dr": null,
+      "gate": "提交表单 + 人工挑选；AI 工具垂类（Matt Wolfe 的站）。",
+      "review": "人工",
+      "rank": "目录页",
+      "assets": [
+        "产品名",
+        "网址",
+        "一句话",
+        "分类"
+      ],
+      "steps": [
+        "填提交表单",
+        "等收录"
+      ],
+      "gotcha": "只收 AI 工具；免费但入选率取决于编辑口味。",
+      "submitUrl": "https://www.futuretools.io/submit-a-tool",
+      "signupUrl": "https://www.futuretools.io/",
+      "signupAuth": "邮箱",
+      "verified": "2026-11-17",
+      "source": "https://www.futuretools.io/submit-a-tool"
+    },
+    {
+      "id": "toolify",
+      "name": "Toolify",
+      "phase": "paid",
+      "lanes": [
+        "ai"
+      ],
+      "fit": {
+        "ios": "none",
+        "dev": "none",
+        "ai": "some"
+      },
+      "cost": "$99（第三方口径，未直读）",
+      "pay": "paid",
+      "linkType": "（未标）",
+      "dr": null,
+      "gate": "Cloudflare 挡着没直读到价格页；第三方清单写 $99 提交费。",
+      "review": "—",
+      "rank": "AI 工具目录页",
+      "assets": [
+        "官网",
+        "logo",
+        "描述",
+        "截图"
+      ],
+      "steps": [
+        "先去提交页看实时价，再决定要不要花这 99"
+      ],
+      "gotcha": "价格是第三方说的，2026-11 没在我这核实到；不要按这个数做预算。",
+      "submitUrl": "https://www.toolify.ai/submit",
+      "signupUrl": "https://www.toolify.ai/",
+      "signupAuth": "邮箱",
+      "verified": "2026-10-18",
+      "src3p": true,
+      "source": "https://alpstack.com/product-launch-sites/for/ai-tools"
+    },
+    {
+      "id": "glama",
+      "name": "Glama MCP 索引",
+      "phase": "longtail",
+      "lanes": [
+        "ai",
+        "dev"
+      ],
+      "fit": {
+        "ios": "none",
+        "dev": "some",
+        "ai": "strong"
+      },
+      "cost": "免费",
+      "pay": "free",
+      "linkType": "dofollow（GitHub 仓库链接）",
+      "dr": null,
+      "gate": "开源 MCP server，页面上有 Add Server 按钮；2026-11 标题写索引 122,355 个 server。",
+      "review": "自动/人工混合",
+      "rank": "站内搜索 + 外部搜索收录",
+      "assets": [
+        "GitHub 仓库",
+        "server 描述",
+        "工具列表"
+      ],
+      "steps": [
+        "打开 glama.ai/mcp/servers",
+        "点 Add Server",
+        "填仓库 URL"
+      ],
+      "gotcha": "只对 MCP server 有意义；没有 MCP 的产品别硬蹭。",
+      "submitUrl": "https://glama.ai/mcp/servers",
+      "signupUrl": "https://glama.ai/",
+      "signupAuth": "GitHub",
+      "verified": "2026-11-17",
+      "source": "https://glama.ai/mcp/servers"
+    },
+    {
+      "id": "mcpso",
+      "name": "mcp.so",
+      "phase": "longtail",
+      "lanes": [
+        "ai",
+        "dev"
+      ],
+      "fit": {
+        "ios": "none",
+        "dev": "some",
+        "ai": "strong"
+      },
+      "cost": "免费审核 / $39 立即发布",
+      "pay": "freemium",
+      "linkType": "dofollow",
+      "dr": null,
+      "gate": "提交表单要仓库 URL；免费要排队审核，$39 一次性免审即上。",
+      "review": "免费=排队；付费=立即",
+      "rank": "站内分类",
+      "assets": [
+        "仓库 URL",
+        "一句话",
+        "分类"
+      ],
+      "steps": [
+        "mcp.so/submit 填表",
+        "或走 GitHub issue 通道"
+      ],
+      "gotcha": "同一个 MCP server 在 mcp.so / Glama / Smithery / 官方 registry 各填一次，是一套活儿。",
+      "submitUrl": "https://mcp.so/submit",
+      "signupUrl": "https://mcp.so/",
+      "signupAuth": "GitHub",
+      "verified": "2026-11-17",
+      "source": "https://mcp.so/submit"
+    },
+    {
+      "id": "smithery",
+      "name": "Smithery",
+      "phase": "longtail",
+      "lanes": [
+        "ai",
+        "dev"
+      ],
+      "fit": {
+        "ios": "none",
+        "dev": "some",
+        "ai": "strong"
+      },
+      "cost": "免费",
+      "pay": "free",
+      "linkType": "dofollow",
+      "dr": null,
+      "gate": "用 CLI 或站点发布 MCP server；2026-11 站点已并入 Arcade（品牌变化，提交入口以站内为准）。",
+      "review": "自动",
+      "rank": "站内搜索",
+      "assets": [
+        "server manifest",
+        "工具说明"
+      ],
+      "steps": [
+        "装 CLI",
+        "smithery publish",
+        "或在站内 Add server"
+      ],
+      "gotcha": "被收购后入口可能变，提交前看一眼首页。",
+      "submitUrl": "https://smithery.ai/",
+      "signupUrl": "https://smithery.ai/",
+      "signupAuth": "GitHub",
+      "verified": "2026-11-17",
+      "source": "https://smithery.ai"
+    },
+    {
+      "id": "mcp-registry",
+      "name": "官方 MCP Registry",
+      "phase": "longtail",
+      "lanes": [
+        "ai",
+        "dev"
+      ],
+      "fit": {
+        "ios": "none",
+        "dev": "some",
+        "ai": "strong"
+      },
+      "cost": "免费",
+      "pay": "free",
+      "linkType": "dofollow（指向仓库/npm）",
+      "dr": null,
+      "gate": "要 server.json（反向域名命名，如 io.github.you/repo），GitHub OIDC 验证命名空间；可用 CI 自动发布。",
+      "review": "自动",
+      "rank": "官方索引，下游目录会来抓",
+      "assets": [
+        "server.json",
+        "公开仓库",
+        "GitHub Actions（可选）"
+      ],
+      "steps": [
+        "写 server.json",
+        "加 publish workflow",
+        "release 时自动发布"
+      ],
+      "gotcha": "这是「一次写好，长期自动」的一条；先做这个再做付费目录。",
+      "submitUrl": "https://registry.modelcontextprotocol.io/",
+      "signupUrl": "https://registry.modelcontextprotocol.io/",
+      "signupAuth": "GitHub OIDC",
+      "verified": "2026-11-17",
+      "source": "https://registry.modelcontextprotocol.io/"
+    },
+    {
+      "id": "indie-apps",
+      "name": "Indie Apps（indie-apps.com）",
+      "phase": "longtail",
+      "lanes": [
+        "ios"
+      ],
+      "fit": {
+        "ios": "strong",
+        "dev": "none",
+        "ai": "none"
+      },
+      "cost": "免费上架 / Featured $4.99 起每周",
+      "pay": "freemium",
+      "linkType": "免费档多为 nofollow；付费 Featured 周带 dofollow 并保留",
+      "dr": null,
+      "gate": "只收「一个人做的 Apple App」；粘 App Store 链接即时上线，事后抽查，不合规直接下架。",
+      "review": "无复审，先上后查",
+      "rank": "每周 Debuts 榜按 App Store 点击数排（不是投票）",
+      "assets": [
+        "App Store 链接",
+        "（可选）宣传图"
+      ],
+      "steps": [
+        "粘链接 → 预览 → 发布",
+        "想上榜就买 Featured 周"
+      ],
+      "gotcha": "这是少数「App Store 链接就够、还即时上线」的站，性价比最高的一条。",
+      "submitUrl": "https://indie-apps.com/submit",
+      "signupUrl": "https://indie-apps.com/",
+      "signupAuth": "邮箱/账号",
+      "verified": "2026-11-17",
+      "source": "https://indie-apps.com/submit"
+    },
+    {
+      "id": "indieappcatalog",
+      "name": "Indie App Catalog",
+      "phase": "longtail",
+      "lanes": [
+        "ios"
+      ],
+      "fit": {
+        "ios": "strong",
+        "dev": "none",
+        "ai": "none"
+      },
+      "cost": "免费（页面未显示收费步骤）",
+      "pay": "free",
+      "linkType": "（未标）",
+      "dr": null,
+      "gate": "只收独立开发者作品；App 必须在美区 App Store；人工审核；拒低质（泛用二维码扫描、套壳 AI 工具）。",
+      "review": "人工",
+      "rank": "目录 + 新闻位",
+      "assets": [
+        "美区 App Store 链接",
+        "（新闻位）16:9 头图 ≥1600px、<2MB、标题 ≤65 字符"
+      ],
+      "steps": [
+        "提交 App 链接",
+        "有大版本再走 news 表单"
+      ],
+      "gotcha": "只认美区链接；你的 App 没上美区就别排。",
+      "submitUrl": "https://indieappcatalog.com/app/submit",
+      "signupUrl": "https://indieappcatalog.com/",
+      "signupAuth": "邮箱",
+      "verified": "2026-11-05",
+      "src3p": true,
+      "source": "https://indieappcatalog.com/app/submit"
+    },
+    {
+      "id": "discoverindieapps",
+      "name": "Discover Indie Apps",
+      "phase": "paid",
+      "lanes": [
+        "ios"
+      ],
+      "fit": {
+        "ios": "strong",
+        "dev": "none",
+        "ai": "none"
+      },
+      "cost": "Listed $9 / Deal 推广 $19（纯付费，无免费通道）",
+      "pay": "paid",
+      "linkType": "dofollow",
+      "dr": null,
+      "gate": "必须在 App Store 已上架；付款后人工审约 24h，不过全额退。",
+      "review": "24 小时内",
+      "rank": "目录 + 首页 Spotlight（同时只放一个）",
+      "assets": [
+        "App Store 链接",
+        "一句话",
+        "截图"
+      ],
+      "steps": [
+        "付款提交",
+        "等审",
+        "要曝光就排 Spotlight"
+      ],
+      "gotcha": "$9 是买一条永久 dofollow + 存档，不是买流量；别指望安装。",
+      "submitUrl": "https://www.discoverindieapps.com/submit",
+      "signupUrl": "https://www.discoverindieapps.com/",
+      "signupAuth": "邮箱",
+      "verified": "2026-11-05",
+      "src3p": true,
+      "source": "https://www.discoverindieapps.com/submit"
+    },
+    {
+      "id": "launchindieapps",
+      "name": "Launch Indie Apps",
+      "phase": "paid",
+      "lanes": [
+        "ios"
+      ],
+      "fit": {
+        "ios": "some",
+        "dev": "none",
+        "ai": "none"
+      },
+      "cost": "Listed $9 / 日 Spotlight $29 / 周 $49",
+      "pay": "paid",
+      "linkType": "dofollow",
+      "dr": null,
+      "gate": "只收已上架 App；人工审，拒或 48h 无结论全额退。",
+      "review": "人工",
+      "rank": "首页 Spotlight + 目录",
+      "assets": [
+        "App Store 链接",
+        "价格/是否要账号/是否支持离线（列表页会展示）"
+      ],
+      "steps": [
+        "提交",
+        "选档位"
+      ],
+      "gotcha": "站方自己就是这份 33 站清单的作者（页面已自我披露），当参考不当背书。",
+      "submitUrl": "https://launchindieapps.com/submit",
+      "signupUrl": "https://launchindieapps.com/",
+      "signupAuth": "邮箱",
+      "verified": "2026-11-17",
+      "source": "https://launchindieapps.com/submit"
+    },
+    {
+      "id": "indieappsanta",
+      "name": "Indie App Santa",
+      "phase": "paid",
+      "lanes": [
+        "ios"
+      ],
+      "fit": {
+        "ios": "some",
+        "dev": "none",
+        "ai": "none"
+      },
+      "cost": "$150/天（打包 2 个 $200 / 5 个 $250）",
+      "pay": "paid",
+      "linkType": "（未标）",
+      "dr": null,
+      "gate": "必须真有限时优惠（免费 lifetime / 订阅免费 / 折扣），没有优惠别买。",
+      "review": "—",
+      "rank": "当日 featured",
+      "assets": [
+        "App Store 链接",
+        "能当天打开的优惠配置"
+      ],
+      "steps": [
+        "配好限时优惠",
+        "买档位",
+        "当天盯评论"
+      ],
+      "gotcha": "它卖的是「找免费/折扣的人」，白嫖流量，不是付费用户；你的 App 没优惠就别上。",
+      "submitUrl": "https://indieappsanta.com/pricing/",
+      "signupUrl": "https://indieappsanta.com/",
+      "signupAuth": "邮箱",
+      "verified": "2026-11-05",
+      "src3p": true,
+      "source": "https://indieappsanta.com/pricing/"
+    },
+    {
+      "id": "betalist",
+      "name": "BetaList",
+      "phase": "paid",
+      "lanes": [
+        "dev",
+        "ai"
+      ],
+      "fit": {
+        "ios": "limited",
+        "dev": "some",
+        "ai": "some"
+      },
+      "cost": "纯付费（价格在表单最后一步显示，未选全额退）",
+      "pay": "paid",
+      "linkType": "（未标）",
+      "dr": null,
+      "gate": "必须有自有域名落地页（不收模板站/vercel.app）；产品要「对它的读者是新东西」；最多被推两次。",
+      "review": "人工选",
+      "rank": "编辑精选",
+      "assets": [
+        "自有域名落地页",
+        "一句话",
+        "logo",
+        "截图"
+      ],
+      "steps": [
+        "准备落地页",
+        "填表单到最后一步看价",
+        "决定付不付"
+      ],
+      "gotcha": "App Store 直链不收；没有官网等于没资格。",
+      "submitUrl": "https://betalist.com/submit",
+      "signupUrl": "https://betalist.com/",
+      "signupAuth": "邮箱",
+      "verified": "2026-11-05",
+      "src3p": true,
+      "source": "https://betalist.com/criteria"
+    },
+    {
+      "id": "hn",
+      "name": "Hacker News · Show HN",
+      "phase": "community",
+      "lanes": [
+        "dev",
+        "ai",
+        "ios"
+      ],
+      "fit": {
+        "ios": "some",
+        "dev": "strong",
+        "ai": "strong"
+      },
+      "cost": "免费",
+      "pay": "free",
+      "linkType": "nofollow（但链接会长期在 Google 排）",
+      "dr": null,
+      "gate": "必须「别人不用注册就能试」；必须非平凡（小更新不算）；标题以 Show HN 开头、不用大写和感叹号；不许找朋友投票/评论；正文必须自己写（明确禁 AI 生成/改写）。",
+      "review": "即时，靠社区投票",
+      "rank": "按分数/时间衰减；首页窗口几小时",
+      "assets": [
+        "可直接打开的产品链接",
+        "第一评：你做它的原因 + 技术上的取舍"
+      ],
+      "steps": [
+        "提交链接（标题 Show HN: …）",
+        "立刻把说明贴成第一条评论（提交页没有正文框）",
+        "全程在线回技术问题"
+      ],
+      "gotcha": "iOS 纯 App 链对 HN 用户「难试」，转化差；有技术故事（成本/算法/本地优先）才值得发。",
+      "submitUrl": "https://news.ycombinator.com/submitlink?u={url}&t={title}",
+      "signupUrl": "https://news.ycombinator.com/login",
+      "signupAuth": "账号（无邮箱验证，但新号发帖会被限）",
+      "verified": "2026-11-05",
+      "source": "https://news.ycombinator.com/showhn.html"
+    },
+    {
+      "id": "reddit-iosapps",
+      "name": "Reddit · r/iosapps",
+      "phase": "community",
+      "lanes": [
+        "ios"
+      ],
+      "fit": {
+        "ios": "strong",
+        "dev": "none",
+        "ai": "none"
+      },
+      "cost": "免费",
+      "pay": "free",
+      "linkType": "nofollow",
+      "dr": null,
+      "gate": "账号 ≥300 karma 且 ≥90 天；App 上架/TestFlight ≥30 天；还要满足其一：50+ 评分 / 成熟 GitHub / 开发者 flair / 透明度（隐私政策+条款+可识别身份）；每 30 天只能发 1 次；必须带定价 flair + 「我做的」声明 + PCP 段（问题/1–2 个竞品/价格+链接）；明显 AI 写的会被删。",
+      "review": "版主抽审",
+      "rank": "Reddit 热度算法",
+      "assets": [
+        "300+ karma 账号",
+        "PCP 段文案",
+        "定价 flair",
+        "App Store 链接"
+      ],
+      "steps": [
+        "先养号 90 天",
+        "上架满 30 天再发",
+        "按 PCP 结构写，别贴链接就完"
+      ],
+      "gotcha": "这是唯一明确写「上架 30 天后才能发」的社区——新品当天发必被删。",
+      "submitUrl": "https://www.reddit.com/r/iosapps/submit",
+      "signupUrl": "https://www.reddit.com/register",
+      "signupAuth": "Reddit 账号（看 karma/年龄）",
+      "verified": "2026-11-05",
+      "source": "https://www.reddit.com/r/iosapps/about/rules/"
+    },
+    {
+      "id": "reddit-apple",
+      "name": "Reddit · r/apple",
+      "phase": "community",
+      "lanes": [
+        "ios"
+      ],
+      "fit": {
+        "ios": "some",
+        "dev": "none",
+        "ai": "none"
+      },
+      "cost": "免费",
+      "pay": "free",
+      "linkType": "nofollow",
+      "dr": null,
+      "gate": "只允许周日（加州时间）以 self-post 形式推广；过去一个月要有 ≥5 条与本 App 无关的发言/回帖；自推占比 ≤10%；纯链接不行，没有 megathread。",
+      "review": "版主",
+      "rank": "Reddit 热度",
+      "assets": [
+        "有历史的账号",
+        "一篇讲过程的 self-post"
+      ],
+      "steps": [
+        "先在该版真实参与一个月",
+        "周日发 self-post"
+      ],
+      "gotcha": "不满足「5 条非自推发言」直接封 + 拉黑 App。",
+      "submitUrl": "https://www.reddit.com/r/apple/submit",
+      "signupUrl": "https://www.reddit.com/register",
+      "signupAuth": "Reddit 账号",
+      "verified": "2026-11-05",
+      "source": "https://www.reddit.com/r/apple/wiki/rules/"
+    },
+    {
+      "id": "reddit-iosprogramming",
+      "name": "Reddit · r/iOSProgramming（App Saturday）",
+      "phase": "community",
+      "lanes": [
+        "ios"
+      ],
+      "fit": {
+        "ios": "some",
+        "dev": "none",
+        "ai": "none"
+      },
+      "cost": "免费",
+      "pay": "free",
+      "linkType": "nofollow",
+      "dr": null,
+      "gate": "只在周六发，且一个 App 一年只能发一次；必须有：技术栈 + 一个开发难点怎么解的 + AI 使用披露（自建/辅助/大部分生成）。",
+      "review": "版主",
+      "rank": "Reddit 热度",
+      "assets": [
+        "技术栈清单",
+        "一个真实难点的解法",
+        "AI 披露"
+      ],
+      "steps": [
+        "攒稿",
+        "选周六发"
+      ],
+      "gotcha": "一年一次，别浪费在没做完的版本上。",
+      "submitUrl": "https://www.reddit.com/r/iOSProgramming/submit",
+      "signupUrl": "https://www.reddit.com/register",
+      "signupAuth": "Reddit 账号",
+      "verified": "2026-11-05",
+      "source": "https://www.reddit.com/r/iOSProgramming/wiki/app-saturday/"
+    },
+    {
+      "id": "reddit-testflight",
+      "name": "Reddit · r/TestFlight",
+      "phase": "community",
+      "lanes": [
+        "ios"
+      ],
+      "fit": {
+        "ios": "strong",
+        "dev": "none",
+        "ai": "none"
+      },
+      "cost": "免费",
+      "pay": "free",
+      "linkType": "nofollow",
+      "dr": null,
+      "gate": "只发 TestFlight 相关，不许夹带其他链接；标题=App 名（可加一句说明），不加 [Tester] 之类标签；同一 App 别高频发。",
+      "review": "版主",
+      "rank": "Reddit 热度",
+      "assets": [
+        "公开 TestFlight 链接",
+        "让测试者重点试什么"
+      ],
+      "steps": [
+        "开公开 TestFlight",
+        "发帖写清要测什么"
+      ],
+      "gotcha": "这是拿「首批真实反馈 + 评分铺垫」最便宜的位，上线前两周就该用。",
+      "submitUrl": "https://www.reddit.com/r/TestFlight/submit",
+      "signupUrl": "https://www.reddit.com/register",
+      "signupAuth": "Reddit 账号",
+      "verified": "2026-11-05",
+      "source": "https://www.reddit.com/r/TestFlight/about/rules/"
+    },
+    {
+      "id": "hackingwithswift",
+      "name": "Hacking with Swift · App Announcements",
+      "phase": "community",
+      "lanes": [
+        "ios"
+      ],
+      "fit": {
+        "ios": "strong",
+        "dev": "none",
+        "ai": "none"
+      },
+      "cost": "免费",
+      "pay": "free",
+      "linkType": "（未标）",
+      "dr": null,
+      "gate": "免费账号；必须带 App Store 链接；欢迎发 promo code。",
+      "review": "版主",
+      "rank": "论坛时间序",
+      "assets": [
+        "免费账号",
+        "App Store 链接",
+        "（可选）promo code"
+      ],
+      "steps": [
+        "注册",
+        "在指定板块发公告",
+        "顺手求反馈"
+      ],
+      "gotcha": "小而精准：全是 iOS 开发者，适合找 beta 测试者和口碑，不适合拉消费安装。",
+      "submitUrl": "https://www.hackingwithswift.com/forums/app-announcements",
+      "signupUrl": "https://www.hackingwithswift.com/login",
+      "signupAuth": "邮箱注册",
+      "verified": "2026-11-05",
+      "source": "https://www.hackingwithswift.com/forums/app-announcements"
+    },
+    {
+      "id": "indiehackers",
+      "name": "Indie Hackers",
+      "phase": "community",
+      "lanes": [
+        "dev",
+        "ai",
+        "ios"
+      ],
+      "fit": {
+        "ios": "some",
+        "dev": "some",
+        "ai": "some"
+      },
+      "cost": "免费",
+      "pay": "free",
+      "linkType": "nofollow（产品页有外链）",
+      "dr": null,
+      "gate": "免费账号即可建产品页/发帖；没找到官方自推规则（自己守分寸）。",
+      "review": "—",
+      "rank": "社区热度",
+      "assets": [
+        "账号",
+        "产品页",
+        "build-in-public 故事"
+      ],
+      "steps": [
+        "建产品页",
+        "发一篇「我为什么做这个 + 数字」"
+      ],
+      "gotcha": "读者是创始人不是用户；价值在「被同行看见」，不带来安装。",
+      "submitUrl": "https://www.indiehackers.com/products",
+      "signupUrl": "https://www.indiehackers.com/",
+      "signupAuth": "邮箱",
+      "verified": "2026-11-05",
+      "source": "https://www.indiehackers.com/products"
+    },
+    {
+      "id": "v2ex",
+      "name": "V2EX · 分享创造",
+      "phase": "community",
+      "lanes": [
+        "dev",
+        "ai",
+        "ios"
+      ],
+      "fit": {
+        "ios": "some",
+        "dev": "strong",
+        "ai": "some"
+      },
+      "cost": "免费",
+      "pay": "free",
+      "linkType": "nofollow",
+      "dr": null,
+      "gate": "要账号；分享创造节点只收「自己做的」，别发广告腔；新号有发帖限制。",
+      "review": "版主",
+      "rank": "帖子热度",
+      "assets": [
+        "账号",
+        "中文一句话 + 截图",
+        "可访问链接"
+      ],
+      "steps": [
+        "发到 /go/create",
+        "正文讲你解决的具体问题"
+      ],
+      "gotcha": "中文开发者社区里最认「自己做的东西」，但它不是消费者流量池。",
+      "submitUrl": "https://www.v2ex.com/new",
+      "signupUrl": "https://www.v2ex.com/signup",
+      "signupAuth": "V2EX 账号（需邀请或邮箱）",
+      "verified": "2026-11-17",
+      "source": "https://www.v2ex.com/new"
+    },
+    {
+      "id": "agents-launchpad",
+      "name": "Agents Launchpad（待核）",
+      "phase": "launch",
+      "lanes": [
+        "ai"
+      ],
+      "fit": {
+        "ios": "none",
+        "dev": "none",
+        "ai": "some"
+      },
+      "cost": "未知（第三方说免费，1 小时内上线）",
+      "pay": "free",
+      "linkType": "未知",
+      "dr": null,
+      "gate": "没核到独立官网。只找到 agentspace.cc 的目录条目，描述与「免费提交、1 小时上线、周投票、永久 SEO 页、Boost 48h 精选、Builder Pro」一致。",
+      "review": "未知",
+      "rank": "未知",
+      "assets": [
+        "未知"
+      ],
+      "steps": [
+        "先别排期",
+        "等真的找到提交页再上"
+      ],
+      "gotcha": "这是整份推荐里唯一一个我没核到实体的名字——很可能来自 AI 的转述而非真实站点。别按它做计划。",
+      "submitUrl": "https://agentspace.cc/tool/agents-launchpad",
+      "signupUrl": "",
+      "signupAuth": "未知",
+      "verified": "2026-11-17",
+      "unverified": true,
+      "source": "https://agentspace.cc/tool/agents-launchpad"
+    }
+  ]
+}
