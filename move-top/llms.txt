@@ -11,7 +11,7 @@
 - License: MIT
 - Category: developer tool / IDE sidebar ordering
 - Platform: DSH desktop (macOS, Windows, Linux)
-- Repository: https://github.com/dongsheng123132/workspace-hub/tree/main/plugins/dsh-workspace-move-top
+- Repository: https://github.com/dongsheng123132/dsh-move-up
 - npm: https://www.npmjs.com/package/dsh-plugin-workspace-move-top
 - Page: https://dongsheng123132.github.io/media-publish/move-top/
 

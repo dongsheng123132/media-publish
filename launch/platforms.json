@@ -10,7 +10,8 @@
       "free=不花钱；freemium=有免费入口但要满足条件（挂回链/评分/排队）；paid=纯付费。",
       "linkType 是该目录上「指向你官网」那条链接的属性；none=没有外链（只有榜单曝光）。",
       "lanes=平台自述的受众；筛选用 fit（strong/some/limited/none）——MCP 目录对「不是 MCP server 的产品」只算 some，别硬蹭。",
-      "phone=false 表示「要到电脑上做」（要上传截图/写长文/填仓库 URL/进 App Store Connect）；手机上只投 phone=true 的那批。"
+      "phone=false 表示「要到电脑上做」（要上传截图/写长文/填仓库 URL/进 App Store Connect）；手机上只投 phone=true 的那批。",
+      "bestTime = 有据可查的「什么时候发」（时区已换算成北京）；发布板的榜单是按时区算的，差几小时就是差一批流量。"
     ],
     "lanes": [
       {
@@ -95,7 +96,8 @@
       "signupAuth": "已有开发者账号即可（Account Holder/Admin/App Manager/Marketing 角色可提）",
       "verified": "2026-11-17",
       "source": "https://developer.apple.com/help/app-store-connect/manage-featuring-nominations/nominate-your-app-for-featuring",
-      "phone": false
+      "phone": false,
+      "bestTime": "上线前 ≥3 周（推荐 3 个月）提；过期补不回"
     },
     {
       "id": "producthunt",
@@ -136,7 +138,8 @@
       "signupAuth": "个人邮箱/Google/X 登录，必须个人账号",
       "verified": "2026-11-05",
       "source": "https://www.producthunt.com/launch",
-      "phone": true
+      "phone": true,
+      "bestTime": "美东 12:01 AM 开榜 = 北京 12:01（冬令时 13:01）；当天全程在线回评论"
     },
     {
       "id": "peerlist",
@@ -177,7 +180,8 @@
       "signupAuth": "个人账号 + 身份验证",
       "verified": "2026-11-05",
       "source": "https://help.peerlist.io/individual/launchpad/frequently-asked-questions-about-spotlight-by-peerlist",
-      "phone": true
+      "phone": true,
+      "bestTime": "周一 UTC 00:00 = 北京周一 08:00；前 2 天随机排序，票不是重点"
     },
     {
       "id": "uneed",
@@ -219,7 +223,8 @@
       "verified": "2026-10-28",
       "src3p": true,
       "source": "https://afterlaunch.io/learn/how-to-launch-on-uneed",
-      "phone": true
+      "phone": true,
+      "bestTime": "每天 12:00 AM PST = 北京 16:00（夏令时 15:00）换批"
     },
     {
       "id": "fazier",
@@ -258,7 +263,8 @@
       "signupAuth": "邮箱/账号注册",
       "verified": "2026-11-17",
       "source": "https://fazier.com/submit",
-      "phone": true
+      "phone": true,
+      "bestTime": "免费 30 天内审核；付费可排期"
     },
     {
       "id": "devhunt",
@@ -299,7 +305,8 @@
       "signupAuth": "GitHub 登录",
       "verified": "2026-11-17",
       "source": "https://devhunt.org/faq",
-      "phone": false
+      "phone": false,
+      "bestTime": "按周排期；免费档排队，付费档自己选周"
     },
     {
       "id": "tinylaunch",
@@ -337,7 +344,8 @@
       "signupAuth": "邮箱注册",
       "verified": "2026-11-17",
       "source": "https://tinylaun.ch/pricing",
-      "phone": true
+      "phone": true,
+      "bestTime": "标准队列排队，付费可跳"
     },
     {
       "id": "microlaunch",
@@ -375,7 +383,8 @@
       "signupAuth": "X 或 Google 登录",
       "verified": "2026-11-17",
       "source": "https://microlaunch.net",
-      "phone": false
+      "phone": false,
+      "bestTime": "30 天 campaign，自选起始日"
     },
     {
       "id": "codehype",
@@ -415,7 +424,8 @@
       "signupAuth": "邮箱注册",
       "verified": "2026-11-17",
       "source": "https://www.codehype.ai/submit",
-      "phone": false
+      "phone": false,
+      "bestTime": "免费 14 天队列；付费即时"
     },
     {
       "id": "startupbase",
@@ -452,7 +462,8 @@
       "signupAuth": "邮箱注册",
       "verified": "2026-11-05",
       "source": "https://startupbase.io/launch",
-      "phone": false
+      "phone": false,
+      "bestTime": "免费 4–5 周；付费 30 天内自选日"
     },
     {
       "id": "launchingnext",
@@ -491,7 +502,8 @@
       "signupAuth": "邮箱",
       "verified": "2026-11-17",
       "source": "https://launchingnext.com/submit/",
-      "phone": true
+      "phone": true,
+      "bestTime": "随时，人工排"
     },
     {
       "id": "alternativeto",
@@ -533,7 +545,8 @@
       "verified": "2026-11-05",
       "src3p": true,
       "source": "https://alternativeto.net/faq/",
-      "phone": false
+      "phone": false,
+      "bestTime": "随时提交；把 5–10 个「被替代品」填完再交"
     },
     {
       "id": "saashub",
@@ -573,7 +586,8 @@
       "verified": "2026-11-05",
       "src3p": true,
       "source": "https://www.saashub.com/services/submit",
-      "phone": false
+      "phone": false,
+      "bestTime": "随时，人工排队"
     },
     {
       "id": "taaft",
@@ -612,7 +626,8 @@
       "signupAuth": "邮箱",
       "verified": "2026-11-17",
       "source": "https://theresanaiforthat.com/get-featured/",
-      "phone": false
+      "phone": false,
+      "bestTime": "人工审核 1–2 天，随时提交"
     },
     {
       "id": "futuretools",
@@ -871,7 +886,8 @@
       "signupAuth": "邮箱/账号",
       "verified": "2026-11-17",
       "source": "https://indie-apps.com/submit",
-      "phone": true
+      "phone": true,
+      "bestTime": "随时，粘链接即时上线"
     },
     {
       "id": "indieappcatalog",
@@ -1095,7 +1111,8 @@
       "signupAuth": "账号（无邮箱验证，但新号发帖会被限）",
       "verified": "2026-11-05",
       "source": "https://news.ycombinator.com/showhn.html",
-      "phone": false
+      "phone": false,
+      "bestTime": "美东工作日 8–10 点 = 北京 20–22 点；周末流量低一档"
     },
     {
       "id": "reddit-iosapps",
@@ -1133,7 +1150,8 @@
       "signupAuth": "Reddit 账号（看 karma/年龄）",
       "verified": "2026-11-05",
       "source": "https://www.reddit.com/r/iosapps/about/rules/",
-      "phone": false
+      "phone": false,
+      "bestTime": "上架满 30 天后，任意工作日；每 30 天 1 次"
     },
     {
       "id": "reddit-apple",
@@ -1168,7 +1186,8 @@
       "signupAuth": "Reddit 账号",
       "verified": "2026-11-05",
       "source": "https://www.reddit.com/r/apple/wiki/rules/",
-      "phone": false
+      "phone": false,
+      "bestTime": "只允许周日（加州时间）= 北京周日晚"
     },
     {
       "id": "reddit-iosprogramming",
@@ -1204,7 +1223,8 @@
       "signupAuth": "Reddit 账号",
       "verified": "2026-11-05",
       "source": "https://www.reddit.com/r/iOSProgramming/wiki/app-saturday/",
-      "phone": false
+      "phone": false,
+      "bestTime": "只允许周六（App Saturday）"
     },
     {
       "id": "reddit-testflight",
@@ -1239,7 +1259,8 @@
       "signupAuth": "Reddit 账号",
       "verified": "2026-11-05",
       "source": "https://www.reddit.com/r/TestFlight/about/rules/",
-      "phone": true
+      "phone": true,
+      "bestTime": "随时，但要在发版前 2 周"
     },
     {
       "id": "hackingwithswift",
@@ -1430,7 +1451,8 @@
       "signupAuth": "邮箱注册（你已注册成功）",
       "verified": "2026-11-17",
       "source": "https://www.crowdstax.com/pricing",
-      "phone": true
+      "phone": true,
+      "bestTime": "选周一开跑；30/90 天 featured"
     },
     {
       "id": "crowdstax-platforms",

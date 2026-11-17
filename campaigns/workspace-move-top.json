@@ -1,5 +1,19 @@
 {
   "slug": "workspace-move-top",
+  "definition": {
+    "zh": "「工作区移到最上面」（dsh-plugin-workspace-move-top）是一个 DeepSeek Harness（DSH）桌面端插件：在工作区菜单里加一项「移到最上面」，把某个工作区一次性提到侧栏第一位，之后仍可自由拖动。安装：`dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2`。",
+    "en": "`dsh-plugin-workspace-move-top` is a DeepSeek Harness (DSH) plugin that adds a \"move to top\" item to the workspace menu: one click puts a workspace at the top of the sidebar, and the rest of the order stays draggable. Install: `dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2`."
+  },
+  "facts": [
+    "v0.2.2 · 17,550 B 解包 / 5.8 KB tarball · 11 个文件 · 零运行时依赖 · MIT",
+    "peer: @deepseek-ai/dsh-workspace >=0.2.1-rc.5 <0.3.0（实测 0.2.1-rc.5 与 0.2.2-rc.1）",
+    "一次点击只写一次顺序（宿主 workspaceRegistry.insertBefore），插件自身不存排序状态"
+  ],
+  "notDoing": [
+    "不置顶、不收藏",
+    "不做后台自动重排",
+    "不联网、不收集遥测"
+  ],
   "title": "工作区移到最上面 · 单独推广",
   "subtitle": "一个只做一件事的 DSH 插件：一次点击到顶，不置顶、不自动重排。",
   "primaryUrl": "https://dongsheng123132.github.io/media-publish/move-top/",
@@ -15,7 +29,7 @@
     },
     {
       "label": "GitHub",
-      "url": "https://github.com/dongsheng123132/workspace-hub/tree/main/plugins/dsh-workspace-move-top"
+      "url": "https://github.com/dongsheng123132/dsh-move-up"
     }
   ],
   "platforms": [
@@ -58,7 +72,7 @@
       "submitUrl": "https://news.ycombinator.com/submitlink?u={url}&t={title}",
       "url": "https://dongsheng123132.github.io/media-publish/move-top/",
       "title": "Show HN: DSH plugin that moves a workspace to the top in one click",
-      "text": "Observation first, tool second.\n\nDSH's workspace menu gives you \"move up one\". I keep nineteen workspaces, and the one I want is usually around eleventh. So getting it to the top costs eleven clicks — and the menu item was clearly designed for \"I'm one slot away\", not for \"I want the top\".\n\nI also had the wrong mental model for a week: I thought I wanted pinning. Pinning (where a client ships it) is a separate block that keeps the top forever. What I actually want is \"front today, then drift down as I work\". Those are different products, and the second one is a one-shot write to the natural order.\n\nSo this does exactly one thing: adds \"move to top\" to the workspace menu, writes the order once through the host's own workspaceRegistry.insertBefore, and leaves the rest draggable. No favourites, no pinning, no background re-sort pass, nothing to configure. 17.5 KB unpacked, 11 files, zero runtime dependencies, MIT.\n\nHonest limits, because they matter more than the feature:\n- The host exposes no menu-extension slot for workspaces, so the item is injected into the menu DOM. If a DSH update changes that structure, the item disappears. Documented, not hidden.\n- Node tests can't replace real Electron DOM verification; I re-checked the menu on 0.2.2-rc.1 by hand.\n- It's DSH-only. Nothing here is useful in VS Code or Cursor.\n\nInstall: `dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2`\nPage: https://dongsheng123132.github.io/media-publish/move-top/\nCode: https://github.com/dongsheng123132/workspace-hub/tree/main/plugins/dsh-workspace-move-top\n\nCurious how others handle sidebar ordering at this size: auto-sort by last-used, a separate pinned block, or free drag? At nineteen workspaces I found auto-sort actively unhelpful — the workspace I want is often one I haven't touched today.",
+      "text": "Observation first, tool second.\n\nDSH's workspace menu gives you \"move up one\". I keep nineteen workspaces, and the one I want is usually around eleventh. So getting it to the top costs eleven clicks — and the menu item was clearly designed for \"I'm one slot away\", not for \"I want the top\".\n\nI also had the wrong mental model for a week: I thought I wanted pinning. Pinning (where a client ships it) is a separate block that keeps the top forever. What I actually want is \"front today, then drift down as I work\". Those are different products, and the second one is a one-shot write to the natural order.\n\nSo this does exactly one thing: adds \"move to top\" to the workspace menu, writes the order once through the host's own workspaceRegistry.insertBefore, and leaves the rest draggable. No favourites, no pinning, no background re-sort pass, nothing to configure. 17.5 KB unpacked, 11 files, zero runtime dependencies, MIT.\n\nHonest limits, because they matter more than the feature:\n- The host exposes no menu-extension slot for workspaces, so the item is injected into the menu DOM. If a DSH update changes that structure, the item disappears. Documented, not hidden.\n- Node tests can't replace real Electron DOM verification; I re-checked the menu on 0.2.2-rc.1 by hand.\n- It's DSH-only. Nothing here is useful in VS Code or Cursor.\n\nInstall: `dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2`\nPage: https://dongsheng123132.github.io/media-publish/move-top/\nCode: https://github.com/dongsheng123132/dsh-move-up\n\nCurious how others handle sidebar ordering at this size: auto-sort by last-used, a separate pinned block, or free drag? At nineteen workspaces I found auto-sort actively unhelpful — the workspace I want is often one I haven't touched today.",
       "tips": "标题 ≤80 字符；不用大写和感叹号；不要拉票；全程在线回技术问题。iOS/桌面插件在 HN 的唯一卖点是「取舍讲清楚」。",
       "limit": 80
     },
@@ -97,7 +111,7 @@
       "submitUrl": "https://devhunt.org/",
       "url": "https://dongsheng123132.github.io/media-publish/move-top/",
       "title": "dsh-plugin-workspace-move-top",
-      "text": "`dsh-plugin-workspace-move-top` is a DeepSeek Harness (DSH) plugin that adds a \"move to top\" item to the workspace menu: one click puts a workspace at the top of the sidebar, and the rest of the order stays draggable. Install: `dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2`.\n\nFacts (verified 2026-11-17)\n- version 0.2.2 · 17,550 bytes unpacked · 11 files · no runtime dependencies · MIT\n- peer: @deepseek-ai/dsh-workspace >=0.2.1-rc.5 <0.3.0 (tested on 0.2.2-rc.1 and 0.2.1-rc.5)\n- it writes the host's persistent order once via workspaceRegistry.insertBefore; the plugin stores no ordering or favourite state\n- it does not: pin, favourite, re-sort in the background, or touch other apps' state\n- known limit: the host exposes no workspace-menu extension slot, so the item is injected into the menu DOM; a host menu change can hide it\n\nRepo: https://github.com/dongsheng123132/workspace-hub/tree/main/plugins/dsh-workspace-move-top",
+      "text": "`dsh-plugin-workspace-move-top` is a DeepSeek Harness (DSH) plugin that adds a \"move to top\" item to the workspace menu: one click puts a workspace at the top of the sidebar, and the rest of the order stays draggable. Install: `dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2`.\n\nFacts (verified 2026-11-17)\n- version 0.2.2 (npm latest; repo main is at 0.3.0, not published) · 17,550 bytes unpacked / 5.8 KB tarball · 11 files · no runtime dependencies · MIT\n- peer: @deepseek-ai/dsh-workspace >=0.2.1-rc.5 <0.3.0 (tested on 0.2.2-rc.1 and 0.2.1-rc.5)\n- it writes the host's persistent order once via workspaceRegistry.insertBefore; the plugin stores no ordering or favourite state\n- it does not: pin, favourite, re-sort in the background, or touch other apps' state\n- known limit: the host exposes no workspace-menu extension slot, so the item is injected into the menu DOM; a host menu change can hide it\n\nRepo: https://github.com/dongsheng123132/dsh-move-up",
       "tips": "只收开发者工具；免费档 nofollow 但永久可见。想 dofollow 再买 $49 的某一个周。"
     },
     {

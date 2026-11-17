@@ -100,7 +100,8 @@ const one = p => {
   const fit = (p.fit && p.fit[LANE]) || 'limited';
   const tag = fit === 'strong' ? '强' : fit === 'some' ? '可' : '弱';
   const pay = p.pay === 'free' ? '免费' : p.pay === 'paid' ? '付费' : '有条件免费';
-  return `· ${p.name}｜${tag}·${pay}\n  ${shortHint(p)}`;
+  const when = p.bestTime ? `\n  ⏱ ${String(p.bestTime).split('；')[0].slice(0, 30)}` : '';
+  return `· ${p.name}｜${tag}·${pay}\n  ${shortHint(p)}${when}`;
 };
 
 const digest =

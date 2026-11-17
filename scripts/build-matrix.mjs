@@ -75,6 +75,9 @@ h2 span.count{color:var(--mut);font-weight:400;font-size:12.5px}
 .brief li{margin:2px 0}
 .brief .st{color:var(--mut);font-size:12px;margin:0 0 6px}
 .chip.lane{margin-right:3px}
+.chip.win{background:#eef2ff;color:#3730a3}
+.chip.win.cheap{background:#e8f5ee;color:#0b6b3a}
+.chip.win.pricey{background:#fdeaea;color:#9b1c1c}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:12px}
 .card{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
 .card.fit-strong{border-left-color:var(--ok)}
@@ -126,6 +129,10 @@ footer{color:var(--mut);font-size:12px;border-top:1px solid var(--line);margin-t
     <label class="chk"><input type="checkbox" id="fFree"> 只看不花钱</label>
     <label class="chk"><input type="checkbox" id="fTodo"> 只看没做</label>
     <input type="search" id="q" placeholder="搜平台名 / 门槛关键词">
+  </div>
+  <div class="controls" style="margin-top:6px">
+    <span class="chip win" id="win">—</span>
+    <span class="hint" style="margin:0">DeepSeek 峰谷：周一至周五 09:00–12:00 / 14:00–18:00 是高峰（双倍价），其余时间是半价。改定时任务先看这条。</span>
   </div>
 </header>
 <main id="main"></main>
@@ -231,6 +238,7 @@ function card(p) {
   add('设备', p.phone === false ? '要到电脑上做' : '手机可做');
   add('审核', p.review);
   add('排名', p.rank);
+  add('建议时间', p.bestTime);
   add('门槛', p.gate, 'gate');
   c.appendChild(dl);
 
@@ -374,6 +382,32 @@ function bind() {
   $('#fTodo').onchange = function (e) { state.todo = e.target.checked; render(); };
   $('#q').oninput = function (e) { state.q = e.target.value.trim().toLowerCase(); render(); };
 }
+function dsWindow() {
+  try {
+    var parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Shanghai', hour12: false, weekday: 'short', hour: '2-digit', minute: '2-digit'
+    }).formatToParts(new Date());
+    var o = {};
+    parts.forEach(function (x) { o[x.type] = x.value; });
+    var wd = o.weekday, h = parseInt(o.hour, 10), m = parseInt(o.minute, 10);
+    var weekend = (wd === 'Sat' || wd === 'Sun');
+    var peak = !weekend && ((h >= 9 && h < 12) || (h >= 14 && h < 18));
+    var label = String(h) + ':' + (m < 10 ? '0' + m : m);
+    return { peak: peak, weekend: weekend, label: label };
+  } catch (e) { return null; }
+}
+function paintWin() {
+  var el = document.getElementById('win');
+  if (!el) return;
+  var w = dsWindow();
+  if (!w) { el.textContent = '峰谷：未知'; return; }
+  el.textContent = (w.peak ? '现在高峰（双倍价）' : '现在半价') + ' · 北京 ' + w.label + (w.weekend ? ' · 周末全时段半价' : '');
+  el.className = 'chip win ' + (w.peak ? 'pricey' : 'cheap');
+  el.title = '高峰：周一至周五 09:00–12:00、14:00–18:00（北京时间）。其余时间与整个周末都是半价。';
+}
+paintWin();
+setInterval(paintWin, 60000);
+
 $('#ttl').textContent = META.title;
 document.title = META.title + (PRODUCT.name ? ' · ' + PRODUCT.name : '');
 bind();

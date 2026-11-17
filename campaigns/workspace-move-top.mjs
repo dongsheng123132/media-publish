@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 
 const NPM = 'https://www.npmjs.com/package/dsh-plugin-workspace-move-top';
-const REPO = 'https://github.com/dongsheng123132/workspace-hub/tree/main/plugins/dsh-workspace-move-top';
+const REPO = 'https://github.com/dongsheng123132/dsh-move-up';
 const SITE = "https://dongsheng123132.github.io/media-publish/move-top/";
 const PKG = 'dsh-plugin-workspace-move-top';
 const INSTALL = `dsh plugin --profile desktop add ${PKG}@0.2.2`;
@@ -19,7 +19,7 @@ const DEF_EN = `\`${PKG}\` is a DeepSeek Harness (DSH) plugin that adds a "move 
 
 const FACTS_EN = [
   'Facts (verified 2026-11-17)',
-  '- version 0.2.2 · 17,550 bytes unpacked · 11 files · no runtime dependencies · MIT',
+  '- version 0.2.2 (npm latest; repo main is at 0.3.0, not published) · 17,550 bytes unpacked / 5.8 KB tarball · 11 files · no runtime dependencies · MIT',
   '- peer: @deepseek-ai/dsh-workspace >=0.2.1-rc.5 <0.3.0 (tested on 0.2.2-rc.1 and 0.2.1-rc.5)',
   '- it writes the host\'s persistent order once via workspaceRegistry.insertBefore; the plugin stores no ordering or favourite state',
   '- it does not: pin, favourite, re-sort in the background, or touch other apps\' state',
@@ -185,6 +185,14 @@ add({
 
 const campaign = {
   slug: 'workspace-move-top',
+  // ── GEO 四件套（lint 门禁会挡：缺一样就不许 build）──────────────────────
+  definition: { zh: DEF_ZH, en: DEF_EN },
+  facts: [
+    'v0.2.2 · 17,550 B 解包 / 5.8 KB tarball · 11 个文件 · 零运行时依赖 · MIT',
+    'peer: @deepseek-ai/dsh-workspace >=0.2.1-rc.5 <0.3.0（实测 0.2.1-rc.5 与 0.2.2-rc.1）',
+    '一次点击只写一次顺序（宿主 workspaceRegistry.insertBefore），插件自身不存排序状态',
+  ],
+  notDoing: ['不置顶、不收藏', '不做后台自动重排', '不联网、不收集遥测'],
   title: '工作区移到最上面 · 单独推广',
   subtitle: '一个只做一件事的 DSH 插件：一次点击到顶，不置顶、不自动重排。',
   primaryUrl: SITE,
