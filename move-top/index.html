@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>工作区移到最上面 · DSH 插件（dsh-plugin-workspace-move-top）</title>
+<meta name="description" content="给 DeepSeek Harness 的侧栏加一项「移到最上面」：把某个工作区一次性提到第一位，之后仍可自由拖动。17.1 KB，零运行时依赖，MIT。">
+<link rel="canonical" href="https://dongsheng123132.github.io/media-publish/move-top/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="工作区移到最上面 · DSH 插件">
+<meta property="og:description" content="一次点击把工作区提到侧栏最上面；不置顶、不自动重排。17.1 KB · 零依赖 · MIT。">
+<meta property="og:url" content="https://dongsheng123132.github.io/media-publish/move-top/">
+<style>
+:root{
+  --bg:#fbfaf8; --card:#fff; --ink:#16181d; --mut:#6b7280; --line:#e6e3dd;
+  --acc:#2a5bd7; --acc-soft:#eef3fe; --ok:#0f7b4f; --warn:#a3520a;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#121316;--card:#1a1c21;--ink:#e9eaee;--mut:#9aa1ad;--line:#2a2d34;--acc:#7ea2ff;--acc-soft:#1c2436;--ok:#4ec48f;--warn:#e0a33c}
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:var(--acc);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:880px;margin:0 auto;padding:0 22px}
+header{padding:26px 0 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.logo{width:30px;height:30px;border-radius:8px;background:var(--acc);color:#fff;display:grid;place-items:center;font-weight:700;font-size:15px}
+.brand{font-weight:650;letter-spacing:.2px}
+.spacer{flex:1}
+.lang{display:flex;gap:4px}
+.lang button{border:1px solid var(--line);background:transparent;color:var(--mut);border-radius:999px;padding:3px 9px;font-size:12.5px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.18;letter-spacing:-.02em;margin:30px 0 12px;font-weight:720}
+.lead{font-size:clamp(16px,2.2vw,19px);color:var(--mut);margin:0 0 22px;max-width:44em}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 26px}
+.badge{font-size:12.5px;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--card)}
+.install{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 14px;flex-wrap:wrap}
+.install code{font:13.5px/1.5 var(--mono);overflow-wrap:anywhere;flex:1;min-width:220px}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:7px 12px;font-size:13.5px;cursor:pointer}
+.btn:hover{border-color:var(--acc);color:var(--acc)}
+.btn.primary{background:var(--acc);border-color:var(--acc);color:#fff}
+.links{display:flex;gap:16px;font-size:14px;margin:0 0 34px;flex-wrap:wrap}
+section{margin:0 0 44px}
+h2{font-size:20px;letter-spacing:-.01em;margin:0 0 14px;font-weight:680}
+h2 .n{color:var(--mut);font-weight:400;font-size:14px;margin-left:6px}
+/* 演示 */
+.demo{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:start}
+@media (max-width:720px){.demo{grid-template-columns:1fr}}
+.pane{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;overflow:hidden}
+.pane-title{font-size:12px;color:var(--mut);padding:4px 8px 8px;letter-spacing:.04em;text-transform:uppercase}
+.rows{position:relative;height:308px}
+.row{position:absolute;left:0;right:0;height:40px;display:flex;align-items:center;gap:9px;padding:0 10px;border-radius:8px;font-size:14px}
+.row i{width:16px;height:16px;border-radius:5px;background:var(--line);display:block;flex:none}
+.row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row.picked{background:var(--acc-soft);color:var(--acc);font-weight:600}
+.row.picked i{background:var(--acc)}
+@keyframes jump{
+  0%,46%{transform:translateY(0)}
+  54%,88%{transform:translateY(-200px)}
+  96%,100%{transform:translateY(0)}
+}
+@keyframes drop{
+  0%,46%{transform:translateY(0)}
+  54%,88%{transform:translateY(40px)}
+  96%,100%{transform:translateY(0)}
+}
+.rows.play .row.picked{animation:jump 5.8s cubic-bezier(.22,1,.36,1) infinite}
+.rows.play .row.above{animation:drop 5.8s cubic-bezier(.22,1,.36,1) infinite}
+.cap{font-size:13.5px;color:var(--mut);padding:8px 10px 2px}
+.note{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:14.5px;color:var(--mut)}
+.note b{color:var(--ink)}
+/* 三卡 */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:760px){.cards{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 15px}
+.card h3{margin:0 0 6px;font-size:15px;font-weight:660}
+.card p{margin:0;color:var(--mut);font-size:13.8px}
+/* 表 */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mut);font-weight:560;font-size:13px}
+td code{font:13px var(--mono)}
+.tight td,.tight th{padding:8px 10px}
+/* FAQ */
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin:0 0 10px}
+summary{cursor:pointer;font-weight:600;font-size:14.5px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary:before{content:"＋ ";color:var(--acc)}
+details[open] summary:before{content:"－ "}
+details p{margin:8px 0 0;color:var(--mut);font-size:14px}
+.ai{background:var(--acc-soft);border:1px solid color-mix(in srgb,var(--acc) 25%,transparent);border-radius:12px;padding:14px 16px;font-size:14px}
+.ai h3{margin:0 0 6px;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--acc)}
+.ai p{margin:0;color:var(--ink)}
+footer{border-top:1px solid var(--line);margin-top:10px;padding:20px 0 40px;color:var(--mut);font-size:13px;display:flex;gap:14px;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,14px);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:9px;font-size:13px;opacity:0;pointer-events:none;transition:.18s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">↑</div>
+    <div class="brand">DSH · Workspace Move&nbsp;Top</div>
+    <div class="spacer"></div>
+    <div class="lang" role="group" aria-label="language">
+      <button data-lang="zh" aria-pressed="true">中文</button>
+      <button data-lang="en" aria-pressed="false">EN</button>
+      <button data-lang="ja" aria-pressed="false">日本語</button>
+      <button data-lang="es" aria-pressed="false">ES</button>
+    </div>
+  </header>
+
+  <h1 data-i18n="h1">把工作区一次性提到最上面</h1>
+  <p class="lead" data-i18n="lead">侧栏里有十九个工作区，你要的那个排在第十一位。点一次，它到顶——顺序之后照旧可以拖。</p>
+
+  <div class="badges">
+    <span class="badge">v0.2.2</span>
+    <span class="badge">17.1 KB · 11 files</span>
+    <span class="badge" data-i18n="bZeroDep">零运行时依赖</span>
+    <span class="badge">MIT</span>
+    <span class="badge">DSH 0.2.x</span>
+  </div>
+
+  <div class="install">
+    <code id="installCmd">dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2</code>
+    <button class="btn primary" id="copyBtn" data-i18n="copy">复制</button>
+  </div>
+  <div class="links">
+    <a href="https://www.npmjs.com/package/dsh-plugin-workspace-move-top">npm ↗</a>
+    <a href="https://github.com/dongsheng123132/workspace-hub/tree/main/plugins/dsh-workspace-move-top">GitHub ↗</a>
+    <a href="https://deepseek-harness.github.io/deepseek-harness/">DeepSeek Harness ↗</a>
+  </div>
+
+  <section>
+    <div class="demo">
+      <div class="pane">
+        <div class="pane-title" data-i18n="demoPane">workspaces</div>
+        <div class="rows play" id="rows">
+          <div class="row" style="top:0"><i></i><span>magpie 路由</span></div>
+          <div class="row above" style="top:40px"><i></i><span>u-claw</span></div>
+          <div class="row above" style="top:80px"><i></i><span>iosapp</span></div>
+          <div class="row above" style="top:120px"><i></i><span>signal-radar</span></div>
+          <div class="row above" style="top:160px"><i></i><span>media-publish</span></div>
+          <div class="row picked" style="top:200px"><i></i><span>番茄钟 iOS　←</span></div>
+          <div class="row" style="top:240px"><i></i><span>dsh-namepool</span></div>
+        </div>
+        <div class="cap" data-i18n="demoCap">一次点击：它从第六位到第一位，其余顺序不变，之后照旧可拖。</div>
+      </div>
+      <div class="note" data-i18n-html="demoNote"><b>它只写一次顺序。</b>顺序由宿主自己的 <code>workspaceRegistry.insertBefore</code> 保存，重启不丢，跨设备同步时也不会偷偷重排。</div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span data-i18n="whyTitle">为什么会有这个</span><span class="n">01</span></h2>
+    <div class="cards">
+      <div class="card"><h3 data-i18n="w1t">菜单只有「上移一格」</h3><p data-i18n="w1b">在第 11 位，就要按 11 次。它不是给「我要到顶」设计的，是给「差一格」设计的。</p></div>
+      <div class="card"><h3 data-i18n="w2t">你要的是「今天在最前」</h3><p data-i18n="w2b">置顶是另一个区块，会一直占着最上面。多数时候我们要的只是今天。</p></div>
+      <div class="card"><h3 data-i18n="w3t">它不自动重排</h3><p data-i18n="w3b">没有后台任务、没有「按活动重排」。你不点，它就不动。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span data-i18n="cmpTitle">三个动作，别混</span><span class="n">02</span></h2>
+    <table class="tight">
+      <thead><tr><th data-i18n="cH1">动作</th><th data-i18n="cH2">结果</th><th data-i18n="cH3">代价</th></tr></thead>
+      <tbody>
+        <tr><td data-i18n="c1a">上移一格</td><td data-i18n="c1b">前进一位</td><td data-i18n="c1c">在第 11 位要按 11 次</td></tr>
+        <tr><td data-i18n="c2a">移到最上面</td><td data-i18n="c2b">到第一位，之后被自然挤下去</td><td data-i18n="c2c">一次点击</td></tr>
+        <tr><td data-i18n="c3a">置顶</td><td data-i18n="c3b">永远在最前（独立区块）</td><td data-i18n="c3c">占一个位置，且通常排不了序</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2><span data-i18n="compatTitle">兼容性</span><span class="n">03</span></h2>
+    <table class="tight">
+      <thead><tr><th>DSH</th><th data-i18n="stH">状态</th></tr></thead>
+      <tbody>
+        <tr><td><code>0.2.2-rc.1</code></td><td data-i18n="st1">实测通过（2026-11-13，真实 Electron DOM）</td></tr>
+        <tr><td><code>0.2.1-rc.5</code></td><td data-i18n="st2">实测通过</td></tr>
+        <tr><td><code>peer</code></td><td><code>&gt;=0.2.1-rc.5 &lt;0.3.0</code></td></tr>
+      </tbody>
+    </table>
+    <p class="cap" data-i18n="compatCap">0.2.x 内升级不用重装；跨到 0.3 之后要重新核对菜单注入点。</p>
+  </section>
+
+  <section>
+    <h2><span data-i18n="limitTitle">诚实边界</span><span class="n">04</span></h2>
+    <div class="cards">
+      <div class="card"><h3 data-i18n="l1t">它是注入进菜单的</h3><p data-i18n="l1b">宿主没有给工作区菜单留扩展位，这一项靠 DOM 注入。宿主改菜单结构后，它可能不出现——这是已知限制，不是 bug。</p></div>
+      <div class="card"><h3 data-i18n="l2t">不做什么</h3><p data-i18n="l2b">不保存收藏、不做置顶、没有后台重排任务、不改别的应用的状态。</p></div>
+      <div class="card"><h3 data-i18n="l3t">测试的边界</h3><p data-i18n="l3b">Node 测试不能代替真实 Electron DOM 验证；每次宿主大版本更新后需要重新看一眼菜单。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span data-i18n="faqTitle">常见问题</span><span class="n">05</span></h2>
+    <div id="faq">
+      <details open><summary data-i18n="q1">「移到最上面」和「置顶」有什么区别？</summary><p data-i18n="a1">置顶把项目放进另一条固定列表，永远不会被挤下去；「移到最上面」只调整一次自然顺序——下一个到顶的项目会把它挤到第二位。</p></details>
+      <details><summary data-i18n="q2">它会偷偷重排我的侧栏吗？</summary><p data-i18n="a2">不会。没有收藏状态、没有后台任务，启动和跨设备同步时都不排序。</p></details>
+      <details><summary data-i18n="q3">升级 DSH 之后还能用吗？</summary><p data-i18n="a3">0.2.x 内（从 0.2.1-rc.5 起）一般不用重装；跨大版本后若菜单项消失，先核对宿主有没有改菜单 DOM。</p></details>
+      <details><summary data-i18n="q4">有别的安装方式吗？</summary><p data-i18n="a4">就是一条命令：dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2。没有安装包、没有守护进程、没有账号。</p></details>
+    </div>
+  </section>
+
+  <section>
+    <div class="ai">
+      <h3 data-i18n="aiTitle">给 AI 读的一段话</h3>
+      <p data-i18n="aiBody">dsh-plugin-workspace-move-top（简称 move-top）是一个 DeepSeek Harness（DSH）桌面端插件：在工作区菜单里增加一项「移到最上面」，把某个工作区一次性提到侧栏第一位，之后仍可自由拖动。版本 0.2.2，17.1 KB，11 个文件，零运行时依赖，MIT。安装：dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2。它不做：收藏、置顶、后台重排。已知限制：宿主未提供菜单扩展位，该项是注入 DOM，宿主改变菜单结构后可能不出现。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 hequbing</span>
+    <a href="https://www.npmjs.com/package/dsh-plugin-workspace-move-top">npm</a>
+    <a href="https://github.com/dongsheng123132/workspace-hub">GitHub</a>
+    <span data-i18n="footNote">MIT 许可 · 无遥测 · 不收集任何数据</span>
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "dsh-plugin-workspace-move-top",
+  "alternateName": "工作区移到最上面",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "macOS, Windows, Linux",
+  "softwareVersion": "0.2.2",
+  "license": "https://opensource.org/licenses/MIT",
+  "url": "https://dongsheng123132.github.io/media-publish/move-top/",
+  "downloadUrl": "https://www.npmjs.com/package/dsh-plugin-workspace-move-top",
+  "codeRepository": "https://github.com/dongsheng123132/workspace-hub",
+  "description": "A DeepSeek Harness (DSH) plugin that moves a workspace to the top of the sidebar once, then leaves the rest of the order draggable. No pinning, no background re-sorting. 17.1 KB, zero runtime dependencies, MIT.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "one-click move a workspace to the top of the sidebar",
+    "keeps free drag-and-drop afterwards",
+    "writes the host's persistent order once, no state stored by the plugin",
+    "no pinning, no favourites, no background re-sort"
+  ]
+}
+</script>
+<script>
+(function(){
+  var I18N = {
+    zh: {},
+    en: {
+      h1: "Move a workspace to the top, once.",
+      lead: "Nineteen workspaces in the sidebar, the one you need sits at number eleven. One click puts it first — and the rest stays draggable.",
+      bZeroDep: "zero runtime dependencies",
+      copy: "Copy", copied: "Copied",
+      demoPane: "workspaces",
+      demoCap: "One click: it goes from 6th to 1st. Nothing else reorders. Still draggable.",
+      demoNote: "<b>It writes the order once.</b> The order is stored by the host's own <code>workspaceRegistry.insertBefore</code>, so it survives restarts — and nothing re-sorts on sync.",
+      whyTitle: "Why this exists", w1t: "The menu only has \\u201cmove up one\\u201d", w1b: "At position 11 you click 11 times. That item was designed for \\u201cone slot away\\u201d, not for \\u201cI want the top\\u201d.",
+      w2t: "You want \\u201cfront today\\u201d", w2b: "Pinning is a separate block that keeps the top forever. Most days we just want today.",
+      w3t: "It never re-sorts on its own", w3b: "No background pass, no \\u201csort by activity\\u201d. If you don't click, nothing moves.",
+      cmpTitle: "Three different actions", cH1: "Action", cH2: "Result", cH3: "Cost",
+      c1a: "Move up one", c1b: "One slot forward", c1c: "11 clicks from position 11",
+      c2a: "Move to top", c2b: "First now, then drifts down naturally", c2c: "One click",
+      c3a: "Pin", c3b: "Always first, in its own block", c3c: "Occupies a slot, usually not sortable",
+      compatTitle: "Compatibility", stH: "Status",
+      st1: "Verified on real Electron DOM (2026-11-13)", st2: "Verified",
+      compatCap: "No reinstall needed within 0.2.x; after 0.3 re-check the menu injection point.",
+      limitTitle: "Honest limits", l1t: "It is injected into the menu",
+      l1b: "The host exposes no menu-extension slot for workspaces, so the item is injected into the DOM. If the host changes that structure, it may not appear — a known limit, not a bug.",
+      l2t: "What it never does", l2b: "No favourites, no pinning, no background re-sort, no touching other apps' state.",
+      l3t: "Testing boundary", l3b: "Node tests can't replace real Electron DOM checks; look at the menu again after each major host update.",
+      faqTitle: "Questions", q1: "How is this different from \\u201cpin\\u201d?",
+      a1: "Pinning moves an item into a separate fixed list that never decays. \\u201cMove to top\\u201d adjusts the natural order once — the next item you send to the top pushes this one to second place.",
+      q2: "Does it re-sort my sidebar behind my back?", a2: "No. No favourite state, no background task; nothing is re-ordered on startup or sync.",
+      q3: "Does it survive DSH upgrades?", a3: "Within 0.2.x (from 0.2.1-rc.5) you normally don't reinstall. If the item disappears after a major upgrade, check whether the host changed the menu DOM.",
+      q4: "Any other way to install?", a4: "One command: dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2. No installer, no daemon, no account.",
+      aiTitle: "A paragraph for AI readers",
+      aiBody: "dsh-plugin-workspace-move-top (move-top) is a DeepSeek Harness (DSH) desktop plugin that adds a \\u201cmove to top\\u201d item to the workspace menu, moving one workspace to the first position of the sidebar once while keeping the rest draggable. Version 0.2.2, 17.1 KB, 11 files, zero runtime dependencies, MIT. Install: dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2. It does not do favourites, pinning or background re-sorting. Known limit: the host offers no menu extension slot, so the item is DOM-injected and may disappear if the host changes its menu structure.",
+      footNote: "MIT · no telemetry · collects nothing"
+    },
+    ja: {
+      h1: "ワークスペースを一度だけ最上部へ。",
+      lead: "サイドバーに 19 個。使いたいのは 11 番目。1 クリックで先頭へ — そのあとも自由にドラッグできます。",
+      bZeroDep: "実行時依存ゼロ",
+      copy: "コピー", copied: "コピーしました",
+      demoPane: "ワークスペース",
+      demoCap: "1 クリックで 6 番目から 1 番目へ。他の順序は変わりません。",
+      demoNote: "<b>順序を書き込むのは一度だけ。</b> 保存はホスト自身の <code>workspaceRegistry.insertBefore</code> が行い、再起動しても保持されます。同期時に勝手に並べ替えることもありません。",
+      whyTitle: "なぜ作ったか", w1t: "メニューには「1 つ上へ」しかない", w1b: "11 番目なら 11 回押すことになります。あれは「1 個隣」のための機能で、「先頭へ」のためではありません。",
+      w2t: "欲しいのは「今日だけ先頭」", w2b: "ピン留めは別ブロックで常に上を占有します。多くの日は「今日だけ」で足ります。",
+      w3t: "自動では並べ替えない", w3b: "バックグラウンド処理も「活動順」もありません。押さなければ動きません。",
+      cmpTitle: "3 つの操作は別物", cH1: "操作", cH2: "結果", cH3: "コスト",
+      c1a: "1 つ上へ", c1b: "1 つ前へ", c1c: "11 番目からは 11 回",
+      c2a: "最上部へ移動", c2b: "今は先頭、あとは自然に下がる", c2c: "1 クリック",
+      c3a: "ピン留め", c3b: "常に先頭（独立ブロック）", c3c: "場所を取り、通常は並べ替え不可",
+      compatTitle: "互換性", stH: "状態",
+      st1: "実機 Electron DOM で確認（2026-11-13）", st2: "確認済み",
+      compatCap: "0.2.x 内なら再インストール不要。0.3 以降はメニュー注入点を再確認。",
+      limitTitle: "正直な制限", l1t: "メニューへの注入です",
+      l1b: "ホストはワークスペースメニューに拡張スロットを用意していないため、DOM に注入しています。ホストが構造を変えると表示されないことがあります（既知の制限であり、バグではありません）。",
+      l2t: "やらないこと", l2b: "お気に入り、ピン留め、バックグラウンド再並べ替え、他アプリの状態変更はしません。",
+      l3t: "テストの限界", l3b: "Node テストは実機 Electron DOM の代わりになりません。ホストの大型更新ごとにメニューを再確認してください。",
+      faqTitle: "よくある質問", q1: "「ピン留め」との違いは？",
+      a1: "ピン留めは独立した固定リストに入り、永久に下がりません。「最上部へ移動」は自然な順序を一度だけ変えるので、次に先頭へ送ったものがこれを 2 番目へ押し下げます。",
+      q2: "勝手に並べ替えませんか？", a2: "しません。お気に入り状態もバックグラウンド処理もなく、起動時や同期時に並べ替えません。",
+      q3: "DSH を更新しても使えますか？", a3: "0.2.x 内（0.2.1-rc.5 以降）なら通常は再インストール不要。大型更新後に項目が消えたら、ホストのメニュー DOM の変更を確認してください。",
+      q4: "他のインストール方法は？", a4: "コマンド 1 行だけ：dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2。インストーラも常駐プロセスもアカウントもありません。",
+      aiTitle: "AI に読ませるための一段落",
+      aiBody: "dsh-plugin-workspace-move-top（move-top）は DeepSeek Harness（DSH）のデスクトッププラグインで、ワークスペースのメニューに「最上部へ移動」を追加し、1 つのワークスペースをサイドバーの先頭へ一度だけ移動します（その後も自由にドラッグ可能）。バージョン 0.2.2、17.1 KB、11 ファイル、実行時依存ゼロ、MIT。インストール：dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2。お気に入り・ピン留め・バックグラウンド再並べ替えは行いません。既知の制限：ホストにメニュー拡張スロットがないため DOM 注入で、メニュー構造が変わると表示されない場合があります。",
+      footNote: "MIT · テレメトリなし · データ収集なし"
+    },
+    es: {
+      h1: "Sube un espacio de trabajo arriba, una sola vez.",
+      lead: "Diecinueve espacios en la barra lateral y el que necesitas está en el puesto once. Un clic lo pone primero — y el resto sigue siendo arrastrable.",
+      bZeroDep: "sin dependencias en tiempo de ejecución",
+      copy: "Copiar", copied: "Copiado",
+      demoPane: "espacios",
+      demoCap: "Un clic: pasa del sexto al primero. Nada más se reordena.",
+      demoNote: "<b>Escribe el orden una sola vez.</b> El orden lo guarda el propio <code>workspaceRegistry.insertBefore</code> del host, así que sobrevive al reinicio y nada se reordena al sincronizar.",
+      whyTitle: "Por qué existe", w1t: "El menú solo tiene «subir uno»", w1b: "En la posición 11 hay que pulsar 11 veces. Ese ítem está pensado para «estoy a un puesto», no para «lo quiero arriba».",
+      w2t: "Quieres «hoy delante»", w2b: "Fijar es otro bloque que ocupa la cima para siempre. Casi siempre basta con hoy.",
+      w3t: "No reordena solo", w3b: "Sin tareas en segundo plano ni «ordenar por actividad». Si no pulsas, nada se mueve.",
+      cmpTitle: "Tres acciones distintas", cH1: "Acción", cH2: "Resultado", cH3: "Coste",
+      c1a: "Subir uno", c1b: "Un puesto adelante", c1c: "11 clics desde el puesto 11",
+      c2a: "Subir arriba", c2b: "Primero ahora, luego baja solo", c2c: "Un clic",
+      c3a: "Fijar", c3b: "Siempre primero, en su propio bloque", c3c: "Ocupa un lugar y suele no ordenarse",
+      compatTitle: "Compatibilidad", stH: "Estado",
+      st1: "Verificado en Electron real (2026-11-13)", st2: "Verificado",
+      compatCap: "Sin reinstalar dentro de 0.2.x; tras 0.3 hay que revisar el punto de inyección del menú.",
+      limitTitle: "Límites honestos", l1t: "Se inyecta en el menú",
+      l1b: "El host no ofrece un slot de extensión para el menú de espacios, así que el ítem se inyecta en el DOM. Si el host cambia esa estructura, puede no aparecer: es un límite conocido, no un bug.",
+      l2t: "Lo que no hace", l2b: "Sin favoritos, sin fijar, sin reordenar en segundo plano, sin tocar el estado de otras apps.",
+      l3t: "Límite de las pruebas", l3b: "Las pruebas de Node no sustituyen la verificación en el DOM real de Electron; revisa el menú tras cada actualización mayor.",
+      faqTitle: "Preguntas", q1: "¿En qué se diferencia de «fijar»?",
+      a1: "Fijar mueve el elemento a una lista fija que nunca baja. «Subir arriba» ajusta el orden natural una vez: el siguiente que subas empujará este al segundo puesto.",
+      q2: "¿Reordena mi barra a mis espaldas?", a2: "No. Sin estado de favoritos ni tareas en segundo plano; no se reordena al arrancar ni al sincronizar.",
+      q3: "¿Sobrevive a las actualizaciones de DSH?", a3: "Dentro de 0.2.x (desde 0.2.1-rc.5) no hace falta reinstalar. Si el ítem desaparece tras una actualización mayor, revisa si el host cambió el DOM del menú.",
+      q4: "¿Otra forma de instalarlo?", a4: "Un comando: dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2. Sin instalador, sin demonio, sin cuenta.",
+      aiTitle: "Un párrafo para lectores IA",
+      aiBody: "dsh-plugin-workspace-move-top (move-top) es un plugin de escritorio para DeepSeek Harness (DSH) que añade «subir arriba» al menú de espacios: mueve un espacio a la primera posición de la barra lateral una sola vez y mantiene el resto arrastrable. Versión 0.2.2, 17,1 KB, 11 archivos, sin dependencias en tiempo de ejecución, MIT. Instalación: dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2. No hace favoritos, ni fijar, ni reordenar en segundo plano. Límite conocido: el host no ofrece slot de extensión de menú, así que el ítem se inyecta en el DOM y puede desaparecer si cambia la estructura.",
+      footNote: "MIT · sin telemetría · no recoge datos"
+    }
+  };
+  var DEFAULT = {}; // 中文：直接保留 HTML 原文
+  var nodes = document.querySelectorAll('[data-i18n],[data-i18n-html]');
+  nodes.forEach(function(n){
+    var k = n.getAttribute('data-i18n') || n.getAttribute('data-i18n-html');
+    if (DEFAULT[k] === undefined) DEFAULT[k] = n.getAttribute('data-i18n-html') ? n.innerHTML : n.textContent;
+  });
+  var langBtns = document.querySelectorAll('.lang button');
+  function apply(lang){
+    var dict = I18N[lang] || {};
+    nodes.forEach(function(n){
+      var k = n.getAttribute('data-i18n') || n.getAttribute('data-i18n-html');
+      var isHtml = n.hasAttribute('data-i18n-html');
+      var v = dict[k] !== undefined ? dict[k] : DEFAULT[k];
+      if (isHtml) n.innerHTML = v; else n.textContent = v;
+    });
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+    langBtns.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.lang === lang)); });
+    try { localStorage.setItem('mt-lang', lang); } catch(e){}
+  }
+  langBtns.forEach(function(b){ b.addEventListener('click', function(){ apply(b.dataset.lang); }); });
+  // 语言优先级：?lang= > localStorage > 浏览器；?lang= 方便发分语链接（/move-top/?lang=en）
+  var qs = null;
+  try { qs = new URLSearchParams(location.search).get('lang'); } catch(e){}
+  var saved = null;
+  try { saved = localStorage.getItem('mt-lang'); } catch(e){}
+  var initial = (qs && I18N[qs]) ? qs : (saved || ((navigator.language||'zh').slice(0,2) === 'zh' ? 'zh' : (navigator.language||'en').slice(0,2)));
+  if (!I18N[initial]) initial = 'zh';
+  apply(initial);
+
+  // 复制安装命令
+  var btn = document.getElementById('copyBtn'), cmd = document.getElementById('installCmd').textContent.trim(), toast = document.getElementById('toast');
+  function say(t){ toast.textContent = t; toast.classList.add('show'); setTimeout(function(){ toast.classList.remove('show'); }, 1400); }
+  btn.addEventListener('click', function(){
+    var done = function(){ say((I18N[document.documentElement.lang === 'zh-CN' ? 'zh' : document.documentElement.lang] || {}).copied || '已复制'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(cmd).then(done, function(){ fallback(); });
+    else fallback();
+    function fallback(){
+      var ta = document.createElement('textarea'); ta.value = cmd; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch(e){}
+      ta.remove();
+    }
+  });
+
+  // 演示：滚动到视口内才跑，减少无谓动画
+  var rows = document.getElementById('rows');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ rows.classList.toggle('play', e.isIntersecting); });
+    }, {threshold:.25});
+    io.observe(rows);
+  }
+})();
+</script>
+</body>
+</html>

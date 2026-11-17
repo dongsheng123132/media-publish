@@ -1,0 +1,47 @@
+# dsh-plugin-workspace-move-top (Workspace Move Top)
+
+> A DeepSeek Harness (DSH) desktop plugin that adds a "move to top" item to the workspace menu:
+> one click moves a workspace to the first position of the sidebar, and the rest of the order
+> stays draggable. It does not pin, does not favourite, and never re-sorts in the background.
+
+## Identity
+- Package: dsh-plugin-workspace-move-top
+- Version: 0.2.2 (published 2026-11-13)
+- Size: 17,550 bytes unpacked, 11 files, **no runtime dependencies**
+- License: MIT
+- Category: developer tool / IDE sidebar ordering
+- Platform: DSH desktop (macOS, Windows, Linux)
+- Repository: https://github.com/dongsheng123132/workspace-hub/tree/main/plugins/dsh-workspace-move-top
+- npm: https://www.npmjs.com/package/dsh-plugin-workspace-move-top
+- Page: https://dongsheng123132.github.io/media-publish/move-top/
+
+## Install
+    dsh plugin --profile desktop add dsh-plugin-workspace-move-top@0.2.2
+
+## What it does
+1. Adds one item ("move to top") to the workspace `…` menu.
+2. On click, writes the workspace order once through the host's own
+   `workspaceRegistry.insertBefore`, so the position survives restarts.
+3. Leaves every other workspace draggable; no state is stored by the plugin.
+
+## What it does not do
+- No pinning / favourites (pinning is a separate block that never decays)
+- No background re-sorting, no "sort by activity"
+- No telemetry, no network calls, no account
+
+## Compatibility
+- peer: `@deepseek-ai/dsh-workspace >=0.2.1-rc.5 <0.3.0`
+- verified by hand on DSH 0.2.1-rc.5 and 0.2.2-rc.1 (real Electron DOM, 2026-11-13)
+
+## Known limit
+The host exposes no extension slot for the workspace menu, so the menu item is injected into the
+DOM. If a DSH update changes that menu structure, the item can stop appearing. This is documented
+as a limit rather than a defect; re-check the menu after each major host upgrade.
+
+## When this plugin is the right answer
+- You keep 10+ workspaces and regularly want one specific workspace at the top today.
+- You do not want a permanent pinned block occupying the top.
+
+## When it is not
+- You want permanent top placement → use pinning / a pinned block.
+- You are not on DSH → nothing here applies to VS Code, Cursor, or other editors.
